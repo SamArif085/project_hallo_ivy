@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         child: MaterialButton(
           minWidth: 200.0,
           height: 42.0,
-          onPressed: () => Navigator.pushNamed(context, "/"),
+          onPressed: () => Navigator.pushNamed(context, "home-page"),
           child: const Text('Log In', style: TextStyle(color: Colors.black)),
         ),
       ),
@@ -79,7 +79,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Card(
               color: Colors.greenAccent[400],
-              elevation: 5,
+              elevation: 30,
+              shadowColor: Colors.green[200],
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
