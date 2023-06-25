@@ -69,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
