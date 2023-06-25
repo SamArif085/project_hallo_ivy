@@ -169,10 +169,16 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         //membuat item navigasi
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.assignment), label: 'Order'),
-          BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Inbox'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
+          BottomNavigationBarItem(icon: Icon(Icons.add_home_work), label: 'PR'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.assignment), label: 'Laporan'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.content_paste_search_rounded),
+              label: 'Menu Materi'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.games_rounded), label: 'Game'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_sharp), label: 'Account'),
         ],
 
         //agar bottom navigation tidak bergerak saat diklik
