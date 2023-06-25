@@ -117,9 +117,7 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               color: Colors.black12,
               image: DecorationImage(
-                image: NetworkImage(
-                  "https://images.unsplash.com/photo-1607355739828-0bf365440db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1444&q=80",
-                ),
+                image: AssetImage('assets/ak.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -133,9 +131,7 @@ class HomePage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                image: NetworkImage(
-                  "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-                ),
+                image: AssetImage('assets/jatim.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -149,9 +145,7 @@ class HomePage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                image: NetworkImage(
-                  "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
-                ),
+                image: AssetImage('assets/ak.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -161,16 +155,28 @@ class HomePage extends StatelessWidget {
     );
 
     return Scaffold(
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            body,
-            const SizedBox(height: 48.0),
-            konten,
-            const SizedBox(height: 48.0),
-            Carousel,
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(height: 50.0),
+          body,
+          const SizedBox(height: 50.0),
+          konten,
+          const SizedBox(height: 50.0),
+          Carousel,
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        //membuat item navigasi
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.assignment), label: 'Order'),
+          BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Inbox'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
+        ],
+
+        //agar bottom navigation tidak bergerak saat diklik
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
