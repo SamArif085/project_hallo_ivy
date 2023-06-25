@@ -101,66 +101,59 @@ class HomePage extends StatelessWidget {
       ),
     );
 
-    final konten1 = Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(30))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    final Carousel = Container(
+      height: 200,
+      child: ListView(
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
         children: [
-          Card(
-            child: Image.asset(
-              'assets/ak.png',
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
+            ),
+            width: 300,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.black12,
+              image: DecorationImage(
+                image: NetworkImage(
+                  "https://images.unsplash.com/photo-1607355739828-0bf365440db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1444&q=80",
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          Card(
-            child: Image.asset(
-              'assets/ak.png',
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
             ),
-          )
-        ],
-      ),
-    );
-
-    final konten2 = Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(30))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Card(
-            child: Image.asset(
-              'assets/ak.png',
+            width: 300,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(
+                  "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          Card(
-            child: Image.asset(
-              'assets/ak.png',
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
             ),
-          )
-        ],
-      ),
-    );
-
-    final konten3 = Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(30))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Card(
-            child: Image.asset(
-              'assets/ak.png',
-            ),
-          ),
-          Card(
-            child: Image.asset(
-              'assets/ak.png',
+            width: 300,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(
+                  "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
           )
         ],
@@ -175,11 +168,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 48.0),
             konten,
             const SizedBox(height: 48.0),
-            konten1,
-            const SizedBox(height: 48.0),
-            konten2,
-            const SizedBox(height: 48.0),
-            konten3,
+            Carousel,
           ],
         ),
       ),
