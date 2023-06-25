@@ -155,16 +155,45 @@ class HomePage extends StatelessWidget {
     );
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const SizedBox(height: 50.0),
-          body,
-          const SizedBox(height: 50.0),
-          konten,
-          const SizedBox(height: 50.0),
-          Carousel,
-        ],
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.greenAccent[400],
+              automaticallyImplyLeading: false,
+              expandedHeight: 150.0,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Text("Fahrizi",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    )),
+                background: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(28.0),
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent[400],
+                  ),
+                  child: Row(
+                    children: <Widget>[foto, welcome, nama, kelas, notif],
+                  ),
+                ),
+              ),
+            ),
+          ];
+        },
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 50.0),
+            konten,
+            const SizedBox(height: 50.0),
+            Carousel,
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         //membuat item navigasi
@@ -180,7 +209,6 @@ class HomePage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle_sharp), label: 'Account'),
         ],
-
         //agar bottom navigation tidak bergerak saat diklik
         type: BottomNavigationBarType.fixed,
       ),
