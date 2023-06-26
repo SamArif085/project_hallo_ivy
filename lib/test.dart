@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   static String tag = 'home-page';
+  HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +66,6 @@ class HomePage extends StatelessWidget {
           color: Colors.black,
           size: 30,
         ),
-      ),
-    );
-
-    final body = Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(28.0),
-      decoration: BoxDecoration(
-        color: Colors.greenAccent[400],
-      ),
-      child: Row(
-        children: <Widget>[foto, welcome, nama, kelas, notif],
       ),
     );
 
@@ -160,6 +150,7 @@ class HomePage extends StatelessWidget {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.greenAccent[400],
+              automaticallyImplyLeading: false,
               expandedHeight: 150.0,
               floating: false,
               pinned: true,
@@ -177,7 +168,13 @@ class HomePage extends StatelessWidget {
                     color: Colors.greenAccent[400],
                   ),
                   child: Row(
-                    children: <Widget>[foto, welcome, nama, kelas, notif],
+                    children: <Widget>[
+                      foto,
+                      welcome,
+                      nama,
+                      kelas,
+                      notif,
+                    ],
                   ),
                 ),
               ),
