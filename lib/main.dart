@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
-import 'dashboard.dart';
+import 'BasePage.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,8 +9,9 @@ void main() {
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
-    BasePage.tag: (context) => BasePage(),
+    BasePage.tag: (context) => const BasePage(),
   };
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

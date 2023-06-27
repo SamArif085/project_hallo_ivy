@@ -3,6 +3,7 @@ import 'package:project_hallo_ivy/menu/PR.dart';
 import 'package:project_hallo_ivy/menu/Materi.dart';
 import 'package:project_hallo_ivy/menu/Laporan.dart';
 import 'package:project_hallo_ivy/menu/Dashboard.dart';
+import 'package:project_hallo_ivy/menu/Game.dart';
 
 class BasePage extends StatefulWidget {
   const BasePage({Key? key}) : super(key: key);
@@ -15,10 +16,11 @@ class BasePage extends StatefulWidget {
 class _BasePageState extends State<BasePage> {
   late int _currentIndex = 0;
   final List<Widget> _children = [
-    const MenuSatu(),
-    const MenuDua(),
-    const MenuTiga(),
     const MenuDashboard(),
+    const MenuSatu(),
+    const MenuTiga(),
+    const MenuDua(),
+    const MenuGame(),
   ];
   void onBarTapped(int index) {
     setState(() {
@@ -135,16 +137,17 @@ class _BasePageState extends State<BasePage> {
         onTap: onBarTapped,
         //membuat item navigasi
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.add_home_work), label: 'PR'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.assignment), label: 'Laporan'),
+              icon: Icon(Icons.home_rounded), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_sharp), label: 'PR'),
           BottomNavigationBarItem(
               icon: Icon(Icons.content_paste_search_rounded),
               label: 'Menu Materi'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.games_rounded), label: 'Game'),
+              icon: Icon(Icons.assignment), label: 'Laporan'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_sharp), label: 'Account'),
+              icon: Icon(Icons.games_rounded), label: 'Game'),
         ],
         //agar bottom navigation tidak bergerak saat diklik
         type: BottomNavigationBarType.fixed,

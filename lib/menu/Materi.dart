@@ -5,13 +5,29 @@ class MenuTiga extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Text(
-            'INI MENU Kedua',
-            style: TextStyle(fontSize: 26),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                child: Card(
+                  child: Image.asset('assets/ak.png'),
+                ),
+              ),
+              Container(
+                child: Card(
+                  child: Image.asset('assets/ak.png'),
+                ),
+              ),
+              Container(
+                child: Card(
+                  child: Image.asset('assets/ak.png'),
+                ),
+              ),
+            ],
           ),
         ),
       ),

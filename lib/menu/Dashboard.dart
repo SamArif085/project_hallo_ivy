@@ -8,7 +8,7 @@ class MenuDashboard extends StatelessWidget {
     final Carousel = SizedBox(
       height: 200,
       child: ListView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
           Container(
