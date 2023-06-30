@@ -23,8 +23,20 @@ class MenuGame extends StatelessWidget {
                   Container(
                     width: 100,
                     height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(30.0),
+                        shadowColor: Colors.lightBlueAccent.shade100,
+                        child: MaterialButton(
+                          minWidth: 200.0,
+                          height: 42.0,
+                          onPressed: () =>
+                              Navigator.pushNamed(context, "konten-Game1"),
+                          child: const Text('Game1',
+                              style: TextStyle(color: Colors.black)),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
