@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'BasePage.dart';
+import 'menu/Tema/Data/VideoApp.dart';
+import 'menu/Tema/Konten.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +12,8 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
     BasePage.tag: (context) => const BasePage(),
+    Konten.tag: (context) => const Konten(),
+    VideoApp.tag: (context) => const VideoApp(),
   };
   MyApp({super.key});
   @override
