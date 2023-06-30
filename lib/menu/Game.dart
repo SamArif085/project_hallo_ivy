@@ -8,22 +8,14 @@ class MenuGame extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Padding(
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Material(
                         borderRadius: BorderRadius.circular(30.0),
@@ -33,102 +25,142 @@ class MenuGame extends StatelessWidget {
                           height: 42.0,
                           onPressed: () =>
                               Navigator.pushNamed(context, "konten-Game1"),
-                          child: const Text('Game1',
-                              style: TextStyle(color: Colors.black)),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Image.asset(
+                                    'assets/susun_kata.png',
+                                    height: 100,
+                                    width: 150,
+                                  ),
+                                  const Text(
+                                    'Susun Kata',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                    width: 50,
-                  ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(30.0),
+                        shadowColor: Colors.lightBlueAccent.shade100,
+                        child: MaterialButton(
+                          minWidth: 200.0,
+                          height: 42.0,
+                          onPressed: () =>
+                              Navigator.pushNamed(context, "konten-Game1"),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Image.asset(
+                                    'assets/susun_kata.png',
+                                    height: 100,
+                                    width: 150,
+                                  ),
+                                  const Text(
+                                    'Susun Kata',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Card(
+                        child: Image.asset('assets/ak.png'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                    width: 50,
-                  ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                    const SizedBox(
+                      height: 20,
+                      width: 50,
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Card(
+                        child: Image.asset('assets/ak.png'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                    width: 50,
-                  ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Card(
+                        child: Image.asset('assets/ak.png'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                    const SizedBox(
+                      height: 20,
+                      width: 50,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                    width: 50,
-                  ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    child: Card(
-                      child: Image.asset('assets/ak.png'),
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Card(
+                        child: Image.asset('assets/ak.png'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Card(
+                        child: Image.asset('assets/ak.png'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                      width: 50,
+                    ),
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Card(
+                        child: Image.asset('assets/ak.png'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

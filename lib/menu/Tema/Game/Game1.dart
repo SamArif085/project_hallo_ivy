@@ -9,6 +9,7 @@ class Game1 extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: WebViewWidget(controller: controller),
       ),
     );
