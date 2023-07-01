@@ -32,8 +32,7 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     const foto = Hero(
       tag: 'hero',
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
+      child: SizedBox(
         child: CircleAvatar(
           radius: 35.0,
           backgroundColor: Colors.transparent,
@@ -42,8 +41,7 @@ class _BasePageState extends State<BasePage> {
       ),
     );
 
-    const welcome = Padding(
-      padding: EdgeInsets.all(10.0),
+    const welcome = SizedBox(
       child: Text(
         'Halo~',
         style: TextStyle(
@@ -53,19 +51,16 @@ class _BasePageState extends State<BasePage> {
       ),
     );
 
-    const nama = Padding(
-      padding: EdgeInsets.all(8.0),
+    const nama = SizedBox(
       child: Text(
         'Fahrizi',
         style: TextStyle(
           fontSize: 20.0,
           color: Colors.white,
-          height: 5,
         ),
       ),
     );
-    const kelas = Padding(
-      padding: EdgeInsets.all(8.0),
+    const kelas = SizedBox(
       child: Text(
         'B1',
         style: TextStyle(
@@ -75,9 +70,8 @@ class _BasePageState extends State<BasePage> {
       ),
     );
 
-    final notif = Center(
+    final notif = SizedBox(
       child: PopupMenuButton(
-        padding: const EdgeInsets.fromLTRB(100, 100, 0, 0),
         itemBuilder: (context) => [
           const PopupMenuItem(
             child: Column(
@@ -100,31 +94,20 @@ class _BasePageState extends State<BasePage> {
             SliverAppBar(
               backgroundColor: Colors.greenAccent[400],
               automaticallyImplyLeading: false,
-              expandedHeight: 150.0,
-              floating: false,
+              floating: true,
               pinned: true,
+              snap: true,
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
-                title: const Text("Fahrizi",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    )),
-                background: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.all(28.0),
-                  decoration: BoxDecoration(
-                    color: Colors.greenAccent[400],
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      foto,
-                      welcome,
-                      nama,
-                      kelas,
-                      notif,
-                    ],
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                      child: Row(
+                        children: [nama, notif],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
