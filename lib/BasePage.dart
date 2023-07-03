@@ -14,14 +14,43 @@ class BasePage extends StatefulWidget {
 }
 
 class _BasePageState extends State<BasePage> {
+  late ScrollController _scrollController;
   late int _currentIndex = 0;
+  bool lastStatus = true;
+  double height = 390;
   final List<Widget> _children = [
     const MenuDashboard(),
-    const MenuSatu(),
-    const MenuTiga(),
-    const MenuDua(),
+    const MenuPR(),
+    const MenuMateri(),
+    const MenuLaporan(),
     const MenuGame(),
   ];
+
+  bool get _isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (height - kToolbarHeight);
+  }
+
+  void _scrollListener() {
+    if (_isShrink != lastStatus) {
+      setState(() {
+        lastStatus = _isShrink;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void onBarTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -86,34 +115,35 @@ class _BasePageState extends State<BasePage> {
         ),
       ),
     );
-
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              backgroundColor: Colors.greenAccent[400],
-              automaticallyImplyLeading: false,
-              floating: true,
-              pinned: true,
-              snap: true,
-              flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Center(
-                      child: Row(
-                        children: [nama, notif],
-                      ),
-                    )
-                  ],
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.greenAccent[400],
+      body: SafeArea(
+        child: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.greenAccent[400],
+                automaticallyImplyLeading: false,
+                floating: true,
+                pinned: true,
+                snap: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    child: nama,
+                  ),
+                  centerTitle: true,
+                  title: _isShrink
+                      ? const Text('pmatatias Statistic',
+                          style: TextStyle(fontSize: 16))
+                      : const SizedBox(),
                 ),
               ),
-            ),
-          ];
-        },
-        body: _children[_currentIndex],
+            ];
+          },
+          body: _children[_currentIndex],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

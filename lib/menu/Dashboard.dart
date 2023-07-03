@@ -81,14 +81,25 @@ class MenuDashboard extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 50.0),
-              konten,
-              const SizedBox(height: 50.0),
-              Carousel,
-            ],
+        backgroundColor: Colors.greenAccent[400],
+        body: SizedBox(
+          child: Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60)),
+              ),
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(height: 50.0),
+                  konten,
+                  const SizedBox(height: 50.0),
+                  Carousel,
+                ],
+              ),
+            ),
           ),
         ),
       ),

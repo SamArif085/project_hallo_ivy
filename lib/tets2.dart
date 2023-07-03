@@ -1,120 +1,163 @@
-
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/PR.dart';
+import 'package:project_hallo_ivy/menu/Materi.dart';
+import 'package:project_hallo_ivy/menu/Laporan.dart';
+import 'package:project_hallo_ivy/menu/Dashboard.dart';
+import 'package:project_hallo_ivy/menu/Game.dart';
 
-/// Flutter code sample for [AppBar].
-
-final List<int> _items = List<int>.generate(51, (int index) => index);
-
-void main() => runApp(const AppBarApp());
-
-class AppBarApp extends StatelessWidget {
-  const AppBarApp({super.key});
+class BasePage extends StatefulWidget {
+  const BasePage({Key? key}) : super(key: key);
+  static String tag = 'home-page';
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xff6750a4),
-        useMaterial3: true,
-      ),
-      home: const AppBarExample(),
-    );
+  State<BasePage> createState() => _BasePageState();
+}
+
+class _BasePageState extends State<BasePage> {
+  late ScrollController _scrollController;
+  late int _currentIndex = 0;
+  bool lastStatus = true;
+  double height = 390;
+  final List<Widget> _children = [MenuDashboard()];
+
+  bool get _isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (height - kToolbarHeight);
   }
-}
 
-class AppBarExample extends StatefulWidget {
-  const AppBarExample({super.key});
+  void _scrollListener() {
+    if (_isShrink != lastStatus) {
+      setState(() {
+        lastStatus = _isShrink;
+      });
+    }
+  }
 
   @override
-  State<AppBarExample> createState() => _AppBarExampleState();
-}
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()..addListener(_scrollListener);
+  }
 
-class _AppBarExampleState extends State<AppBarExample> {
-  bool shadowColor = false;
-  double? scrolledUnderElevation;
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void onBarTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
-    final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
+    const foto = Hero(
+      tag: 'hero',
+      child: SizedBox(
+        child: CircleAvatar(
+          radius: 35.0,
+          backgroundColor: Colors.transparent,
+          backgroundImage: AssetImage('assets/icon/user-212-256.png'),
+        ),
+      ),
+    );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('AppBar Demo'),
-        scrolledUnderElevation: scrolledUnderElevation,
-        shadowColor: shadowColor ? Theme.of(context).colorScheme.shadow : null,
-      ),
-      body: GridView.builder(
-        itemCount: _items.length,
-        padding: const EdgeInsets.all(8.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 2.0,
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 10.0,
+    const welcome = SizedBox(
+      child: Text(
+        'Halo~',
+        style: TextStyle(
+          fontSize: 20.0,
+          color: Colors.white,
         ),
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            return Center(
-              child: Text(
-                'Scroll to see the Appbar in effect.',
-                style: Theme.of(context).textTheme.labelLarge,
-                textAlign: TextAlign.center,
-              ),
-            );
-          }
-          return Container(
-            alignment: Alignment.center,
-            // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: _items[index].isOdd ? oddItemColor : evenItemColor,
+      ),
+    );
+
+    const nama = SizedBox(
+      child: Text(
+        'Fahrizi',
+        style: TextStyle(
+          fontSize: 20.0,
+          color: Colors.white,
+        ),
+      ),
+    );
+    const kelas = SizedBox(
+      child: Text(
+        'B1',
+        style: TextStyle(
+          fontSize: 15.0,
+          color: Colors.white,
+        ),
+      ),
+    );
+
+    final notif = SizedBox(
+      child: PopupMenuButton(
+        itemBuilder: (context) => [
+          const PopupMenuItem(
+            child: Column(
+              children: [Text('item1'), Text('item2')],
             ),
-            child: Text('Item $index'),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: OverflowBar(
-            overflowAlignment: OverflowBarAlignment.center,
-            alignment: MainAxisAlignment.center,
-            overflowSpacing: 5.0,
-            children: <Widget>[
-              ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    shadowColor = !shadowColor;
-                  });
-                },
-                icon: Icon(
-                  shadowColor ? Icons.visibility_off : Icons.visibility,
-                ),
-                label: const Text('shadow color'),
-              ),
-              const SizedBox(width: 5),
-              ElevatedButton(
-                onPressed: () {
-                  if (scrolledUnderElevation == null) {
-                    setState(() {
-                      // Default elevation is 3.0, increment by 1.0.
-                      scrolledUnderElevation = 4.0;
-                    });
-                  } else {
-                    setState(() {
-                      scrolledUnderElevation = scrolledUnderElevation! + 1.0;
-                    });
-                  }
-                },
-                child: Text(
-                  'scrolledUnderElevation: ${scrolledUnderElevation ?? 'default'}',
-                ),
-              ),
-            ],
           ),
+        ],
+        child: const Icon(
+          Icons.notification_add,
+          color: Colors.black,
+          size: 30,
         ),
+      ),
+    );
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.greenAccent[400],
+      body: SafeArea(
+        child: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.greenAccent[400],
+                automaticallyImplyLeading: false,
+                floating: true,
+                pinned: true,
+                snap: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    child: nama,
+                  ),
+                  centerTitle: true,
+                  title: _isShrink
+                      ? const Text('pmatatias Statistic',
+                          style: TextStyle(fontSize: 16))
+                      : const SizedBox(),
+                ),
+              ),
+            ];
+          },
+          body: _children[_currentIndex],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: onBarTapped,
+        //membuat item navigasi
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_rounded), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_sharp), label: 'PR'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.content_paste_search_rounded),
+              label: 'Menu Materi'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.assignment), label: 'Laporan'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.games_rounded), label: 'Game'),
+        ],
+        //agar bottom navigation tidak bergerak saat diklik
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

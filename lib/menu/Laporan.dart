@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 
-class MenuDua extends StatelessWidget {
-  const MenuDua({super.key});
+class MenuLaporan extends StatelessWidget {
+  const MenuLaporan({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Center(
-          child: Text(
-            'INI MENU Ketiga',
-            style: TextStyle(fontSize: 26),
+        backgroundColor: Colors.greenAccent[400],
+        body: SizedBox(
+          child: Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60)),
+              ),
+            ),
           ),
         ),
       ),
