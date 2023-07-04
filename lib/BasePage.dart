@@ -14,7 +14,6 @@ class BasePage extends StatefulWidget {
 }
 
 class _BasePageState extends State<BasePage> {
-  late ScrollController _scrollController;
   late int _currentIndex = 0;
   bool lastStatus = true;
   double height = 390;
@@ -25,31 +24,6 @@ class _BasePageState extends State<BasePage> {
     const MenuLaporan(),
     const MenuGame(),
   ];
-
-  bool get _isShrink {
-    return _scrollController.hasClients &&
-        _scrollController.offset > (height - kToolbarHeight);
-  }
-
-  void _scrollListener() {
-    if (_isShrink != lastStatus) {
-      setState(() {
-        lastStatus = _isShrink;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()..addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   void onBarTapped(int index) {
     setState(() {
@@ -120,7 +94,6 @@ class _BasePageState extends State<BasePage> {
       backgroundColor: Colors.greenAccent[400],
       body: SafeArea(
         child: NestedScrollView(
-          controller: _scrollController,
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
@@ -129,15 +102,12 @@ class _BasePageState extends State<BasePage> {
                 floating: true,
                 pinned: true,
                 snap: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    child: nama,
+                expandedHeight: 100,
+                flexibleSpace: const FlexibleSpaceBar(
+                  title: Row(
+                    children: [nama, kelas],
                   ),
-                  centerTitle: true,
-                  title: _isShrink
-                      ? const Text('pmatatias Statistic',
-                          style: TextStyle(fontSize: 16))
-                      : const SizedBox(),
+                  background: Column(children: [foto]),
                 ),
               ),
             ];

@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/menu/PR.dart';
-import 'package:project_hallo_ivy/menu/Materi.dart';
-import 'package:project_hallo_ivy/menu/Laporan.dart';
-import 'package:project_hallo_ivy/menu/Dashboard.dart';
-import 'package:project_hallo_ivy/menu/Game.dart';
 
-class BasePage extends StatefulWidget {
-  const BasePage({Key? key}) : super(key: key);
-  static String tag = 'home-page';
-
-  @override
-  State<BasePage> createState() => _BasePageState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _BasePageState extends State<BasePage> {
-  late ScrollController _scrollController;
-  late int _currentIndex = 0;
-  bool lastStatus = true;
-  double height = 390;
-  final List<Widget> _children = [MenuDashboard()];
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  bool get _isShrink {
-    return _scrollController.hasClients &&
-        _scrollController.offset > (height - kToolbarHeight);
-  }
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ScrollController? _scrollController;
+  bool lastStatus = true;
+  double height = 200;
 
   void _scrollListener() {
     if (_isShrink != lastStatus) {
@@ -31,6 +22,12 @@ class _BasePageState extends State<BasePage> {
         lastStatus = _isShrink;
       });
     }
+  }
+
+  bool get _isShrink {
+    return _scrollController != null &&
+        _scrollController!.hasClients &&
+        _scrollController!.offset > (height - kToolbarHeight);
   }
 
   @override
@@ -41,123 +38,175 @@ class _BasePageState extends State<BasePage> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController?.removeListener(_scrollListener);
+    _scrollController?.dispose();
     super.dispose();
-  }
-
-  void onBarTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    const foto = Hero(
-      tag: 'hero',
-      child: SizedBox(
-        child: CircleAvatar(
-          radius: 35.0,
-          backgroundColor: Colors.transparent,
-          backgroundImage: AssetImage('assets/icon/user-212-256.png'),
-        ),
-      ),
-    );
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
-    const welcome = SizedBox(
-      child: Text(
-        'Halo~',
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Colors.white,
-        ),
-      ),
-    );
-
-    const nama = SizedBox(
-      child: Text(
-        'Fahrizi',
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Colors.white,
-        ),
-      ),
-    );
-    const kelas = SizedBox(
-      child: Text(
-        'B1',
-        style: TextStyle(
-          fontSize: 15.0,
-          color: Colors.white,
-        ),
-      ),
-    );
-
-    final notif = SizedBox(
-      child: PopupMenuButton(
-        itemBuilder: (context) => [
-          const PopupMenuItem(
-            child: Column(
-              children: [Text('item1'), Text('item2')],
-            ),
-          ),
-        ],
-        child: const Icon(
-          Icons.notification_add,
-          color: Colors.black,
-          size: 30,
-        ),
-      ),
-    );
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.greenAccent[400],
-      body: SafeArea(
-        child: NestedScrollView(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      title: 'Horizons Weather',
+      home: Scaffold(
+        body: NestedScrollView(
           controller: _scrollController,
           headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return <Widget>[
+            return [
               SliverAppBar(
-                backgroundColor: Colors.greenAccent[400],
-                automaticallyImplyLeading: false,
-                floating: true,
+                elevation: 0,
+                backgroundColor: Colors.blueGrey,
                 pinned: true,
-                snap: true,
+                expandedHeight: 275,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    child: nama,
-                  ),
-                  centerTitle: true,
+                  collapseMode: CollapseMode.parallax,
                   title: _isShrink
-                      ? const Text('pmatatias Statistic',
-                          style: TextStyle(fontSize: 16))
-                      : const SizedBox(),
+                      ? const Text(
+                          "Profile",
+                        )
+                      : null,
+                  background: SafeArea(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 48),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              headerImage,
+                              fit: BoxFit.cover,
+                              height: 100,
+                              width: 100,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          "Flipkart",
+                          style: textTheme.headline4,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          "flipkart.com",
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Text(
+                          "Info about the company",
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+                actions: _isShrink
+                    ? [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 12),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8, right: 8),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      "Flipkart",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "flipkart.com",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.network(
+                                  headerImage,
+                                  fit: BoxFit.cover,
+                                  height: 30,
+                                  width: 30,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]
+                    : null,
               ),
             ];
           },
-          body: _children[_currentIndex],
+          body: CustomScrollView(
+            scrollBehavior: const ConstantScrollBehavior(),
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(child: Text("Item: $index")),
+                    );
+                  },
+                  childCount: 50,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: onBarTapped,
-        //membuat item navigasi
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_sharp), label: 'PR'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.content_paste_search_rounded),
-              label: 'Menu Materi'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.assignment), label: 'Laporan'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.games_rounded), label: 'Game'),
-        ],
-        //agar bottom navigation tidak bergerak saat diklik
-        type: BottomNavigationBarType.fixed,
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              const UserAccountsDrawerHeader(
+                accountName: Text("Zakaria Hossain"),
+                accountEmail: Text("zakariaaltime@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.orange,
+                  child: Text(
+                    "A",
+                    style: TextStyle(fontSize: 40.0),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Home"),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text("Settings"),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.contacts),
+                title: Text("Contact Us"),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

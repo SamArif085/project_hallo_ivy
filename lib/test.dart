@@ -17,9 +17,6 @@ class _BasePageState extends State<BasePage> {
   late int _currentIndex = 0;
   final List<Widget> _children = [
     const MenuDashboard(),
-    const MenuSatu(),
-    const MenuTiga(),
-    const MenuDua(),
     const MenuGame(),
   ];
   void onBarTapped(int index) {

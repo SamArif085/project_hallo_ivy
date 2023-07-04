@@ -78,21 +78,22 @@ class MenuDashboard extends StatelessWidget {
         ],
       ),
     );
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.greenAccent[400],
-        body: SizedBox(
-          child: Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(60),
-                    topRight: Radius.circular(60)),
-              ),
+    return Scaffold(
+      backgroundColor: Colors.greenAccent[400],
+      body: SizedBox(
+        child: Expanded(
+          child: Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(60), topRight: Radius.circular(60)),
+            ),
+            child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  const SizedBox(height: 50.0),
+                  konten,
                   const SizedBox(height: 50.0),
                   konten,
                   const SizedBox(height: 50.0),
