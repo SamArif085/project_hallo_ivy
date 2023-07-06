@@ -38,25 +38,14 @@ class _BasePageState extends State<BasePage> {
       child: SizedBox(
         child: CircleAvatar(
           radius: 35.0,
-          backgroundColor: Colors.transparent,
           backgroundImage: AssetImage('assets/icon/user-212-256.png'),
-        ),
-      ),
-    );
-
-    const welcome = SizedBox(
-      child: Text(
-        'Halo~',
-        style: TextStyle(
-          fontSize: 20.0,
-          color: Colors.white,
         ),
       ),
     );
 
     const nama = SizedBox(
       child: Text(
-        'Fahrizi',
+        'Ahmad Fahrizi',
         style: TextStyle(
           fontSize: 20.0,
           color: Colors.white,
@@ -65,9 +54,9 @@ class _BasePageState extends State<BasePage> {
     );
     const kelas = SizedBox(
       child: Text(
-        'B1',
+        'Kelas B1',
         style: TextStyle(
-          fontSize: 15.0,
+          fontSize: 20.0,
           color: Colors.white,
         ),
       ),
@@ -102,12 +91,44 @@ class _BasePageState extends State<BasePage> {
                 floating: true,
                 pinned: true,
                 snap: true,
-                expandedHeight: 100,
-                flexibleSpace: const FlexibleSpaceBar(
-                  title: Row(
-                    children: [nama, kelas],
+                expandedHeight: 150,
+                title: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: nama,
+                      ),
+                    ),
+                  ],
+                ),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: foto,
+                        ),
+                      ),
+                      const SizedBox(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: kelas,
+                        ),
+                      ),
+                      SizedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: notif,
+                        ),
+                      ),
+                    ],
                   ),
-                  background: Column(children: [foto]),
                 ),
               ),
             ];
