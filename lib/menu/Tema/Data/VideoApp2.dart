@@ -7,19 +7,20 @@ import 'package:video_player/video_player.dart';
 class VideoApp2 extends StatefulWidget {
   const VideoApp2({Key? key}) : super(key: key);
   static String tag = 'konten-page-video-2';
+
   @override
   _DefaultPlayerState createState() => _DefaultPlayerState();
 }
 
 class _DefaultPlayerState extends State<VideoApp2> {
   late FlickManager flickManager;
+  int _playCount = 0;
   @override
   void initState() {
     super.initState();
     flickManager = FlickManager(
       videoPlayerController: VideoPlayerController.network(
-        file["items"][0]["trailer_url"],
-      ),
+          'https://github.com/GeekyAnts/flick-video-player-demo-videos/blob/master/example/iceland_compressed.mp4?raw=true'),
     );
   }
 
@@ -55,25 +56,41 @@ class _DefaultPlayerState extends State<VideoApp2> {
 
   @override
   Widget build(BuildContext context) {
-    return VisibilityDetector(
-      key: ObjectKey(flickManager),
-      onVisibilityChanged: (visibility) {
-        if (visibility.visibleFraction == 0) {
-          flickManager.flickControlManager?.autoPause();
-        } else if (visibility.visibleFraction == 1) {
-          flickManager.flickControlManager?.autoResume();
-        }
-      },
-      child: Container(
-        child: FlickVideoPlayer(
-          flickManager: flickManager,
-          flickVideoWithControls: const FlickVideoWithControls(
-            closedCaptionTextStyle: TextStyle(fontSize: 8),
-            controls: FlickPortraitControls(),
+    return Scaffold(
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(
+            child: VisibilityDetector(
+              key: ObjectKey(flickManager),
+              onVisibilityChanged: (visibility) {
+                if (visibility.visibleFraction == 0 && this.mounted) {
+                  flickManager.flickControlManager?.autoPause();
+                } else if (visibility.visibleFraction == 1) {
+                  flickManager.flickControlManager?.autoResume();
+                  setState(() {
+                    _playCount++;
+                  });
+                }
+              },
+              child: FlickVideoPlayer(
+                flickManager: flickManager,
+                flickVideoWithControls: const FlickVideoWithControls(
+                  closedCaptionTextStyle: TextStyle(fontSize: 8),
+                  controls: FlickPortraitControls(),
+                ),
+                flickVideoWithControlsFullscreen: const FlickVideoWithControls(
+                  controls: FlickLandscapeControls(),
+                ),
+              ),
+            ),
           ),
-          flickVideoWithControlsFullscreen: const FlickVideoWithControls(
-            controls: FlickLandscapeControls(),
-          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('Play Count: $_playCount'),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/VideoApp2.dart';
 
 class VideoApp3 extends StatelessWidget {
   const VideoApp3({super.key});
@@ -11,7 +12,11 @@ class VideoApp3 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Card(
-            child: Text('test'),
+            child: SizedBox(
+              height: 500,
+              width: 500,
+              child: VideoApp2(),
+            ),
           ),
         ],
       ),
