@@ -15,13 +15,37 @@ class Konten extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Material(
                   child: MaterialButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, "konten-page-video"),
                     child: const Card(
                       child: Text('Video'),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Material(
+                  child: MaterialButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, "konten-page-video-2"),
+                    child: const Card(
+                      child: Text('Quiz'),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Material(
+                  child: MaterialButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, "konten-page-video-3"),
+                    child: const Card(
+                      child: Text('Test'),
                     ),
                   ),
                 ),
