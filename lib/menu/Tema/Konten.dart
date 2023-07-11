@@ -20,8 +20,20 @@ class Konten extends StatelessWidget {
                   child: MaterialButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, "konten-page-video"),
-                    child: const Card(
-                      child: Text('Video'),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/Video.png',
+                            height: 250,
+                            width: 250,
+                          ),
+                          const Text(
+                            'Mari Tonton Video',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -32,8 +44,20 @@ class Konten extends StatelessWidget {
                   child: MaterialButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, "konten-page-Quiz"),
-                    child: const Card(
-                      child: Text('Quiz'),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/Quiz.png',
+                            height: 250,
+                            width: 250,
+                          ),
+                          const Text(
+                            'Mari Tonton Video',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -44,8 +68,20 @@ class Konten extends StatelessWidget {
                   child: MaterialButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, "konten-page-video-3"),
-                    child: const Card(
-                      child: Text('Test'),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/Test.png',
+                            height: 250,
+                            width: 250,
+                          ),
+                          const Text(
+                            'Mari Tonton Video',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
