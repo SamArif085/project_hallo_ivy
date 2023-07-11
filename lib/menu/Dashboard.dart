@@ -60,8 +60,11 @@ class MenuDashboard extends StatelessWidget {
     final konten = Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: const BorderRadius.all(Radius.circular(30))),
+        border: Border.all(color: Colors.black),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(30),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

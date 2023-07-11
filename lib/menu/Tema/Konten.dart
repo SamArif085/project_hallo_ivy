@@ -31,7 +31,7 @@ class Konten extends StatelessWidget {
                 child: Material(
                   child: MaterialButton(
                     onPressed: () =>
-                        Navigator.pushNamed(context, "konten-page-video-2"),
+                        Navigator.pushNamed(context, "konten-page-Quiz"),
                     child: const Card(
                       child: Text('Quiz'),
                     ),

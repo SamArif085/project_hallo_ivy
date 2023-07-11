@@ -1,82 +1,91 @@
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/untils/file.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoApp extends StatefulWidget {
-  const VideoApp({super.key});
+  const VideoApp({Key? key}) : super(key: key);
   static String tag = 'konten-page-video';
+
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  _DefaultPlayerState createState() => _DefaultPlayerState();
 }
 
-class _VideoPlayerScreenState extends State<VideoApp> {
-  late VideoPlayerController _controller;
+class _DefaultPlayerState extends State<VideoApp> {
+  late FlickManager flickManager;
   int _playCount = 0;
-
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    flickManager = FlickManager(
+      videoPlayerController: VideoPlayerController.network(
+          'https://github.com/SamArif085/Video_Hello_Ivy/blob/main/Test/materi1.mp4?raw=true'),
+    );
   }
+
+  ///If you have subtitle assets
+
+  // Future<ClosedCaptionFile> _loadCaptions() async {
+  //   final String fileContents = await DefaultAssetBundle.of(context)
+  //       .loadString('images/bumble_bee_captions.srt');
+
+  //   return SubRipCaptionFile(fileContents);
+  // }
+
+  ///If you have subtitle urls
+
+  // Future<ClosedCaptionFile> _loadCaptions() async {
+  //   final url = Uri.parse('SUBTITLE URL LINK');
+  //   try {
+  //     final data = await http.get(url);
+  //     final srtContent = data.body.toString();
+  //     print(srtContent);
+  //     return SubRipCaptionFile(srtContent);
+  //   } catch (e) {
+  //     print('Failed to get subtitles for ${e}');
+  //     return SubRipCaptionFile('');
+  //   }
+  //}
 
   @override
   void dispose() {
-    _controller.dispose();
+    flickManager.dispose();
     super.dispose();
-  }
-
-  void _playVideo() {
-    if (_controller.value.isPlaying) {
-      _controller.pause();
-    } else {
-      _controller.play();
-      setState(() {
-        _playCount++;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Video Player'),
-      ),
-      body: Center(
-        child: _controller.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    VideoPlayer(_controller),
-                  ],
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(
+            child: VisibilityDetector(
+              key: ObjectKey(flickManager),
+              onVisibilityChanged: (visibility) {
+                if (visibility.visibleFraction == 0 && this.mounted) {
+                  flickManager.flickControlManager?.autoPause();
+                } else if (visibility.visibleFraction == 1) {
+                  flickManager.flickControlManager?.autoResume();
+                  setState(() {
+                    _playCount++;
+                  });
+                }
+              },
+              child: FlickVideoPlayer(
+                flickManager: flickManager,
+                flickVideoWithControls: const FlickVideoWithControls(
+                  closedCaptionTextStyle: TextStyle(fontSize: 8),
+                  controls: FlickPortraitControls(),
                 ),
-              )
-            : const CircularProgressIndicator(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(
-            () {
-              _controller.value.isPlaying;
-              if (_controller.value.isPlaying) {
-                _controller.pause();
-              } else {
-                _controller.play();
-                setState(() {
-                  _playCount++;
-                });
-              }
-            },
-          );
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
+                flickVideoWithControlsFullscreen: const FlickVideoWithControls(
+                  controls: FlickLandscapeControls(),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Padding(
