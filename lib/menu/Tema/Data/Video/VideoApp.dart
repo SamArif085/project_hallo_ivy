@@ -56,6 +56,20 @@ class _DefaultPlayerState extends State<VideoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.greenAccent[400],
+        title: const Text('Video'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add_alert),
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('This is a snackbar')));
+            },
+          ),
+        ],
+      ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
