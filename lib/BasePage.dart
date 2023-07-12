@@ -19,10 +19,10 @@ class _BasePageState extends State<BasePage> {
   double height = 390;
   final List<Widget> _children = [
     const MenuDashboard(),
-    const MenuPR(),
-    const MenuMateri(),
     const MenuLaporan(),
+    const MenuMateri(),
     const MenuGame(),
+    const MenuPR(),
   ];
 
   void onBarTapped(int index) {
@@ -144,14 +144,14 @@ class _BasePageState extends State<BasePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_sharp), label: 'PR'),
+              icon: Icon(Icons.assignment), label: 'Laporan'),
           BottomNavigationBarItem(
               icon: Icon(Icons.content_paste_search_rounded),
               label: 'Menu Materi'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.assignment), label: 'Laporan'),
-          BottomNavigationBarItem(
               icon: Icon(Icons.games_rounded), label: 'Game'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_sharp), label: 'Akun'),
         ],
         //agar bottom navigation tidak bergerak saat diklik
         type: BottomNavigationBarType.fixed,

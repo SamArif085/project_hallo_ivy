@@ -23,46 +23,48 @@ class _IconStepperDemo extends State<Quiz> {
         appBar: AppBar(
           title: const Text('IconStepper Example'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              IconStepper(
-                icons: const [
-                  Icon(Icons.supervised_user_circle),
-                  Icon(Icons.flag),
-                  Icon(Icons.access_alarm),
-                  Icon(Icons.supervised_user_circle),
-                  Icon(Icons.flag),
-                  Icon(Icons.access_alarm),
-                  Icon(Icons.supervised_user_circle),
-                ],
-                // activeStep property set to activeStep variable defined above.
-                activeStep: activeStep,
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                IconStepper(
+                  icons: const [
+                    Icon(Icons.supervised_user_circle),
+                    Icon(Icons.flag),
+                    Icon(Icons.access_alarm),
+                    Icon(Icons.supervised_user_circle),
+                    Icon(Icons.flag),
+                    Icon(Icons.access_alarm),
+                    Icon(Icons.supervised_user_circle),
+                  ],
+                  // activeStep property set to activeStep variable defined above.
+                  activeStep: activeStep,
 
-                // This ensures step-tapping updates the activeStep.
-                onStepReached: (index) {
-                  setState(() {
-                    activeStep = index;
-                  });
-                },
-              ),
-              header(),
-              Expanded(
-                child: FittedBox(
-                  child: Center(
-                    child: Text('$activeStep'),
+                  // This ensures step-tapping updates the activeStep.
+                  onStepReached: (index) {
+                    setState(() {
+                      activeStep = index;
+                    });
+                  },
+                ),
+                header(),
+                Expanded(
+                  child: FittedBox(
+                    child: Center(
+                      child: Text('$activeStep'),
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  previousButton(),
-                  nextButton(),
-                ],
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    previousButton(),
+                    nextButton(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
