@@ -129,7 +129,7 @@ class MenuDashboard extends StatelessWidget {
         children: [
           Card(
             child: Image.asset(
-              'assets/ak.png',
+              'assets/Lambang-AK.png',
             ),
           ),
           Material(

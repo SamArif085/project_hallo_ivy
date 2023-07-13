@@ -54,7 +54,7 @@ class _LoginPage extends State<LoginPage1> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Image.asset(
-                    'assets/images/logo_hello__ivy.png',
+                    'assets/images/logo.png',
                   ),
                 ),
 
@@ -67,8 +67,9 @@ class _LoginPage extends State<LoginPage1> {
                       const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Login',
+                          'Hello IVY',
                           style: TextStyle(
+                              color: Colors.greenAccent,
                               fontSize: 40,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'Poppins'),
@@ -152,7 +153,7 @@ class _LoginPage extends State<LoginPage1> {
 
                       // Forgot Password
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: GestureDetector(
@@ -161,7 +162,7 @@ class _LoginPage extends State<LoginPage1> {
                               style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.indigo),
+                                  color: Colors.black),
                             ),
                             onTap: () {},
                           ),
@@ -178,6 +179,7 @@ class _LoginPage extends State<LoginPage1> {
                           // }
                         },
                         style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.greenAccent,
                             minimumSize: const Size.fromHeight(45),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
