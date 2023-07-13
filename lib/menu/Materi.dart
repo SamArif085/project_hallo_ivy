@@ -22,7 +22,6 @@ class MenuMateri extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Material(
-                      color: Colors.white,
                       borderRadius: BorderRadius.circular(30.0),
                       shadowColor: Colors.lightBlueAccent.shade100,
                       child: MaterialButton(

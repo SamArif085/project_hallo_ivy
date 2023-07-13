@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'BasePage.dart';
 import 'menu/Tema/Data/Quiz/Quiz.dart';
+import 'menu/Tema/Data/Test/Test.dart';
 import 'menu/Tema/Data/Video/VideoApp.dart';
 import 'menu/Tema/Data/Game/Game1.dart';
 import 'menu/Tema/Konten.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     VideoApp.tag: (context) => const VideoApp(),
     Game1.tag: (context) => Game1(),
     Quiz.tag: (context) => const Quiz(),
+    LoginPage1.tag: (context) => const LoginPage1(),
   };
   MyApp({super.key});
   @override

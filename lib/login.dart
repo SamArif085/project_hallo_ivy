@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(
-                  'assets/ak.png',
+                  'assets/Lambang-AK.png',
                   height: 80,
                 ),
                 Image.asset(

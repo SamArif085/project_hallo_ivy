@@ -60,7 +60,7 @@ class MenuDashboard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: const DecorationImage(
-                image: AssetImage('assets/ak.png'),
+                image: AssetImage('assets/Lambang-AK.png'),
                 fit: BoxFit.cover,
               ),
             ),

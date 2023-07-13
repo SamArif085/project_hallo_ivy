@@ -102,7 +102,7 @@ class MenuGame extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Card(
-                              child: Image.asset('assets/ak.png'),
+                              child: Image.asset('assets/Lambang-AK.png'),
                             ),
                           ),
                           const SizedBox(
@@ -113,7 +113,7 @@ class MenuGame extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Card(
-                              child: Image.asset('assets/ak.png'),
+                              child: Image.asset('assets/Lambang-AK.png'),
                             ),
                           ),
                         ],
@@ -127,7 +127,7 @@ class MenuGame extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Card(
-                              child: Image.asset('assets/ak.png'),
+                              child: Image.asset('assets/Lambang-AK.png'),
                             ),
                           ),
                           const SizedBox(
@@ -138,7 +138,7 @@ class MenuGame extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Card(
-                              child: Image.asset('assets/ak.png'),
+                              child: Image.asset('assets/Lambang-AK.png'),
                             ),
                           ),
                         ],
@@ -152,7 +152,7 @@ class MenuGame extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Card(
-                              child: Image.asset('assets/ak.png'),
+                              child: Image.asset('assets/Lambang-AK.png'),
                             ),
                           ),
                           const SizedBox(
@@ -163,7 +163,7 @@ class MenuGame extends StatelessWidget {
                             width: 100,
                             height: 100,
                             child: Card(
-                              child: Image.asset('assets/ak.png'),
+                              child: Image.asset('assets/Lambang-AK.png'),
                             ),
                           ),
                         ],

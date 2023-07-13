@@ -68,7 +68,7 @@ class Konten extends StatelessWidget {
                   child: Material(
                     child: MaterialButton(
                       onPressed: () =>
-                          Navigator.pushNamed(context, "konten-page-video-3"),
+                          Navigator.pushNamed(context, "konten-page-Test"),
                       child: Center(
                         child: Column(
                           children: [
