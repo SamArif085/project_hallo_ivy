@@ -13,13 +13,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
-    LoginPage.tag: (context) => LoginPage(),
+    LoginPage.tag: (context) => const LoginPage(),
     BasePage.tag: (context) => const BasePage(),
     Konten.tag: (context) => const Konten(),
     VideoApp.tag: (context) => const VideoApp(),
     Game1.tag: (context) => Game1(),
     Quiz.tag: (context) => const Quiz(),
-    LoginPage1.tag: (context) => const LoginPage1(),
   };
   MyApp({super.key});
   @override
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         fontFamily: 'Nunito',
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: routes,
     );
   }

@@ -1,126 +1,246 @@
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  static String tag = 'login-page';
+  const LoginPage({super.key});
+  static String tag = 'konten-page-Test';
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPage();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPage extends State<LoginPage> {
+// =========================================Declaring are the required variables=============================================
+  final _formKey = GlobalKey<FormState>();
+
+  var id = TextEditingController();
+  var password = TextEditingController();
+  var phone = TextEditingController();
+
+  bool notvisible = true;
+  bool notVisiblePassword = true;
+  Icon passwordIcon = const Icon(Icons.visibility);
+  bool emailFormVisibility = true;
+  bool otpVisibilty = false;
+
+  String? emailError;
+  String? passError;
+
+// ================================================Password Visibility function ===========================================
+
+  void passwordVisibility() {
+    if (notVisiblePassword) {
+      passwordIcon = const Icon(Icons.visibility);
+    } else {
+      passwordIcon = const Icon(Icons.visibility_off);
+    }
+  }
+
+// ================================================Building The Screen ===================================================
   @override
   Widget build(BuildContext context) {
-    const logo = Hero(
-      tag: 'hero',
-      child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 48.0,
-          child: Center(
-            child: Text(
-              'HALLO IVY',
-              style: TextStyle(fontSize: 50, color: Colors.black),
-            ),
-          )),
-    );
-
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        hintText: 'Username',
-        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final password = TextFormField(
-      autofocus: false,
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Password',
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final loginButton = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(30.0),
-        shadowColor: Colors.lightBlueAccent.shade100,
-        child: MaterialButton(
-          minWidth: 200.0,
-          height: 42.0,
-          onPressed: () => Navigator.pushNamed(context, "home-page"),
-          child: const Text('Log In', style: TextStyle(color: Colors.black)),
-        ),
-      ),
-    );
-
-    final forgotLabel = TextButton(
-      child: const Text(
-        'Forgot password?',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {},
-    );
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Card(
-              color: Colors.greenAccent[400],
-              elevation: 30,
-              shadowColor: Colors.green[200],
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-              ),
-              child: ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-                children: <Widget>[
-                  const SizedBox(height: 48.0),
-                  logo,
-                  const SizedBox(height: 48.0),
-                  email,
-                  const SizedBox(height: 8.0),
-                  password,
-                  const SizedBox(height: 24.0),
-                  loginButton,
-                  forgotLabel
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
               children: [
-                Image.asset(
-                  'assets/Lambang-AK.png',
-                  height: 80,
+                const SizedBox(
+                  height: 40,
                 ),
-                Image.asset(
-                  'assets/patreon.png',
-                  height: 80,
+                // Topmost image
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                  ),
                 ),
-                Image.asset(
-                  'assets/jatim.png',
-                  height: 80,
-                )
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 10),
+                  child: Column(
+                    children: [
+                      // Login Text
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              color: Colors.greenAccent,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Poppins'),
+                        ),
+                      ),
+                      // Sized box
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Visibility(
+                        visible: emailFormVisibility,
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      icon: const Icon(
+                                        Icons.alternate_email_outlined,
+                                        color: Colors.grey,
+                                      ),
+                                      labelText: 'Email ID',
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              emailFormVisibility =
+                                                  !emailFormVisibility;
+                                            });
+                                          },
+                                          icon: const Icon(
+                                              Icons.phone_android_rounded))),
+                                  controller: id,
+                                ),
+                                TextFormField(
+                                  obscureText: notvisible,
+                                  decoration: InputDecoration(
+                                      icon: const Icon(
+                                        Icons.lock_outline_rounded,
+                                        color: Colors.grey,
+                                      ),
+                                      labelText: 'Password',
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              notvisible = !notvisible;
+                                              notVisiblePassword =
+                                                  !notVisiblePassword;
+                                              passwordVisibility();
+                                            });
+                                          },
+                                          icon: passwordIcon)),
+                                  controller: password,
+                                )
+                              ],
+                            )),
+                      ),
+                      Visibility(
+                          visible: !emailFormVisibility,
+                          child: Form(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  icon: const Icon(
+                                    Icons.phone_android_rounded,
+                                    color: Colors.grey,
+                                  ),
+                                  labelText: 'Phone Number',
+                                  suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          emailFormVisibility =
+                                              !emailFormVisibility;
+                                        });
+                                      },
+                                      icon: const Icon(
+                                          Icons.alternate_email_rounded))),
+                              controller: phone,
+                            ),
+                          )),
+
+                      const SizedBox(height: 13),
+
+                      // Forgot Password
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: GestureDetector(
+                            child: const Text(
+                              'Lupa Password?',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black),
+                            ),
+                            onTap: () {},
+                          ),
+                        ),
+                      ),
+                      // Login Button
+                      ElevatedButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, "home-page"),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.greenAccent,
+                            minimumSize: const Size.fromHeight(45),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        child: const Center(
+                            child: Text(
+                          "Login",
+                          style: TextStyle(fontSize: 15),
+                        )),
+                      ),
+                      // Sized box
+                      const SizedBox(height: 15),
+                      // Divider and OR
+                      Stack(
+                        children: [
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          Center(
+                            child: Container(
+                              color: Colors.white,
+                              width: 70,
+                              child: const Center(
+                                child: Text(
+                                  "With",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      backgroundColor: Colors.white),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      // Sized box
+                      const SizedBox(height: 20),
+                      // Login with google
+
+                      // Sized box
+                      const SizedBox(height: 25),
+                      // Register button
+                      Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            child: Image.asset(
+                              'assets/Lambang-AK.png',
+                              height: 80,
+                              width: 80,
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/patreon.png',
+                            height: 80,
+                          ),
+                          Image.asset(
+                            'assets/jatim.png',
+                            height: 80,
+                          )
+                        ],
+                      ))
+                    ],
+                  ),
+                ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

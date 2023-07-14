@@ -158,7 +158,7 @@ class _LoginPage extends State<LoginPage1> {
                           alignment: Alignment.bottomRight,
                           child: GestureDetector(
                             child: const Text(
-                              'Forgot Password?',
+                              'Lupa Password?',
                               style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w800,
