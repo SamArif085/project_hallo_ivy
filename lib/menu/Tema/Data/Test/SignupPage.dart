@@ -1,203 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/fitness_app_theme.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/models/tabIcon_data.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/my_diary/my_diary_screen.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/training/training_screen.dart';
 
-class SignUpPage extends StatefulWidget {
+class FitnessAppHomeScreen1 extends StatefulWidget {
+  static String tag = 'home-page';
+
   @override
-  State<StatefulWidget> createState() => _SignUpPage();
+  _FitnessAppHomeScreenState createState() => _FitnessAppHomeScreenState();
 }
 
-class _SignUpPage extends State<SignUpPage> {
-  String email = '';
-  String pass = '';
+class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen1>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
 
-  bool notvisible = true;
-  bool notVisiblePassword = true;
-  Icon passwordIcon = const Icon(Icons.visibility);
+  List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
-  var id = TextEditingController();
-  var password = TextEditingController();
+  Widget tabBody = Container(
+    color: FitnessAppTheme.background,
+  );
 
-  void passwordVisibility() {
-    if (notVisiblePassword) {
-      passwordIcon = const Icon(Icons.visibility);
-    } else {
-      passwordIcon = const Icon(Icons.visibility_off);
-    }
+  @override
+  void initState() {
+    tabIconsList.forEach((TabIconData tab) {
+      tab.isSelected = false;
+    });
+    tabIconsList[0].isSelected = true;
+
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
+    tabBody = MyDiaryScreen(animationController: animationController);
+    super.initState();
   }
 
-  // void sendVerificationEmail() {
-  //   User user = FirebaseAuth.instance.currentUser!;
-  //   user.sendEmailVerification();
-  // }
-
-  // create_user() {
-  //   FirebaseAuth.instance
-  //       .createUserWithEmailAndPassword(
-  //           email: id.text.toString().trim(),
-  //           password: password.text.toString().trim())
-  //       .whenComplete(() {
-  //     if (FirebaseAuth.instance.currentUser?.uid != null) {
-  //       sendVerificationEmail();
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //           content: Text(
-  //               'Verification mail has been to registed Email ID. Verify your account and login again')));
-
-  //       Navigator.pushReplacement(context,
-  //           MaterialPageRoute(builder: (context) {
-  //         return LoginPage();
-  //       }));
-  //     }
-  //   });
-  // }
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 40,
-              ),
-              // Topmost image
-              Container(
-                height: size.height / 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Image.asset(
-                    'assets/images/signup.jpg',
-                  ),
-                ),
-              ),
+    return Container(
+      color: FitnessAppTheme.background,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: FutureBuilder<bool>(
+          future: getData(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            if (!snapshot.hasData) {
+              return const SizedBox();
+            } else {
+              return Stack(
+                children: <Widget>[
+                  tabBody,
+                  // bottomBar(),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
 
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-                child: Column(
-                  children: [
-                    // Login Text
-                    const Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Register',
-                        style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Poppins'),
-                      ),
-                    ),
-                    // Sized box
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                        child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            icon: const Icon(
-                              Icons.alternate_email_outlined,
-                              color: Colors.grey,
-                            ),
-                            labelText: 'Email ID',
-                          ),
-                          controller: id,
-                        ),
-                        TextFormField(
-                          obscureText: notvisible,
-                          decoration: InputDecoration(
-                              icon: const Icon(
-                                Icons.lock_outline_rounded,
-                                color: Colors.grey,
-                              ),
-                              labelText: 'Password',
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      notvisible = !notvisible;
-                                      notVisiblePassword = !notVisiblePassword;
-                                      passwordVisibility();
-                                    });
-                                  },
-                                  icon: passwordIcon)),
-                          controller: password,
-                        )
-                      ],
-                    )),
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    return true;
+  }
 
-                    const SizedBox(height: 13),
-
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.0),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: GestureDetector(
-                          child: const Text(
-                            'By signing up, you agree to our Terms & conditions and Privacy Policy',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey),
-                          ),
-                          onTap: () {},
-                        ),
-                      ),
-                    ),
-                    // SignUp Button
-                    ElevatedButton(
-                      onPressed: () {
-                        // create_user();
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(45),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                      child: const Center(
-                          child: Text(
-                        "Sign Up",
-                        style: TextStyle(fontSize: 15),
-                      )),
-                    ),
-
-                    // Sized box
-                    const SizedBox(height: 25),
-                    // Login button
-                    Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Joined us before? ",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey),
-                        ),
-                        GestureDetector(
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.indigo),
-                          ),
-                          onTap: () {
-                            // Navigator.pushReplacement(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return LoginPage();
-                            // }));
-                          },
-                        )
-                      ],
-                    ))
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
+  Widget bottomBar() {
+    return Column(
+      children: <Widget>[
+        const Expanded(
+          child: SizedBox(),
+        ),
+        BottomBarView(
+          tabIconsList: tabIconsList,
+          addClick: () {},
+          changeIndex: (int index) {
+            if (index == 0 || index == 2) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      MyDiaryScreen(animationController: animationController);
+                });
+              });
+            } else if (index == 1 || index == 3) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      TrainingScreen(animationController: animationController);
+                });
+              });
+            }
+          },
+        ),
+      ],
+    );
   }
 }

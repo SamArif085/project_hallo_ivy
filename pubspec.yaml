@@ -44,7 +44,12 @@ dependencies:
   im_stepper: ^1.0.1+1
   flutter_screenutil: ^5.8.4
   intl: ^0.18.1
-
+  animations: ^2.0.3
+  font_awesome_flutter: ^10.1.0
+  flutter_rating_bar: ^4.0.1
+  http: ^1.1.0
+  shared_preferences: ^2.2.0
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +79,10 @@ flutter:
     - assets/
     - assets/icon/
     - assets/images/
+    - assets/design_course/
+    - assets/fitness_app/
+    - assets/hotel/
+    - assets/introduction_animation/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

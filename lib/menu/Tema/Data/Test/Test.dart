@@ -1,252 +1,111 @@
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/training/training_screen.dart';
+import '../Test2/home_design_course.dart';
+import 'bottom_navigation_view/bottom_bar_view.dart';
+import 'fitness_app_theme.dart';
+import 'models/tabIcon_data.dart';
 
-class LoginPage1 extends StatefulWidget {
-  const LoginPage1({super.key});
-  static String tag = 'konten-page-Test';
+class FitnessAppHomeScreen extends StatefulWidget {
+  static String tag = 'home-page';
 
+  const FitnessAppHomeScreen({super.key});
   @override
-  State<LoginPage1> createState() => _LoginPage();
+  _FitnessAppHomeScreenState createState() => _FitnessAppHomeScreenState();
 }
 
-class _LoginPage extends State<LoginPage1> {
-// =========================================Declaring are the required variables=============================================
-  final _formKey = GlobalKey<FormState>();
+class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
 
-  var id = TextEditingController();
-  var password = TextEditingController();
-  var phone = TextEditingController();
+  List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
-  bool notvisible = true;
-  bool notVisiblePassword = true;
-  Icon passwordIcon = const Icon(Icons.visibility);
-  bool emailFormVisibility = true;
-  bool otpVisibilty = false;
+  Widget tabBody = Container(
+    color: FitnessAppTheme.background,
+  );
 
-  String? emailError;
-  String? passError;
+  @override
+  void initState() {
+    tabIconsList.forEach((TabIconData tab) {
+      tab.isSelected = false;
+    });
+    tabIconsList[0].isSelected = true;
 
-// ================================================Password Visibility function ===========================================
-
-  void passwordVisibility() {
-    if (notVisiblePassword) {
-      passwordIcon = const Icon(Icons.visibility);
-    } else {
-      passwordIcon = const Icon(Icons.visibility_off);
-    }
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
+    tabBody = DesignCourseHomeScreen(animationController: animationController);
+    super.initState();
   }
 
-// ================================================Building The Screen ===================================================
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                // Topmost image
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                  ),
-                ),
+    return Container(
+      color: FitnessAppTheme.background,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: FutureBuilder<bool>(
+          future: getData(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            if (!snapshot.hasData) {
+              return const SizedBox();
+            } else {
+              return Stack(
+                children: <Widget>[
+                  tabBody,
+                  bottomBar(),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 10),
-                  child: Column(
-                    children: [
-                      // Login Text
-                      const Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Hello IVY',
-                          style: TextStyle(
-                              color: Colors.greenAccent,
-                              fontSize: 40,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins'),
-                        ),
-                      ),
-                      // Sized box
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Visibility(
-                        visible: emailFormVisibility,
-                        child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      icon: const Icon(
-                                        Icons.alternate_email_outlined,
-                                        color: Colors.grey,
-                                      ),
-                                      labelText: 'Email ID',
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              emailFormVisibility =
-                                                  !emailFormVisibility;
-                                            });
-                                          },
-                                          icon: const Icon(
-                                              Icons.phone_android_rounded))),
-                                  controller: id,
-                                ),
-                                TextFormField(
-                                  obscureText: notvisible,
-                                  decoration: InputDecoration(
-                                      icon: const Icon(
-                                        Icons.lock_outline_rounded,
-                                        color: Colors.grey,
-                                      ),
-                                      labelText: 'Password',
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              notvisible = !notvisible;
-                                              notVisiblePassword =
-                                                  !notVisiblePassword;
-                                              passwordVisibility();
-                                            });
-                                          },
-                                          icon: passwordIcon)),
-                                  controller: password,
-                                )
-                              ],
-                            )),
-                      ),
-                      Visibility(
-                          visible: !emailFormVisibility,
-                          child: Form(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                  icon: const Icon(
-                                    Icons.phone_android_rounded,
-                                    color: Colors.grey,
-                                  ),
-                                  labelText: 'Phone Number',
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          emailFormVisibility =
-                                              !emailFormVisibility;
-                                        });
-                                      },
-                                      icon: const Icon(
-                                          Icons.alternate_email_rounded))),
-                              controller: phone,
-                            ),
-                          )),
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    return true;
+  }
 
-                      const SizedBox(height: 13),
-
-                      // Forgot Password
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: GestureDetector(
-                            child: const Text(
-                              'Lupa Password?',
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black),
-                            ),
-                            onTap: () {},
-                          ),
-                        ),
-                      ),
-                      // Login Button
-                      ElevatedButton(
-                        onPressed: () {
-                          // if (emailFormVisibility) {
-                          //   login();
-                          //   first_login();
-                          // } else {
-                          //   signinphone();
-                          // }
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.greenAccent,
-                            minimumSize: const Size.fromHeight(45),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        child: const Center(
-                            child: Text(
-                          "Login",
-                          style: TextStyle(fontSize: 15),
-                        )),
-                      ),
-                      // Sized box
-                      const SizedBox(height: 15),
-                      // Divider and OR
-                      Stack(
-                        children: [
-                          const Divider(
-                            thickness: 1,
-                          ),
-                          Center(
-                            child: Container(
-                              color: Colors.white,
-                              width: 70,
-                              child: const Center(
-                                child: Text(
-                                  "With",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      backgroundColor: Colors.white),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      // Sized box
-                      const SizedBox(height: 20),
-                      // Login with google
-
-                      // Sized box
-                      const SizedBox(height: 25),
-                      // Register button
-                      Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            child: Image.asset(
-                              'assets/Lambang-AK.png',
-                              height: 80,
-                              width: 80,
-                            ),
-                          ),
-                          Image.asset(
-                            'assets/patreon.png',
-                            height: 80,
-                          ),
-                          Image.asset(
-                            'assets/jatim.png',
-                            height: 80,
-                          )
-                        ],
-                      ))
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+  Widget bottomBar() {
+    return Column(
+      children: <Widget>[
+        const Expanded(
+          child: SizedBox(),
+        ),
+        BottomBarView(
+          tabIconsList: tabIconsList,
+          addClick: () {},
+          changeIndex: (int index) {
+            if (index == 0 || index == 2) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = DesignCourseHomeScreen(
+                      animationController: animationController);
+                });
+              });
+            } else if (index == 1 || index == 3) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      TrainingScreen(animationController: animationController);
+                });
+              });
+            }
+          },
+        ),
+      ],
+    );
   }
 }

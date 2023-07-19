@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Dashboard.dart';
+
+import 'menu/Tema/Data/Test/Test.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-  static String tag = 'konten-page-Test';
 
   @override
   State<LoginPage> createState() => _LoginPage();
@@ -10,10 +15,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
 // =========================================Declaring are the required variables=============================================
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
 
-  var id = TextEditingController();
-  var password = TextEditingController();
+  //FormKey é responsável em dizer se o usuário adicionou algum dado incorreto
+
+  //os dados de email e senha, ou seja, vamos ter o controle
+
+  TextEditingController id = TextEditingController();
+  TextEditingController password = TextEditingController();
   var phone = TextEditingController();
 
   bool notvisible = true;
@@ -25,6 +34,30 @@ class _LoginPage extends State<LoginPage> {
   String? emailError;
   String? passError;
 
+  Future<void> _login() async {
+    var url = Uri.parse("https://hello-ivy.id/cek_login.php");
+    var response = await http.post(url, body: {
+      "nisn": id.text,
+      "password": password.text,
+    });
+
+    var data = jsonDecode(response.body);
+    print(response.body);
+
+    if (data['statusCode'] == 200) {
+      print(data);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()));
+    } else {
+      print(data);
+      Fluttertoast.showToast(
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        msg: 'Username and password invalid',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+  }
 // ================================================Password Visibility function ===========================================
 
   void passwordVisibility() {
@@ -82,72 +115,64 @@ class _LoginPage extends State<LoginPage> {
                       Visibility(
                         visible: emailFormVisibility,
                         child: Form(
-                            key: _formKey,
+                            // key: _formKey,
                             child: Column(
-                              children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      icon: const Icon(
-                                        Icons.alternate_email_outlined,
-                                        color: Colors.grey,
-                                      ),
-                                      labelText: 'Email ID',
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              emailFormVisibility =
-                                                  !emailFormVisibility;
-                                            });
-                                          },
-                                          icon: const Icon(
-                                              Icons.phone_android_rounded))),
-                                  controller: id,
+                          children: [
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                icon: Icon(
+                                  Icons.alternate_email_outlined,
+                                  color: Colors.grey,
                                 ),
-                                TextFormField(
-                                  obscureText: notvisible,
-                                  decoration: InputDecoration(
-                                      icon: const Icon(
-                                        Icons.lock_outline_rounded,
-                                        color: Colors.grey,
-                                      ),
-                                      labelText: 'Password',
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              notvisible = !notvisible;
-                                              notVisiblePassword =
-                                                  !notVisiblePassword;
-                                              passwordVisibility();
-                                            });
-                                          },
-                                          icon: passwordIcon)),
-                                  controller: password,
-                                )
-                              ],
-                            )),
-                      ),
-                      Visibility(
-                          visible: !emailFormVisibility,
-                          child: Form(
-                            child: TextFormField(
+                                labelText: 'Email ID',
+                              ),
+                              controller: id,
+                            ),
+                            TextFormField(
+                              obscureText: notvisible,
                               decoration: InputDecoration(
                                   icon: const Icon(
-                                    Icons.phone_android_rounded,
+                                    Icons.lock_outline_rounded,
                                     color: Colors.grey,
                                   ),
-                                  labelText: 'Phone Number',
+                                  labelText: 'Password',
                                   suffixIcon: IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          emailFormVisibility =
-                                              !emailFormVisibility;
+                                          notvisible = !notvisible;
+                                          notVisiblePassword =
+                                              !notVisiblePassword;
+                                          passwordVisibility();
                                         });
                                       },
-                                      icon: const Icon(
-                                          Icons.alternate_email_rounded))),
-                              controller: phone,
-                            ),
-                          )),
+                                      icon: passwordIcon)),
+                              controller: password,
+                            )
+                          ],
+                        )),
+                      ),
+                      // Visibility(
+                      //     visible: !emailFormVisibility,
+                      //     child: Form(
+                      //       child: TextFormField(
+                      //         decoration: InputDecoration(
+                      //             icon: const Icon(
+                      //               Icons.phone_android_rounded,
+                      //               color: Colors.grey,
+                      //             ),
+                      //             labelText: 'Phone Number',
+                      //             suffixIcon: IconButton(
+                      //                 onPressed: () {
+                      //                   setState(() {
+                      //                     emailFormVisibility =
+                      //                         !emailFormVisibility;
+                      //                   });
+                      //                 },
+                      //                 icon: const Icon(
+                      //                     Icons.alternate_email_rounded))),
+                      //         controller: phone,
+                      //       ),
+                      //     ),),
 
                       const SizedBox(height: 13),
 
@@ -168,10 +193,11 @@ class _LoginPage extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      // Login Button
+
                       ElevatedButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, "home-page"),
+                        onPressed: () {
+                          _login();
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.greenAccent,
                             minimumSize: const Size.fromHeight(45),

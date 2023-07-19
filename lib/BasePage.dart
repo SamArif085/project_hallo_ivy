@@ -7,7 +7,7 @@ import 'package:project_hallo_ivy/menu/Game.dart';
 
 class BasePage extends StatefulWidget {
   const BasePage({Key? key}) : super(key: key);
-  static String tag = 'home-page';
+  // static String tag = 'home-page';
 
   @override
   State<BasePage> createState() => _BasePageState();

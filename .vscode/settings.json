@@ -1,3 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cmake.sourceDirectory": "E:/Kuliah/AKN/project-flutter-hallo-ivy_Flutter/project_hallo_ivy/linux",
+    "C_Cpp.default.compilerPath": ""
 }
