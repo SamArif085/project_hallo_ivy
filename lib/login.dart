@@ -1,28 +1,113 @@
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Dashboard.dart';
 
-import 'menu/Tema/Data/Test/Test.dart';
+import 'main.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginController extends GetxController {
+  RxBool _isObscure = true.obs;
+  bool get isObscure => _isObscure.value;
 
-  @override
-  State<LoginPage> createState() => _LoginPage();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void togglePasswordVisibility() {
+    _isObscure.toggle();
+  }
+
+  Future<void> login() async {
+    var url = Uri.parse("https://hello-ivy.id/cek_login.php");
+    var response = await http.post(url, body: {
+      "nisn": usernameController.text,
+      "password": passwordController.text,
+    });
+
+    var datauser = jsonDecode(response.body);
+    var userData = UserData.fromJson(datauser);
+    print(userData.values.id); // Contoh penggunaan data dari model UserData
+
+    if (response.statusCode == 200) {
+      print("Login Success");
+      // Berpindah ke halaman berikutnya jika login berhasil
+      Get.off(() => DashboardHome(
+            username: usernameController.text,
+            password: passwordController.text,
+            userData: userData, // Kirim data userData ke halaman berikutnya
+          ));
+    } else {
+      print("Login Failed");
+      Get.to(() => const MyApp());
+    }
+  }
+
+  // const LoginPage({super.key});
+
+  // @override
+  // State<LoginPage> createState() => _LoginPage();
 }
 
-class _LoginPage extends State<LoginPage> {
-// =========================================Declaring are the required variables=============================================
-  // final _formKey = GlobalKey<FormState>();
+class UserData {
+  final bool status;
+  final int statusCode;
+  final int message;
+  final UserDataValues values;
 
-  //FormKey é responsável em dizer se o usuário adicionou algum dado incorreto
+  UserData({
+    required this.status,
+    required this.statusCode,
+    required this.message,
+    required this.values,
+  });
 
-  //os dados de email e senha, ou seja, vamos ter o controle
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      status: json['status'],
+      statusCode: json['statusCode'],
+      message: json['message'],
+      values: UserDataValues.fromJson(json['values']),
+    );
+  }
+}
 
-  TextEditingController id = TextEditingController();
-  TextEditingController password = TextEditingController();
+class UserDataValues {
+  final String id;
+  final String nisnSiswa;
+  final String password;
+  final String nama;
+  final String kelas;
+
+  UserDataValues({
+    required this.id,
+    required this.nisnSiswa,
+    required this.password,
+    required this.nama,
+    required this.kelas,
+  });
+
+  factory UserDataValues.fromJson(Map<String, dynamic> json) {
+    return UserDataValues(
+      id: json['id'],
+      nisnSiswa: json['nisn_siswa'],
+      password: json['password'],
+      nama: json['nama'],
+      kelas: json['kelas'],
+    );
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  final LoginController _loginController = Get.put(LoginController());
+
+  LoginPage({super.key});
+
+  void togglePasswordVisibility() {
+    _loginController.togglePasswordVisibility();
+  }
+
+  //  Get.to(UserDataScreen());
   // var phone = TextEditingController();
 
   bool notvisible = true;
@@ -33,31 +118,6 @@ class _LoginPage extends State<LoginPage> {
 
   String? emailError;
   String? passError;
-
-  Future<void> _login() async {
-    var url = Uri.parse("https://hello-ivy.id/cek_login.php");
-    var response = await http.post(url, body: {
-      "nisn": id.text,
-      "password": password.text,
-    });
-
-    var data = jsonDecode(response.body);
-    print(response.body);
-
-    if (data['statusCode'] == 200) {
-      print(data);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) =>  FitnessAppHomeScreen()));
-    } else {
-      print(data);
-      Fluttertoast.showToast(
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        msg: 'Username and password invalid',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
-  }
 // ================================================Password Visibility function ===========================================
 
   void passwordVisibility() {
@@ -115,7 +175,6 @@ class _LoginPage extends State<LoginPage> {
                       Visibility(
                         visible: emailFormVisibility,
                         child: Form(
-                            // key: _formKey,
                             child: Column(
                           children: [
                             TextFormField(
@@ -126,10 +185,11 @@ class _LoginPage extends State<LoginPage> {
                                 ),
                                 labelText: 'Email ID',
                               ),
-                              controller: id,
+                              controller: _loginController.usernameController,
+                              obscureText: _loginController.isObscure,
                             ),
                             TextFormField(
-                              obscureText: notvisible,
+                              obscureText: _loginController.isObscure,
                               decoration: InputDecoration(
                                   icon: const Icon(
                                     Icons.lock_outline_rounded,
@@ -137,45 +197,14 @@ class _LoginPage extends State<LoginPage> {
                                   ),
                                   labelText: 'Password',
                                   suffixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          notvisible = !notvisible;
-                                          notVisiblePassword =
-                                              !notVisiblePassword;
-                                          passwordVisibility();
-                                        });
-                                      },
+                                      onPressed: togglePasswordVisibility,
                                       icon: passwordIcon)),
-                              controller: password,
+                              controller: _loginController.passwordController,
                             )
                           ],
                         )),
                       ),
-                      // Visibility(
-                      //     visible: !emailFormVisibility,
-                      //     child: Form(
-                      //       child: TextFormField(
-                      //         decoration: InputDecoration(
-                      //             icon: const Icon(
-                      //               Icons.phone_android_rounded,
-                      //               color: Colors.grey,
-                      //             ),
-                      //             labelText: 'Phone Number',
-                      //             suffixIcon: IconButton(
-                      //                 onPressed: () {
-                      //                   setState(() {
-                      //                     emailFormVisibility =
-                      //                         !emailFormVisibility;
-                      //                   });
-                      //                 },
-                      //                 icon: const Icon(
-                      //                     Icons.alternate_email_rounded))),
-                      //         controller: phone,
-                      //       ),
-                      //     ),),
-
                       const SizedBox(height: 13),
-
                       // Forgot Password
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -195,9 +224,7 @@ class _LoginPage extends State<LoginPage> {
                       ),
 
                       ElevatedButton(
-                        onPressed: () {
-                          _login();
-                        },
+                        onPressed: _loginController.login,
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.greenAccent,
                             minimumSize: const Size.fromHeight(45),

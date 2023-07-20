@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/popular_course_list_view.dart';
+
+import '../../../../login.dart';
 import 'category_list_view.dart';
 import 'course_info_screen.dart';
 import 'design_course_app_theme.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
-  const DesignCourseHomeScreen({Key? key, this.animationController})
+
+   final String username;
+  final String password;
+  final UserData userData; 
+
+  DesignCourseHomeScreen({Key? key, this.animationController,
+    required this.username,
+    required this.password,
+    required this.userData, })
       : super(key: key);
   final AnimationController? animationController;
 
@@ -208,12 +218,12 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       padding: const EdgeInsets.only(top: 8.0, left: 18, right: 18),
       child: Row(
         children: <Widget>[
-          const Expanded(
+           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   'Kelas B1',
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -224,9 +234,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                   ),
                 ),
                 Text(
-                  'Ahmad Fahrizi',
+                'Welcome, ${widget.userData.values.nama}!',
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                     letterSpacing: 0.27,

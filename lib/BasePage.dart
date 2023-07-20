@@ -18,11 +18,11 @@ class _BasePageState extends State<BasePage> {
   bool lastStatus = true;
   double height = 390;
   final List<Widget> _children = [
-    const MenuDashboard(),
-    const MenuLaporan(),
-    const MenuMateri(),
-    const MenuGame(),
-    const MenuPR(),
+    // const MenuDashboard(),
+    // const MenuLaporan(),
+    // const MenuMateri(),
+    // const MenuGame(),
+    // const MenuPR(),
   ];
 
   void onBarTapped(int index) {
