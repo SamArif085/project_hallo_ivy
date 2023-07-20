@@ -23,7 +23,7 @@ class _LoginPage extends State<LoginPage> {
 
   TextEditingController id = TextEditingController();
   TextEditingController password = TextEditingController();
-  var phone = TextEditingController();
+  // var phone = TextEditingController();
 
   bool notvisible = true;
   bool notVisiblePassword = true;
@@ -47,7 +47,7 @@ class _LoginPage extends State<LoginPage> {
     if (data['statusCode'] == 200) {
       print(data);
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()));
+          MaterialPageRoute(builder: (context) =>  FitnessAppHomeScreen()));
     } else {
       print(data);
       Fluttertoast.showToast(
