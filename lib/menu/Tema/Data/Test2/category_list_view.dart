@@ -121,7 +121,7 @@ class CategoryView extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: HexColor('#F8FAFB'),
+                                color: Color.fromRGBO(105, 240, 155, 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
                               ),
@@ -144,7 +144,7 @@ class CategoryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                                 letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme
+                                                color:  DesignCourseAppTheme
                                                     .darkerText,
                                               ),
                                             ),
@@ -163,7 +163,7 @@ class CategoryView extends StatelessWidget {
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  '${category!.lessonCount} lesson',
+                                                  '',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w200,
@@ -177,7 +177,7 @@ class CategoryView extends StatelessWidget {
                                                   child: Row(
                                                     children: <Widget>[
                                                       Text(
-                                                        '${category!.rating}',
+                                                        '',
                                                         textAlign:
                                                             TextAlign.left,
                                                         style: TextStyle(
@@ -190,13 +190,13 @@ class CategoryView extends StatelessWidget {
                                                                   .grey,
                                                         ),
                                                       ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        color:
-                                                            DesignCourseAppTheme
-                                                                .nearlyBlue,
-                                                        size: 20,
-                                                      ),
+                                                      // Icon(
+                                                      //   Icons.star,
+                                                      //   color:
+                                                      //       DesignCourseAppTheme
+                                                      //           .nearlyBlue,
+                                                      //   size: 20,
+                                                      // ),
                                                     ],
                                                   ),
                                                 )
@@ -214,7 +214,7 @@ class CategoryView extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  '\$${category!.money}',
+                                                  '',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w600,
@@ -227,7 +227,7 @@ class CategoryView extends StatelessWidget {
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     color: DesignCourseAppTheme
-                                                        .nearlyBlue,
+                                                        .notWhite,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(
@@ -238,10 +238,9 @@ class CategoryView extends StatelessWidget {
                                                         const EdgeInsets.all(
                                                             4.0),
                                                     child: Icon(
-                                                      Icons.add,
+                                                      Icons.bookmark,
                                                       color:
-                                                          DesignCourseAppTheme
-                                                              .nearlyWhite,
+                                                         Colors.greenAccent,
                                                     ),
                                                   ),
                                                 )
