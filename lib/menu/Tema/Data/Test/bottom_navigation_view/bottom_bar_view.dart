@@ -169,7 +169,7 @@ class _BottomBarViewState extends State<BottomBarView>
                             color: FitnessAppTheme.white,
                             size: 32,
                           ),
-                        ),
+                        ),                                                                                                
                       ),
                     ),
                   ),

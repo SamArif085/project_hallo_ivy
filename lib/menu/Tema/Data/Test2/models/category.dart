@@ -15,33 +15,33 @@ class Category {
 
   static List<Category> categoryList = <Category>[
     Category(
-      imagePath: 'assets/materi1.png',
+      imagePath: 'assets/design_course/interFace2.png',
       title: 'Materi Tema 1',
       // lessonCount: 24,
       // money: 25,
       // rating: 4.3,
     ),
-    Category(
-      imagePath: 'assets/design_course/interFace2.png',
-      title: 'User interface Design',
-      // lessonCount: 22,
-      // money: 18,
-      // rating: 4.6,
-    ),
-    Category(
-      imagePath: 'assets/design_course/interFace1.png',
-      title: 'User interface Design',
-      // lessonCount: 24,
-      // money: 25,
-      // rating: 4.3,
-    ),
-    Category(
-      imagePath: 'assets/design_course/interFace2.png',
-      title: 'User interface Design',
-      // lessonCount: 22,
-      // money: 18,
-      // rating: 4.6,
-    ),
+    // Category(
+    //   imagePath: 'assets/design_course/interFace2.png',
+    //   title: 'User interface Design',
+    //   // lessonCount: 22,
+    //   // money: 18,
+    //   // rating: 4.6,
+    // ),
+    // Category(
+    //   imagePath: 'assets/design_course/interFace1.png',
+    //   title: 'User interface Design',
+    //   // lessonCount: 24,
+    //   // money: 25,
+    //   // rating: 4.3,
+    // ),
+    // Category(
+    //   imagePath: 'assets/design_course/interFace2.png',
+    //   title: 'User interface Design',
+    //   // lessonCount: 22,
+    //   // money: 18,
+    //   // rating: 4.6,
+    // ),
   ];
 
   static List<Category> popularCourseList = <Category>[

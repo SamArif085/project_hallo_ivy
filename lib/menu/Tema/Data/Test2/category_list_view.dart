@@ -50,7 +50,7 @@ class _CategoryListViewState extends State<CategoryListView>
             } else {
               return ListView.builder(
                 padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, right: 16, left: 16),
+                    top: 0, bottom: 0, right: 0, left: 60),
                 itemCount: Category.categoryList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
@@ -115,14 +115,14 @@ class CategoryView extends StatelessWidget {
                     Container(
                       child: Row(
                         children: <Widget>[
-                          const SizedBox(
-                            width: 48,
-                          ),
+                          // const SizedBox(
+                          //   width: 48,
+                          // ),
                           Expanded(
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color.fromRGBO(105, 240, 155, 1),
-                                borderRadius: const BorderRadius.all(
+                                borderRadius: BorderRadius.all(
                                     Radius.circular(16.0)),
                               ),
                               child: Row(
@@ -140,7 +140,7 @@ class CategoryView extends StatelessWidget {
                                             child: Text(
                                               category!.title,
                                               textAlign: TextAlign.left,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                                 letterSpacing: 0.27,
@@ -162,7 +162,7 @@ class CategoryView extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
-                                                Text(
+                                                const Text(
                                                   '',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
@@ -174,7 +174,7 @@ class CategoryView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Container(
-                                                  child: Row(
+                                                  child: const Row(
                                                     children: <Widget>[
                                                       Text(
                                                         '',
@@ -213,7 +213,7 @@ class CategoryView extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
-                                                Text(
+                                                const Text(
                                                   '',
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
@@ -225,17 +225,17 @@ class CategoryView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Container(
-                                                  decoration: BoxDecoration(
+                                                  decoration: const BoxDecoration(
                                                     color: DesignCourseAppTheme
                                                         .notWhite,
                                                     borderRadius:
-                                                        const BorderRadius.all(
+                                                        BorderRadius.all(
                                                             Radius.circular(
                                                                 8.0)),
                                                   ),
-                                                  child: Padding(
+                                                  child: const Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
+                                                        EdgeInsets.all(
                                                             4.0),
                                                     child: Icon(
                                                       Icons.bookmark,

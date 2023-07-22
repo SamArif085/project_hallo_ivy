@@ -104,17 +104,17 @@ class CategoryView extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: callback,
               child: SizedBox(
-                height: 280,
+                height: 200,
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: <Widget>[
                     Container(
                       child: Column(
                         children: <Widget>[
-                          Expanded(
+                          Expanded(                         
                             child: Container(
                               decoration: BoxDecoration(
-                                color:Color.fromRGBO(105, 240, 155, 1),
+                                color:const Color.fromRGBO(105, 240, 155, 1),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(16.0)),
                                 border: Border.all(
@@ -141,8 +141,8 @@ class CategoryView extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 top: 8,
                                                 left: 16,
                                                 right: 16,
@@ -154,44 +154,44 @@ class CategoryView extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
-                                                const Text(
-                                                  '',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 12,
-                                                    letterSpacing: 0.27,
-                                                    color: DesignCourseAppTheme
-                                                        .grey,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: const Row(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        '',
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w200,
-                                                          fontSize: 18,
-                                                          letterSpacing: 0.27,
-                                                          color:
-                                                              DesignCourseAppTheme
-                                                                  .grey,
-                                                        ),
-                                                      ),
-                                                      // const Icon(
-                                                      //   Icons.star,
-                                                      //   color:
-                                                      //       DesignCourseAppTheme
-                                                      //           .nearlyBlue,
-                                                      //   size: 20,
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                )
+                                                // const Text(
+                                                //   'test',
+                                                //   textAlign: TextAlign.left,
+                                                //   style: TextStyle(
+                                                //     fontWeight: FontWeight.w200,
+                                                //     fontSize: 12,
+                                                //     letterSpacing: 0.27,
+                                                //     color: DesignCourseAppTheme
+                                                //         .grey,
+                                                //   ),
+                                                // ),
+                                                // Container(
+                                                //   child: const Row(
+                                                //     children: <Widget>[
+                                                //       Text(
+                                                //         '',
+                                                //         textAlign:
+                                                //             TextAlign.left,
+                                                //         style: TextStyle(
+                                                //           fontWeight:
+                                                //               FontWeight.w200,
+                                                //           fontSize: 18,
+                                                //           letterSpacing: 0.27,
+                                                //           color:
+                                                //               DesignCourseAppTheme
+                                                //                   .grey,
+                                                //         ),
+                                                //       ),
+                                                //       // const Icon(
+                                                //       //   Icons.star,
+                                                //       //   color:
+                                                //       //       DesignCourseAppTheme
+                                                //       //           .nearlyBlue,
+                                                //       //   size: 20,
+                                                //       // ),
+                                                //     ],
+                                                //   ),
+                                                // )
                                               ],
                                             ),
                                           ),
@@ -200,14 +200,14 @@ class CategoryView extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(
-                                    width: 48,
+                                  height: 20,
                                   ),
                                 ],
                               ),
                             ),
                           ),
                           const SizedBox(
-                            height: 48,
+                            height: 25,
                           ),
                         ],
                       ),
@@ -215,11 +215,11 @@ class CategoryView extends StatelessWidget {
                     Container(
                       child: Padding(
                         padding:
-                            const EdgeInsets.only(top: 24, right: 16, left: 16),
+                            const EdgeInsets.only(top: 0, right: 16, left: 16 ,bottom: 40),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(16.0)),
+                                const BorderRadius.all(Radius.circular(10.0)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
                                   color: DesignCourseAppTheme.grey

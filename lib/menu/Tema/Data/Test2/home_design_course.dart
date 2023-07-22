@@ -124,6 +124,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             moveTo();
           },
         ),
+         const SizedBox(
+          height: 20,
+        ),
       ],
     );
   }
