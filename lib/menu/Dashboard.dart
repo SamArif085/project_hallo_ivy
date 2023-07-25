@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/fitness_app_theme.dart';
@@ -7,13 +6,15 @@ import 'package:project_hallo_ivy/menu/Tema/Data/Test/training/training_screen.d
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/home_design_course.dart';
 
 import '../login.dart';
-
-
+import 'Tema/Data/Test2/profile_screen.dart';
 
 class DashboardHome extends StatefulWidget {
-  
-const DashboardHome({super.key, required this.username, required this.password, required this.userData});
- final String username;
+  const DashboardHome(
+      {super.key,
+      required this.username,
+      required this.password,
+      required this.userData});
+  final String username;
   final String password;
   final UserData userData;
 
@@ -21,7 +22,6 @@ const DashboardHome({super.key, required this.username, required this.password, 
   _DashboardHomeState createState() => _DashboardHomeState();
 }
 
-  
 class _DashboardHomeState extends State<DashboardHome>
     with TickerProviderStateMixin {
   AnimationController? animationController;
@@ -32,8 +32,6 @@ class _DashboardHomeState extends State<DashboardHome>
     color: FitnessAppTheme.background,
   );
 
-
-
   @override
   void initState() {
     tabIconsList.forEach((TabIconData tab) {
@@ -43,9 +41,11 @@ class _DashboardHomeState extends State<DashboardHome>
 
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = DesignCourseHomeScreen(animationController: animationController,  password: widget.password,
+    tabBody = DesignCourseHomeScreen(
+      animationController: animationController, password: widget.password,
       userData: widget.userData, // Gunakan userData dari widget ini
-      username: widget.username, );
+      username: widget.username,
+    );
     super.initState();
   }
 
@@ -102,12 +102,15 @@ class _DashboardHomeState extends State<DashboardHome>
                 }
                 setState(() {
                   tabBody = DesignCourseHomeScreen(
-                      animationController: animationController , password: widget.password,
-      userData: widget.userData, // Gunakan userData dari widget ini
-      username: widget.username,);
+                    animationController: animationController,
+                    password: widget.password,
+                    userData:
+                        widget.userData, // Gunakan userData dari widget ini
+                    username: widget.username,
+                  );
                 });
               });
-            } else if (index == 1 || index == 3) {
+            } else if (index == 1) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -115,6 +118,16 @@ class _DashboardHomeState extends State<DashboardHome>
                 setState(() {
                   tabBody =
                       TrainingScreen(animationController: animationController);
+                });
+              });
+            } else if (index == 3) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      UserProfilePage(userData: widget.userData);
                 });
               });
             }

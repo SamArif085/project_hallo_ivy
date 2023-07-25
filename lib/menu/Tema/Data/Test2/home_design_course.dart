@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/popular_course_list_view.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular.dart';
 
 import '../../../../login.dart';
 import 'category_list_view.dart';
@@ -34,6 +35,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
               height: MediaQuery.of(context).padding.top,
@@ -41,22 +44,22 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             getAppBarUI(),
             Expanded(
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: <Widget>[
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      //   Flexible(
+                      //   child: getPopularCourseUI(),
+                      // ),
                      Flexible(
                         child: getCategoryUI(),
                       ),
-                      Flexible(
-                        child: getPopularCourseUI(),
-                      ),
-                      Flexible(
-                        child: getGameUI(),
-                      ),
+                      // Flexible(
+                      //   child: getGameUI(),
+                      // ),
                     ],
                   ),
                 ),
@@ -69,41 +72,79 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   }
 
   Widget getCategoryUI() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.only(top: 0.0, left: 18, right: 16),
-          child: Text(
-            'Materi',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 22,
-              letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+    return Padding(
+        padding: const EdgeInsets.only(top: 40.0, left: 18, right: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          //  Padding(
+          //   padding: EdgeInsets.only(top: 0.0, left: 18, right: 16),
+          //   child: Text(
+          //     'Materi',
+          //     textAlign: TextAlign.left,
+          //     style: TextStyle(
+          //       fontWeight: FontWeight.w600,
+          //       fontSize: 22,
+          //       letterSpacing: 0.27,
+          //       color: DesignCourseAppTheme.darkerText,
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 16,
+          // ),
+           const Text(
+              'Materi',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+                letterSpacing: 0.27,
+                color: DesignCourseAppTheme.darkerText,
+              ),
+            ),
+          Flexible(
+            child: CategoryListView(
+              callBack: () {
+                moveTo();
+              },
             ),
           ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        CategoryListView(
-          callBack: () {
-            moveTo();
-          },
-        ),
-      ],
+            Flexible(
+              child: TestPopularView(
+                callBack: () {
+                  moveTo();
+                },
+              ),
+            ),
+            const Text(
+              'Game',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+                letterSpacing: 0.27,
+                color: DesignCourseAppTheme.darkerText,
+              ),
+            ),
+              Flexible(
+                child: GameListView(
+                          callBack: () {
+                moveTo();
+                          },
+                        ),
+              ),
+        ],
+      ),
     );
   }
 
    Widget getGameUI() {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 0.0, left: 18, right: 16),
           child: Text(
             'Game',
@@ -116,24 +157,24 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             ),
           ),
         ),
-        const SizedBox(
+        SizedBox(
           height: 16,
         ),
-        GameListView(
-          callBack: () {
-            moveTo();
-          },
-        ),
-         const SizedBox(
-          height: 20,
-        ),
+        // GameListView(
+        //   callBack: () {
+        //     moveTo();
+        //   },
+        // ),
+        //  SizedBox(
+        //   height: 20,
+        // ),
       ],
     );
   }
 
   Widget getPopularCourseUI() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
+    return const Padding(
+      padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,13 +189,13 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           //     color: DesignCourseAppTheme.darkerText,
           //   ),
           // ),
-          Flexible(
-            child: PopularCourseListView(
-              callBack: () {
-                moveTo();
-              },
-            ),
-          )
+          // Flexible(
+          //   child: PopularCourseListView(
+          //     callBack: () {
+          //       moveTo();
+          //     },
+          //   ),
+          // )
         ],
       ),
     );

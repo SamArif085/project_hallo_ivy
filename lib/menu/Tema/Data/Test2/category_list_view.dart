@@ -40,7 +40,7 @@ class _CategoryListViewState extends State<CategoryListView>
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 16),
       child: Container(
-        height: 134,
+        height: 140,
         width: double.infinity,
         child: FutureBuilder<bool>(
           future: getData(),
@@ -50,12 +50,12 @@ class _CategoryListViewState extends State<CategoryListView>
             } else {
               return ListView.builder(
                 padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, right: 0, left: 60),
-                itemCount: Category.categoryList.length,
+                    top: 0, bottom: 0, right: 0, left: 0),
+                itemCount: 1,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = Category.categoryList.length > 10
-                      ? 10
+                  final int count = 1 > 1
+                      ? 1
                       : Category.categoryList.length;
                   final Animation<double> animation =
                       Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -64,7 +64,6 @@ class _CategoryListViewState extends State<CategoryListView>
                               curve: Interval((1 / count) * index, 1.0,
                                   curve: Curves.fastOutSlowIn)));
                   animationController?.forward();
-
                   return CategoryView(
                     category: Category.categoryList[index],
                     animation: animation,
@@ -109,7 +108,7 @@ class CategoryView extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: callback,
               child: SizedBox(
-                width: 280,
+                width: 380,
                 child: Stack(
                   children: <Widget>[
                     Container(

@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../Test/bottom_navigation_view/bottom_bar_view.dart';
 import 'design_course_app_theme.dart';
 import 'models/category.dart';
 
@@ -227,7 +226,7 @@ class gameView extends StatelessWidget {
                                                 Container(
                                                   decoration: const BoxDecoration(
                                                     color: DesignCourseAppTheme
-                                                        .nearlyBlue,
+                                                        .nearlyWhite,
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
@@ -238,10 +237,10 @@ class gameView extends StatelessWidget {
                                                         EdgeInsets.all(
                                                             4.0),
                                                     child: Icon(
-                                                      Icons.add,
+                                                      Icons.play_arrow_rounded,
                                                       color:
                                                           DesignCourseAppTheme
-                                                              .nearlyWhite,
+                                                              .nearlyGreen,
                                                     ),
                                                   ),
                                                 )

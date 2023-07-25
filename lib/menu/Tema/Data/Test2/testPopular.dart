@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'design_course_app_theme.dart';
 import 'models/category.dart';
 
-class PopularCourseListView extends StatefulWidget {
-  const PopularCourseListView({Key? key, this.callBack}) : super(key: key);
+class TestPopularView extends StatefulWidget {
+  const TestPopularView({Key? key, this.callBack}) : super(key: key);
 
   final Function()? callBack;
   @override
-  _PopularCourseListViewState createState() => _PopularCourseListViewState();
+  _TestPopularViewState createState() => _TestPopularViewState();
 }
 
-class _PopularCourseListViewState extends State<PopularCourseListView>
+class _TestPopularViewState extends State<TestPopularView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
   @override

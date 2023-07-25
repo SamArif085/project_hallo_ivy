@@ -58,12 +58,12 @@ class Category {
       // lessonCount: 28,
       // money: 208,
       // rating: 4.9,
-    ),
+    ), 
   ];
 
     static List<Category> gameList = <Category>[
     Category(
-      imagePath: 'assets/susun_kata.png',
+      imagePath: 'assets/design_course/interFace2.png',
       title: 'Susun Kata',
       // lessonCount: 24,
       // money: 25,
