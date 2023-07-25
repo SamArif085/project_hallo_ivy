@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Dashboard.dart';
 
-
 class LoginController extends GetxController {
-  RxBool _isObscure = true.obs;
+  final RxBool _isObscure = true.obs;
   bool get isObscure => _isObscure.value;
 
   TextEditingController usernameController = TextEditingController();
@@ -34,18 +33,18 @@ class LoginController extends GetxController {
       Get.off(() => DashboardHome(
             username: usernameController.text,
             password: passwordController.text,
-            userData: userData, // Kirim data userData ke halaman berikutnya
+            userData: userData,// Kirim data userData ke halaman berikutnya
           ));
     } else {
-       print("Login Failed");
-    Fluttertoast.showToast(
-      msg: "Username atau Password salah",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+      print("Login Failed");
+      Fluttertoast.showToast(
+        msg: "Username atau Password salah",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
@@ -61,6 +60,8 @@ class UserDataValues {
   final String password;
   final String nama;
   final String kelas;
+  final String materi;
+  final String link;
 
   UserDataValues({
     required this.id,
@@ -68,15 +69,26 @@ class UserDataValues {
     required this.password,
     required this.nama,
     required this.kelas,
+    required this.materi,
+    required this.link,
   });
 
-  factory UserDataValues.fromJson(Map<String, dynamic> json, {required id, required nisnSiswa, required password, required nama, required kelas}) {
+  factory UserDataValues.fromJson(Map<String, dynamic> json,
+      {required id,
+      required nisnSiswa,
+      required password,
+      required nama,
+      required kelas,
+       required materi,
+        required link}) {
     return UserDataValues(
       id: json['id'],
       nisnSiswa: json['nisn_siswa'],
       password: json['password'],
       nama: json['nama'],
       kelas: json['kelas'],
+      materi: json['judul_materi'],
+      link: json['link_materi'],
     );
   }
 }
@@ -94,28 +106,32 @@ class UserData {
     required this.values,
   });
 
-factory UserData.fromJson(Map<String, dynamic> json) {
-  return UserData(
-    status: json['status'] as bool,
-    statusCode: int.tryParse(json['statusCode'].toString()) ?? 0,
-    message: int.tryParse(json['message'].toString()) ?? 0,
-    values: json['values'] != null
-        ? UserDataValues(
-            id: json['values']['id'],
-            nisnSiswa: json['values']['nisn_siswa'],
-            password: json['values']['password'],
-            nama: json['values']['nama'],
-            kelas: json['values']['kelas'],
-          )
-        : UserDataValues(
-            id: '', nisnSiswa: '', password: '', nama: '', kelas: ''),
-  );
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      status: json['status'] as bool,
+      statusCode: int.tryParse(json['statusCode'].toString()) ?? 0,
+      message: int.tryParse(json['message'].toString()) ?? 0,
+      values: json['values'] != null
+          ? UserDataValues(
+              id: json['values']['id'],
+              nisnSiswa: json['values']['nisn_siswa'],
+              password: json['values']['password'],
+              nama: json['values']['nama'],
+              kelas: json['values']['kelas'],
+              materi: json['values']['judul_materi'],
+              link: json['values']['link_materi'],
+            )
+          : UserDataValues(
+              id: '',
+              nisnSiswa: '',
+              password: '',
+              nama: '',
+              kelas: '',
+              materi: '',
+              link: ''),
+    );
+  }
 }
-
-
-}
-
-
 
 class LoginPage extends StatelessWidget {
   final LoginController _loginController = Get.put(LoginController());
@@ -154,7 +170,7 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: MediaQuery(
-           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
           child: Container(
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
@@ -171,7 +187,7 @@ class LoginPage extends StatelessWidget {
                       'assets/images/logo.png',
                     ),
                   ),
-        
+
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30.0, vertical: 10),
@@ -243,7 +259,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-        
+
                         ElevatedButton(
                           onPressed: _loginController.login,
                           style: ElevatedButton.styleFrom(
@@ -284,7 +300,7 @@ class LoginPage extends StatelessWidget {
                         // Sized box
                         const SizedBox(height: 20),
                         // Login with google
-        
+
                         // Sized box
                         const SizedBox(height: 25),
                         // Register button

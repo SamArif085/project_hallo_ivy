@@ -13,10 +13,12 @@ class DashboardHome extends StatefulWidget {
       {super.key,
       required this.username,
       required this.password,
-      required this.userData});
+      required this.userData,
+     });
   final String username;
   final String password;
   final UserData userData;
+
 
   @override
   _DashboardHomeState createState() => _DashboardHomeState();
@@ -45,6 +47,7 @@ class _DashboardHomeState extends State<DashboardHome>
       animationController: animationController, password: widget.password,
       userData: widget.userData, // Gunakan userData dari widget ini
       username: widget.username,
+ 
     );
     super.initState();
   }
@@ -105,7 +108,7 @@ class _DashboardHomeState extends State<DashboardHome>
                     animationController: animationController,
                     password: widget.password,
                     userData:
-                        widget.userData, // Gunakan userData dari widget ini
+                        widget.userData,// Gunakan userData dari widget ini
                     username: widget.username,
                   );
                 });

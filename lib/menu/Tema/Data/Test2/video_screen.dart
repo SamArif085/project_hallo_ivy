@@ -1,15 +1,22 @@
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/login.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'design_course_app_theme.dart';
+import 'package:video_player/video_player.dart';
 
-class CourseInfoScreen extends StatefulWidget {
-const CourseInfoScreen({super.key,});
+class VideoScreen extends StatefulWidget {
+const VideoScreen({Key? key, required this.userData}) : super(key: key);
+final UserData userData;
 
   @override
-  _CourseInfoScreenState createState() => _CourseInfoScreenState();
+  _VideoScreenState createState() => _VideoScreenState();
 }
 
-class _CourseInfoScreenState extends State<CourseInfoScreen>
+class _VideoScreenState extends State<VideoScreen>
     with TickerProviderStateMixin {
+  late FlickManager flickManager;
+   int _playCount = 0;
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
@@ -17,6 +24,7 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
   double opacity2 = 0.0;
   double opacity3 = 0.0;
   @override
+  
   void initState() {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
@@ -25,7 +33,10 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
     super.initState();
-  }
+     flickManager = FlickManager(
+      videoPlayerController: VideoPlayerController.network(
+          'https://github.com/SamArif085/Video_Hello_Ivy/blob/main/Test/materi1.mp4?raw=true'),
+   );}
 
   Future<void> setData() async {
     animationController?.forward();
@@ -57,13 +68,37 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
             Column(
               children: <Widget>[
                 AspectRatio(
-                  aspectRatio: 1.2,
-                  child: Image.asset('assets/design_course/webInterFace.png'),
+                  aspectRatio: 1.4,
+                  child:SizedBox(
+            child: VisibilityDetector(
+              key: ObjectKey(flickManager),
+              onVisibilityChanged: (visibility) {
+                if (visibility.visibleFraction == 0 && this.mounted) {
+                  flickManager.flickControlManager?.autoPause();
+                } else if (visibility.visibleFraction == 1) {
+                  flickManager.flickControlManager?.autoResume();
+                  setState(() {
+                    _playCount++;
+                  });
+                }
+              },
+              child: FlickVideoPlayer(
+                flickManager: flickManager,
+                flickVideoWithControls: const FlickVideoWithControls(
+                  closedCaptionTextStyle: TextStyle(fontSize: 8),
+                  controls: FlickPortraitControls(),
+                ),
+                flickVideoWithControlsFullscreen: const FlickVideoWithControls(
+                  controls: FlickLandscapeControls(),
+                ),
+              ),
+            ),
+          ),
                 ),
               ],
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
+              top: (MediaQuery.of(context).size.width / 1.35) - 20.0,
               bottom: 0,
               left: 0,
               right: 0,
@@ -71,8 +106,8 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                 decoration: BoxDecoration(
                   color: DesignCourseAppTheme.nearlyWhite,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(32.0),
-                      topRight: Radius.circular(32.0)),
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(2.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                         color: DesignCourseAppTheme.grey.withOpacity(0.2),
@@ -93,13 +128,14 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Padding(
+                           Padding(
                             padding:
-                                EdgeInsets.only(top: 32.0, left: 18, right: 16),
+                                const EdgeInsets.only(top: 32.0, left: 18, right: 16),
                             child: Text(
-                              'Web Design\nCourse',
+                              // 'Web Design\nCourse',
+                               widget.userData.values.materi,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22,
                                 letterSpacing: 0.27,
@@ -158,6 +194,7 @@ class _CourseInfoScreenState extends State<CourseInfoScreen>
                                   getTimeBoxUI('24', 'Classe'),
                                   getTimeBoxUI('2hours', 'Time'),
                                   getTimeBoxUI('24', 'Seat'),
+                                  Text('Play Count: $_playCount'),
                                 ],
                               ),
                             ),

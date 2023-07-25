@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
 
+import '../Test/bottom_navigation_view/bottom_bar_view.dart';
+
+
 // class UserProfilePage extends StatelessWidget {
 
 //  final UserData userData;
@@ -52,7 +55,7 @@ class UserProfilePage extends StatelessWidget {
         children: [
           const Expanded(flex: 2, child: _TopPortion()),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -164,13 +167,14 @@ class _TopPortion extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(bottom: 50),
-          decoration: const BoxDecoration(
+          decoration:BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [Color(0xff0043ba), Color(0xff006df1)],
+                colors: [HexColor('#66e782'),
+                              Colors.greenAccent,],
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50),
               )),

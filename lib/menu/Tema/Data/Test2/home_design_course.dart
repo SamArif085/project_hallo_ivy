@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/popular_course_list_view.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/video_screen.dart';
 
 import '../../../../login.dart';
 import 'category_list_view.dart';
@@ -9,16 +9,19 @@ import 'design_course_app_theme.dart';
 import 'game_list_view.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
-
-   final String username;
+  final String username;
   final String password;
-  final UserData userData; 
+  final UserData userData;
 
-  const DesignCourseHomeScreen({Key? key, this.animationController,
+
+  const DesignCourseHomeScreen({
+    Key? key,
+    this.animationController,
     required this.username,
     required this.password,
-    required this.userData, })
-      : super(key: key);
+    required this.userData,
+   
+  }) : super(key: key);
   final AnimationController? animationController;
 
   @override
@@ -35,8 +38,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
               height: MediaQuery.of(context).padding.top,
@@ -54,7 +57,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                       //   Flexible(
                       //   child: getPopularCourseUI(),
                       // ),
-                     Flexible(
+                      Flexible(
                         child: getCategoryUI(),
                       ),
                       // Flexible(
@@ -73,7 +76,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
 
   Widget getCategoryUI() {
     return Padding(
-        padding: const EdgeInsets.only(top: 40.0, left: 18, right: 16),
+      padding: const EdgeInsets.only(top: 40.0, left: 18, right: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -93,53 +96,53 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           // const SizedBox(
           //   height: 16,
           // ),
-           const Text(
-              'Materi',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 22,
-                letterSpacing: 0.27,
-                color: DesignCourseAppTheme.darkerText,
-              ),
+          const Text(
+            'Materi',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 22,
+              letterSpacing: 0.27,
+              color: DesignCourseAppTheme.darkerText,
             ),
+          ),
           Flexible(
             child: CategoryListView(
+              callBack: () {
+                moveToMateri();
+              },
+            ),
+          ),
+          Flexible(
+            child: TestPopularView(
               callBack: () {
                 moveTo();
               },
             ),
           ),
-            Flexible(
-              child: TestPopularView(
-                callBack: () {
-                  moveTo();
-                },
-              ),
+          const Text(
+            'Game',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 22,
+              letterSpacing: 0.27,
+              color: DesignCourseAppTheme.darkerText,
             ),
-            const Text(
-              'Game',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 22,
-                letterSpacing: 0.27,
-                color: DesignCourseAppTheme.darkerText,
-              ),
-            ),
-              Flexible(
-                child: GameListView(
-                          callBack: () {
+          ),
+          Flexible(
+            child: GameListView(
+              callBack: () {
                 moveTo();
-                          },
-                        ),
-              ),
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 
-   Widget getGameUI() {
+  Widget getGameUI() {
     return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,13 +204,21 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-
-
   void moveTo() {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => CourseInfoScreen(),
+        builder: (BuildContext context) => const CourseInfoScreen(),
+      ),
+    );
+  }
+
+  void moveToMateri() {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) =>
+            VideoScreen(userData: widget.userData),
       ),
     );
   }
@@ -268,12 +279,12 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       padding: const EdgeInsets.only(top: 8.0, left: 18, right: 18),
       child: Row(
         children: <Widget>[
-           Expanded(
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                 Text(
+                Text(
                   widget.userData.values.kelas,
                   textAlign: TextAlign.left,
                   style: const TextStyle(
@@ -284,7 +295,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                   ),
                 ),
                 Text(
-                widget.userData.values.nama,
+                  widget.userData.values.nama,
                   textAlign: TextAlign.left,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
