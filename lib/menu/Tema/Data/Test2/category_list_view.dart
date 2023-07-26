@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../Test/bottom_navigation_view/bottom_bar_view.dart';
 import 'design_course_app_theme.dart';
 import 'models/category.dart';
 

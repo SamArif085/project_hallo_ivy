@@ -35,7 +35,7 @@ class _VideoScreenState extends State<VideoScreen>
     super.initState();
      flickManager = FlickManager(
       videoPlayerController: VideoPlayerController.network(
-          'https://github.com/SamArif085/Video_Hello_Ivy/blob/main/Test/materi1.mp4?raw=true'),
+           widget.userData.values.link),
    );}
 
   Future<void> setData() async {
@@ -98,7 +98,7 @@ class _VideoScreenState extends State<VideoScreen>
               ],
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.35) - 20.0,
+              top: (MediaQuery.of(context).size.width / 1.4) - 0.0,
               bottom: 0,
               left: 0,
               right: 0,
@@ -106,8 +106,8 @@ class _VideoScreenState extends State<VideoScreen>
                 decoration: BoxDecoration(
                   color: DesignCourseAppTheme.nearlyWhite,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(2.0)),
+                      topLeft: Radius.circular(0.0),
+                      topRight: Radius.circular(0.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                         color: DesignCourseAppTheme.grey.withOpacity(0.2),
@@ -132,7 +132,6 @@ class _VideoScreenState extends State<VideoScreen>
                             padding:
                                 const EdgeInsets.only(top: 32.0, left: 18, right: 16),
                             child: Text(
-                              // 'Web Design\nCourse',
                                widget.userData.values.materi,
                               textAlign: TextAlign.left,
                               style: const TextStyle(
@@ -150,55 +149,55 @@ class _VideoScreenState extends State<VideoScreen>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                const Text(
-                                  '\$28.99',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 22,
-                                    letterSpacing: 0.27,
-                                    color: DesignCourseAppTheme.nearlyBlue,
-                                  ),
-                                ),
+                                // const Text(
+                                //   '\$28.99',
+                                //   textAlign: TextAlign.left,
+                                //   style: TextStyle(
+                                //     fontWeight: FontWeight.w200,
+                                //     fontSize: 22,
+                                //     letterSpacing: 0.27,
+                                //     color: DesignCourseAppTheme.nearlyBlue,
+                                //   ),
+                                // ),
                                 Container(
                                   child: const Row(
                                     children: <Widget>[
-                                      Text(
-                                        '4.3',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w200,
-                                          fontSize: 22,
-                                          letterSpacing: 0.27,
-                                          color: DesignCourseAppTheme.grey,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: DesignCourseAppTheme.nearlyBlue,
-                                        size: 24,
-                                      ),
+                                      // Text(
+                                      //   '4.3',
+                                      //   textAlign: TextAlign.left,
+                                      //   style: TextStyle(
+                                      //     fontWeight: FontWeight.w200,
+                                      //     fontSize: 22,
+                                      //     letterSpacing: 0.27,
+                                      //     color: DesignCourseAppTheme.grey,
+                                      //   ),
+                                      // ),
+                                      // Icon(
+                                      //   Icons.star,
+                                      //   color: DesignCourseAppTheme.nearlyBlue,
+                                      //   size: 24,
+                                      // ),
                                     ],
                                   ),
                                 )
                               ],
                             ),
                           ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: <Widget>[
-                                  getTimeBoxUI('24', 'Classe'),
-                                  getTimeBoxUI('2hours', 'Time'),
-                                  getTimeBoxUI('24', 'Seat'),
-                                  Text('Play Count: $_playCount'),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // AnimatedOpacity(
+                          //   duration: const Duration(milliseconds: 500),
+                          //   opacity: opacity1,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(8),
+                          //     child: Row(
+                          //       children: <Widget>[
+                          //         getTimeBoxUI('Video Diputar', '$_playCount'),
+                          //         // getTimeBoxUI('2hours', 'Time'),
+                          //         // getTimeBoxUI('24', 'Seat'),
+                          //         // Text('Play Count: $_playCount'),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                           Expanded(
                             child: AnimatedOpacity(
                               duration: const Duration(milliseconds: 500),
@@ -206,86 +205,86 @@ class _VideoScreenState extends State<VideoScreen>
                               child: const Padding(
                                 padding: EdgeInsets.only(
                                     left: 16, right: 16, top: 8, bottom: 8),
-                                child: Text(
-                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 14,
-                                    letterSpacing: 0.27,
-                                    color: DesignCourseAppTheme.grey,
-                                  ),
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                // child: Text(
+                                //   'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
+                                //   textAlign: TextAlign.justify,
+                                //   style: TextStyle(
+                                //     fontWeight: FontWeight.w200,
+                                //     fontSize: 14,
+                                //     letterSpacing: 0.27,
+                                //     color: DesignCourseAppTheme.grey,
+                                //   ),
+                                //   maxLines: 3,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
                               ),
                             ),
                           ),
                           AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
                             opacity: opacity3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
+                            child: const Padding(
+                              padding: EdgeInsets.only(
                                   left: 16, bottom: 16, right: 16),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(
-                                    width: 48,
-                                    height: 48,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: DesignCourseAppTheme.nearlyWhite,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        border: Border.all(
-                                            color: DesignCourseAppTheme.grey
-                                                .withOpacity(0.2)),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: DesignCourseAppTheme.nearlyBlue,
-                                        size: 28,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 48,
-                                      decoration: BoxDecoration(
-                                        color: DesignCourseAppTheme.nearlyBlue,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                              color: DesignCourseAppTheme
-                                                  .nearlyBlue
-                                                  .withOpacity(0.5),
-                                              offset: const Offset(1.1, 1.1),
-                                              blurRadius: 10.0),
-                                        ],
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Join Course',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            letterSpacing: 0.0,
-                                            color: DesignCourseAppTheme
-                                                .nearlyWhite,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                  // Container(
+                                  //   width: 48,
+                                  //   height: 48,
+                                  //   child: Container(
+                                  //     decoration: BoxDecoration(
+                                  //       color: DesignCourseAppTheme.nearlyWhite,
+                                  //       borderRadius: const BorderRadius.all(
+                                  //         Radius.circular(16.0),
+                                  //       ),
+                                  //       border: Border.all(
+                                  //           color: DesignCourseAppTheme.grey
+                                  //               .withOpacity(0.2)),
+                                  //     ),
+                                  //     child: const Icon(
+                                  //       Icons.add,
+                                  //       color: DesignCourseAppTheme.nearlyBlue,
+                                  //       size: 28,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // const SizedBox(
+                                  //   width: 16,
+                                  // ),
+                                  // Expanded(
+                                  //   child: Container(
+                                  //     height: 48,
+                                  //     decoration: BoxDecoration(
+                                  //       color: DesignCourseAppTheme.nearlyBlue,
+                                  //       borderRadius: const BorderRadius.all(
+                                  //         Radius.circular(16.0),
+                                  //       ),
+                                  //       boxShadow: <BoxShadow>[
+                                  //         BoxShadow(
+                                  //             color: DesignCourseAppTheme
+                                  //                 .nearlyBlue
+                                  //                 .withOpacity(0.5),
+                                  //             offset: const Offset(1.1, 1.1),
+                                  //             blurRadius: 10.0),
+                                  //       ],
+                                  //     ),
+                                  //     child: const Center(
+                                  //       child: Text(
+                                  //         'Join Course',
+                                  //         textAlign: TextAlign.left,
+                                  //         style: TextStyle(
+                                  //           fontWeight: FontWeight.w600,
+                                  //           fontSize: 18,
+                                  //           letterSpacing: 0.0,
+                                  //           color: DesignCourseAppTheme
+                                  //               .nearlyWhite,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // )
                                 ],
                               ),
                             ),
@@ -300,30 +299,54 @@ class _VideoScreenState extends State<VideoScreen>
                 ),
               ),
             ),
+            // Positioned(
+            //   top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
+            //   right: 35,
+            //   child: ScaleTransition(
+            //     alignment: Alignment.center,
+            //     scale: CurvedAnimation(
+            //         parent: animationController!, curve: Curves.fastOutSlowIn),
+            //     child: Card(
+            //       color: DesignCourseAppTheme.nearlyGreen,
+            //       shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(50.0)),
+            //       elevation: 10.0,
+            //       child: Container(
+            //         width: 60,
+            //         height: 60,
+            //         child: const Center(
+            //           child: Icon(
+            //             Icons.thumb_up_alt_sharp,
+            //             color: DesignCourseAppTheme.nearlyWhite,
+            //             size: 30,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Positioned(
               top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
-              right: 35,
+              right: 10,
               child: ScaleTransition(
                 alignment: Alignment.center,
                 scale: CurvedAnimation(
                     parent: animationController!, curve: Curves.fastOutSlowIn),
-                child: Card(
-                  color: DesignCourseAppTheme.nearlyBlue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
-                  elevation: 10.0,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    child: const Center(
-                      child: Icon(
-                        Icons.favorite,
-                        color: DesignCourseAppTheme.nearlyWhite,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
+                child:     AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: <Widget>[
+                                  getTimeBoxUI('Diputar', '$_playCount'),
+                                  // getTimeBoxUI('2hours', 'Time'),
+                                  // getTimeBoxUI('24', 'Seat'),
+                                  // Text('Play Count: $_playCount'),
+                                ],
+                              ),
+                            ),
+                          ),
               ),
             ),
             Padding(
@@ -381,8 +404,11 @@ class _VideoScreenState extends State<VideoScreen>
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: DesignCourseAppTheme.nearlyBlue,
+                  color: DesignCourseAppTheme.nearlyBlack,
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Text(
                 txt2,
@@ -391,7 +417,7 @@ class _VideoScreenState extends State<VideoScreen>
                   fontWeight: FontWeight.w200,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: DesignCourseAppTheme.grey,
+                  color: DesignCourseAppTheme.nearlyBlack,
                 ),
               ),
             ],

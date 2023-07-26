@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:project_hallo_ivy/login.dart';
 
 import '../Test/bottom_navigation_view/bottom_bar_view.dart';
@@ -47,7 +49,6 @@ class UserProfilePage extends StatelessWidget {
   final UserData userData;
 
   const UserProfilePage({super.key, required this.userData});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,62 +160,83 @@ class UserProfilePage extends StatelessWidget {
 
 class _TopPortion extends StatelessWidget {
   const _TopPortion({Key? key}) : super(key: key);
+    void _logout() {
+    // Kembali ke halaman sebelumnya (halaman login) saat tombol logout ditekan
+    Get.off(() => LoginPage());
+    // Hapus controller yang digunakan dalam halaman AdminPage
+    Get.delete<LoginController>();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 50),
-          decoration:BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [HexColor('#66e782'),
-                              Colors.greenAccent,],
-              ),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
-              )),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: 150,
-            height: 150,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    // color: Colors.black,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/design_course/userImage.png'),
+    return Scaffold(
+      appBar: AppBar(
+        // Atur warna latar belakang AppBar menjadi transparan
+         backgroundColor: Colors.greenAccent,
+         elevation: 0,
+        // Sembunyikan judul AppBar
+        title: null,
+        // Sembunyikan tombol kembali (back button) di AppBar
+        automaticallyImplyLeading: false,
+        actions: [  IconButton(
+            icon: const Icon(Icons.logout ,color: Colors.red,),
+            onPressed: _logout,
+          ),],
+      ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 50),
+            decoration:BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [HexColor('#66e782'),
+                                Colors.greenAccent,],
+                ),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                )),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: 150,
+              height: 150,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      // color: Colors.black,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/design_course/userImage.png'),
+                      ),
                     ),
                   ),
-                ),
-                // Positioned(
-                //   bottom: 0,
-                //   right: 0,
-                //   child: CircleAvatar(
-                //     radius: 20,
-                //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                //     child: Container(
-                //       margin: const EdgeInsets.all(8.0),
-                //       decoration: const BoxDecoration(
-                //           color: Colors.green, shape: BoxShape.circle),
-                //     ),
-                //   ),
-                // ),
-              ],
+                  // Positioned(
+                  //   bottom: 0,
+                  //   right: 0,
+                  //   child: CircleAvatar(
+                  //     radius: 20,
+                  //     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  //     child: Container(
+                  //       margin: const EdgeInsets.all(8.0),
+                  //       decoration: const BoxDecoration(
+                  //           color: Colors.green, shape: BoxShape.circle),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

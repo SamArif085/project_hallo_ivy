@@ -118,7 +118,7 @@ class UserData {
               password: json['values']['password'],
               nama: json['values']['nama'],
               kelas: json['values']['kelas'],
-              materi: json['values']['judul_materi'],
+              materi: json['values']['judul'],
               link: json['values']['link_materi'],
             )
           : UserDataValues(
