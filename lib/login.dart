@@ -209,38 +209,43 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        Visibility(
-                          visible: emailFormVisibility,
-                          child: Form(
-                              child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                  icon: Icon(
-                                    Icons.alternate_email_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                  labelText: 'Username',
-                                ),
-                                controller: _loginController.usernameController,
-                                obscureText: _loginController.isObscure,
-                              ),
-                              TextFormField(
-                                obscureText: _loginController.isObscure,
-                                decoration: InputDecoration(
-                                    icon: const Icon(
-                                      Icons.lock_outline_rounded,
-                                      color: Colors.grey,
-                                    ),
-                                    labelText: 'Password',
-                                    suffixIcon: IconButton(
-                                        onPressed: togglePasswordVisibility,
-                                        icon: passwordIcon)),
-                                controller: _loginController.passwordController,
-                              )
-                            ],
-                          )),
-                        ),
+                  Visibility(
+  visible: emailFormVisibility,
+  child: Form(
+    child: Column(
+      children: [
+        TextFormField(
+          decoration: const InputDecoration(
+            icon: Icon(
+              Icons.alternate_email_outlined,
+              color: Colors.grey,
+            ),
+            labelText: 'Username',
+          ),
+          controller: _loginController.usernameController,
+          // Hapus properti obscureText untuk Username
+          // obscureText: _loginController.isObscure,
+        ),
+        TextFormField(
+          obscureText: _loginController.isObscure,
+          decoration: InputDecoration(
+            icon: const Icon(
+              Icons.lock_outline_rounded,
+              color: Colors.grey,
+            ),
+            labelText: 'Password',
+            suffixIcon: IconButton(
+              onPressed: togglePasswordVisibility,
+              icon: passwordIcon,
+            ),
+          ),
+          controller: _loginController.passwordController,
+        )
+      ],
+    ),
+  ),
+),
+
                         const SizedBox(height: 13),
                         // Forgot Password
                         Padding(

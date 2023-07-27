@@ -3,6 +3,7 @@ import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bot
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/fitness_app_theme.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/models/tabIcon_data.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/training/training_screen.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/game_page.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/home_design_course.dart';
 
 import '../login.dart';
@@ -98,7 +99,7 @@ class _DashboardHomeState extends State<DashboardHome>
           tabIconsList: tabIconsList,
           addClick: () {},
           changeIndex: (int index) {
-            if (index == 0 || index == 2) {
+            if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -123,7 +124,17 @@ class _DashboardHomeState extends State<DashboardHome>
                       TrainingScreen(animationController: animationController);
                 });
               });
-            } else if (index == 3) {
+            } else if (index == 2) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      GamePage(userData: widget.userData);
+                });
+              });
+            }else if (index == 3) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
