@@ -25,6 +25,12 @@ class _VideoScreenState extends State<VideoScreen>
   double opacity3 = 0.0;
   @override
   
+  void dispose() {
+    flickManager.dispose(); // Menghentikan pemutar video
+    animationController?.dispose(); // Membebaskan sumber daya animasi
+    super.dispose();
+  }
+  
   void initState() {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
