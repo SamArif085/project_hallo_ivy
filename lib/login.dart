@@ -33,7 +33,7 @@ class LoginController extends GetxController {
       Get.off(() => DashboardHome(
             username: usernameController.text,
             password: passwordController.text,
-            userData: userData,// Kirim data userData ke halaman berikutnya
+            userData: userData, // Kirim data userData ke halaman berikutnya
           ));
     } else {
       print("Login Failed");
@@ -62,6 +62,9 @@ class UserDataValues {
   final String kelas;
   final String materi;
   final String link;
+  final String alamat;
+  final String ortu;
+  final String Seks;
 
   UserDataValues({
     required this.id,
@@ -71,6 +74,9 @@ class UserDataValues {
     required this.kelas,
     required this.materi,
     required this.link,
+    required this.alamat,
+    required this.ortu,
+    required this.Seks,
   });
 
   factory UserDataValues.fromJson(Map<String, dynamic> json,
@@ -79,8 +85,8 @@ class UserDataValues {
       required password,
       required nama,
       required kelas,
-       required materi,
-        required link}) {
+      required materi,
+      required link}) {
     return UserDataValues(
       id: json['id'],
       nisnSiswa: json['nisn_siswa'],
@@ -89,6 +95,9 @@ class UserDataValues {
       kelas: json['kelas'],
       materi: json['judul_materi'],
       link: json['link_materi'],
+      alamat: json['alamat_ortu'],
+      ortu: json['nama_ortu'],
+      Seks: json['jenis_kelamin'],
     );
   }
 }
@@ -120,6 +129,9 @@ class UserData {
               kelas: json['values']['kelas'],
               materi: json['values']['judul'],
               link: json['values']['link_materi'],
+              alamat: json['values']['alamat_ortu'],
+              ortu: json['values']['nama_ortu'],
+              Seks: json['values']['jenis_kelamin'],
             )
           : UserDataValues(
               id: '',
@@ -128,7 +140,11 @@ class UserData {
               nama: '',
               kelas: '',
               materi: '',
-              link: ''),
+              link: '',
+              alamat: '',
+              ortu: '',
+              Seks: '',
+            ),
     );
   }
 }
@@ -209,42 +225,44 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                  Visibility(
-  visible: emailFormVisibility,
-  child: Form(
-    child: Column(
-      children: [
-        TextFormField(
-          decoration: const InputDecoration(
-            icon: Icon(
-              Icons.alternate_email_outlined,
-              color: Colors.grey,
-            ),
-            labelText: 'Username',
-          ),
-          controller: _loginController.usernameController,
-          // Hapus properti obscureText untuk Username
-          // obscureText: _loginController.isObscure,
-        ),
-        TextFormField(
-          obscureText: _loginController.isObscure,
-          decoration: InputDecoration(
-            icon: const Icon(
-              Icons.lock_outline_rounded,
-              color: Colors.grey,
-            ),
-            labelText: 'Password',
-            suffixIcon: IconButton(
-              onPressed: togglePasswordVisibility,
-              icon: passwordIcon,
-            ),
-          ),
-          controller: _loginController.passwordController,
-        )
-      ],
-    ),
-  ),
-),
+                        Visibility(
+                          visible: emailFormVisibility,
+                          child: Form(
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                    icon: Icon(
+                                      Icons.alternate_email_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                    labelText: 'Username',
+                                  ),
+                                  controller:
+                                      _loginController.usernameController,
+                                  // Hapus properti obscureText untuk Username
+                                  // obscureText: _loginController.isObscure,
+                                ),
+                                TextFormField(
+                                  obscureText: _loginController.isObscure,
+                                  decoration: InputDecoration(
+                                    icon: const Icon(
+                                      Icons.lock_outline_rounded,
+                                      color: Colors.grey,
+                                    ),
+                                    labelText: 'Password',
+                                    suffixIcon: IconButton(
+                                      onPressed: togglePasswordVisibility,
+                                      icon: passwordIcon,
+                                    ),
+                                  ),
+                                  controller:
+                                      _loginController.passwordController,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
 
                         const SizedBox(height: 13),
                         // Forgot Password
