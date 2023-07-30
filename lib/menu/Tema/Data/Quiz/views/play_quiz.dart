@@ -4,7 +4,6 @@ import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/data/data.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/models/question_model.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/result.dart';
 
-
 class PlayQuiz extends StatefulWidget {
   const PlayQuiz({super.key});
 
@@ -14,7 +13,7 @@ class PlayQuiz extends StatefulWidget {
 
 class _PlayQuizState extends State<PlayQuiz>
     with SingleTickerProviderStateMixin {
-List<QuestionModel> questions = List<QuestionModel>.empty();
+  List<QuestionModel> questions = List<QuestionModel>.empty();
   int index = 0;
   int points = 0;
   int correct = 0;
@@ -28,7 +27,7 @@ List<QuestionModel> questions = List<QuestionModel>.empty();
 
   double endAnim = 1.0;
 
-    void replayQuiz(BuildContext context) {
+  void replayQuiz(BuildContext context) {
     setState(() {
       // Atur kembali nilai-nilai awal
       index = 0;
@@ -185,7 +184,11 @@ List<QuestionModel> questions = List<QuestionModel>.empty();
                 child: LinearProgressIndicator(
               value: animation.value,
             )),
-            CachedNetworkImage(imageUrl: questions[index].getImageUrl(),),
+            FractionallySizedBox(
+              widthFactor: 0.8, // Ukuran gambar sebesar 80% lebar layar
+              child:
+                  CachedNetworkImage(imageUrl: questions[index].getImageUrl()),
+            ),
             const Spacer(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),

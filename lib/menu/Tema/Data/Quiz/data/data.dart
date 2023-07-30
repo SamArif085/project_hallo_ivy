@@ -8,7 +8,7 @@ List<QuestionModel> getQuestions() {
   //1
   questionModel.setQuestion("A baby has more bones than an adult");
   questionModel.setAnswer("True");
-  questionModel.setImageUrl("https://images.pexels.com/photos/789786/pexels-photo-789786.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  questionModel.setImageUrl('assets/jatim.png');
   questions.add(questionModel);
   questionModel = QuestionModel(question: '', answer: '');
 
