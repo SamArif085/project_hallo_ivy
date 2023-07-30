@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
 
-
-
-
 class HomePage extends StatefulWidget {
+
+ const HomePage({super.key}); 
   @override
   _HomePageState createState() => _HomePageState();
+   
 }
 
 class _HomePageState extends State<HomePage> {

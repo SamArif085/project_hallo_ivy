@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Game/Game1.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 
 import 'design_course_app_theme.dart';
 import 'models/category.dart';
 
 class TestPopularView extends StatefulWidget {
-  const TestPopularView({Key? key, this.callBack}) : super(key: key);
-
+  const TestPopularView({Key? key, this.callBack, required this.contentType,}) : super(key: key);
+  final String contentType;
   final Function()? callBack;
   @override
   _TestPopularViewState createState() => _TestPopularViewState();
@@ -36,7 +38,7 @@ class _TestPopularViewState extends State<TestPopularView>
           if (!snapshot.hasData) {
             return const SizedBox();
           } else {
-            return GridView(
+            return GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -44,27 +46,28 @@ class _TestPopularViewState extends State<TestPopularView>
                 crossAxisSpacing: 32.0,
                 childAspectRatio: 0.8,
               ),
-              children: List<Widget>.generate(
-               2,
-                (int index) {
-                  const int count = 2;
-                  final Animation<double> animation =
-                      Tween<double>(begin: 0.0, end: 1.0).animate(
-                    CurvedAnimation(
-                      parent: animationController!,
-                      curve: Interval((1 / count) * index, 1.0,
-                          curve: Curves.fastOutSlowIn),
-                    ),
-                  );
-                  animationController?.forward();
-                  return CategoryView(
-                    callback: widget.callBack,
-                    category: Category.popularCourseList[index],
-                    animation: animation,
-                    animationController: animationController,
-                  );
-                },
-              ),
+              itemCount: Category.popularCourseList.length,
+              itemBuilder: (BuildContext context, int index) {
+                final Category category = Category.popularCourseList[index];
+                final Animation<double> animation =
+                    Tween<double>(begin: 0.0, end: 1.0).animate(
+                  CurvedAnimation(
+                    parent: animationController!,
+                    curve: Interval(
+                        (1 / Category.popularCourseList.length) * index, 1.0,
+                        curve: Curves.fastOutSlowIn),
+                  ),
+                );
+                animationController?.forward();
+                return CategoryView(
+                  callback: widget.callBack,
+                  category: category,
+                  animation: animation,
+                  animationController: animationController,
+                  pageToMove: category.pageToMove,
+                  contentType: widget.contentType, // Tambahkan parameter contentType
+                );
+              },
             );
           }
         },
@@ -73,22 +76,27 @@ class _TestPopularViewState extends State<TestPopularView>
   }
 }
 
+
 class CategoryView extends StatelessWidget {
-  const CategoryView(
-      {Key? key,
-      this.category,
-      this.animationController,
-      this.animation,
-      this.callback})
-      : super(key: key);
+  const CategoryView({
+    Key? key,
+    this.category,
+    this.animationController,
+    this.animation,
+    this.callback,
+    required this.pageToMove, // Tambahkan parameter pageToMove
+    required this.contentType, // Tambahkan parameter contentType
+  }) : super(key: key);
 
   final VoidCallback? callback;
   final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final String? pageToMove; // Tambahkan parameter pageToMove
+  final String? contentType;
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -99,19 +107,37 @@ class CategoryView extends StatelessWidget {
                 0.0, 50 * (1.0 - animation!.value), 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: callback,
+            onTap: () {
+                callback?.call();
+                // Cek nilai contentType untuk menentukan halaman yang ingin ditampilkan
+                if (contentType == 'quiz') { 
+                  Navigator.push<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => const HomePage(),
+                    ),
+                  );
+                } else if (contentType == 'game') {
+                  Navigator.push<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => const Game1(),
+                    ),
+                  );
+                }
+              },
               child: SizedBox(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        Expanded(                         
+                        Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color:const Color.fromRGBO(105, 240, 155, 1),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(16.0)),
+                              color: const Color.fromRGBO(105, 240, 155, 1),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16.0)),
                               border: Border.all(
                                   color: DesignCourseAppTheme.notWhite),
                             ),
@@ -122,7 +148,10 @@ class CategoryView extends StatelessWidget {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 16, left: 16, right: 16,),
+                                          top: 16,
+                                          left: 16,
+                                          right: 16,
+                                        ),
                                         child: Text(
                                           category!.title,
                                           textAlign: TextAlign.left,
@@ -130,21 +159,21 @@ class CategoryView extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16,
                                             letterSpacing: 0.27,
-                                            color: DesignCourseAppTheme
-                                                .darkerText,
+                                            color:
+                                                DesignCourseAppTheme.darkerText,
                                           ),
                                         ),
                                       ),
                                       const Padding(
                                         padding: EdgeInsets.only(
-                                            top: 8,
-                                            left: 16,
-                                            right: 16,
-                                            bottom: 8,),
+                                          top: 8,
+                                          left: 16,
+                                          right: 16,
+                                          bottom: 8,
+                                        ),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
@@ -202,16 +231,16 @@ class CategoryView extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 0, right: 16, left: 16 ,bottom: 40),
+                      padding: const EdgeInsets.only(
+                          top: 0, right: 16, left: 16, bottom: 40),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10.0)),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color: DesignCourseAppTheme.grey
-                                    .withOpacity(0.2),
+                                color:
+                                    DesignCourseAppTheme.grey.withOpacity(0.2),
                                 offset: const Offset(0.0, 0.0),
                                 blurRadius: 6.0),
                           ],

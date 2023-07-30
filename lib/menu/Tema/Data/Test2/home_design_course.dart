@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Game/Game1.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/video_screen.dart';
@@ -14,14 +15,12 @@ class DesignCourseHomeScreen extends StatefulWidget {
   final String password;
   final UserData userData;
 
-
   const DesignCourseHomeScreen({
     Key? key,
     this.animationController,
     required this.username,
     required this.password,
     required this.userData,
-   
   }) : super(key: key);
   final AnimationController? animationController;
 
@@ -30,7 +29,21 @@ class DesignCourseHomeScreen extends StatefulWidget {
 }
 
 class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
+  String contentTypeToShow = 'game';
+  void toggleViews() {
+    setState(() {
+      contentTypeToShow = (contentTypeToShow == 'quiz') ? 'game' : 'quiz';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    toggleViews(); // Ini akan menampilkan konten game saat halaman dimuat.
+  }
+
   CategoryType categoryType = CategoryType.ui;
+  bool showTestPopularView = true;
 
   @override
   Widget build(BuildContext context) {
@@ -114,11 +127,23 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               },
             ),
           ),
-          Flexible(
-            child: TestPopularView(
-              callBack: () {
-                moveToQuiz();
-              },
+       Visibility(
+            visible: contentTypeToShow == 'quiz', // Tampilkan hanya jika konten yang ingin ditampilkan adalah quiz
+            child: Flexible(
+              child: TestPopularView(
+                contentType: contentTypeToShow,
+                callBack: toggleViews,
+              ),
+            ),
+          ),
+
+          Visibility(
+            visible: contentTypeToShow == 'game', // Tampilkan hanya jika konten yang ingin ditampilkan adalah game
+            child: Flexible(
+              child: TestPopularView(
+                contentType: contentTypeToShow,
+                callBack: toggleViews,
+              ),
             ),
           ),
           const Text(
@@ -224,15 +249,32 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-    void moveToQuiz() {
-   Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => HomePage(),
-      ),
-    );
+  void moveToQuiz(String pageToMove) {
+    if (pageToMove == 'quiz') {
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => const HomePage(),
+        ),
+      );
+    } else if (pageToMove == 'game') {
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => const Game1(),
+        ),
+      );
+    }
   }
 
+  //   void moveToQuiz() {
+  //  Navigator.push<dynamic>(
+  //     context,
+  //     MaterialPageRoute<dynamic>(
+  //       builder: (BuildContext context) => const HomePage(page: 'quiz',),
+  //     ),
+  //   );
+  // }
 
   // Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
   //   String txt = '';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'login.dart';
+import 'menu/Tema/Data/Quiz/views/homepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +19,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         fontFamily: 'Nunito',
       ),
-      home:  LoginPage(),
-
+      // home:  LoginPage(),
+      initialRoute: '/', // Atur rute awal aplikasi (biasanya '/' untuk halaman beranda)
+      routes: {
+        '/': (context) =>  LoginPage(), // Rute untuk halaman beranda
+        '/quiz': (context) => const HomePage(), // Rute untuk halaman kuis, sesuaikan dengan halaman kuis Anda jika berbeda
+        // Jika Anda memiliki halaman lain, Anda dapat menambahkan rute lain di sini
+      }, 
     );
   }
 }
