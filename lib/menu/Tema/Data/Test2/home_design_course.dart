@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/video_screen.dart';
 
@@ -116,7 +117,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           Flexible(
             child: TestPopularView(
               callBack: () {
-                moveTo();
+                moveToQuiz();
               },
             ),
           ),
@@ -222,6 +223,16 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       ),
     );
   }
+
+    void moveToQuiz() {
+   Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => HomePage(),
+      ),
+    );
+  }
+
 
   // Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
   //   String txt = '';

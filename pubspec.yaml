@@ -51,6 +51,7 @@ dependencies:
   shared_preferences: ^2.2.0
   fluttertoast: ^8.2.2
   get: ^4.6.5
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
