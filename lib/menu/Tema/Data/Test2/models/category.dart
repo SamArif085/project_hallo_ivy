@@ -32,6 +32,13 @@ class Category {
     ), 
   ];
 
+   static List<Category> PRCourseList = <Category>[
+    Category(
+      imagePath: 'assets/design_course/interFace3.png',
+      title: 'Tugas Rumah',
+    ),
+  ];
+
     static List<Category> gameList = <Category>[
     Category(
       imagePath: 'assets/design_course/interFace2.png',

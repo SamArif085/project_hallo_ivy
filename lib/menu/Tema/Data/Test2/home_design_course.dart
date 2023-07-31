@@ -29,10 +29,12 @@ class DesignCourseHomeScreen extends StatefulWidget {
 }
 
 class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
-  String contentTypeToShow = 'game';
+  String contentTypeToShow = '';
   void toggleViews() {
     setState(() {
-      contentTypeToShow = (contentTypeToShow == 'quiz') ? 'game' : 'quiz';
+      contentTypeToShow = (contentTypeToShow == 'game')
+          ? 'quiz'
+          : 'game'; // Toggle antara game dan quiz saat tombol ditekan
     });
   }
 
@@ -127,21 +129,24 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               },
             ),
           ),
-       Visibility(
-            visible: contentTypeToShow == 'quiz', // Tampilkan hanya jika konten yang ingin ditampilkan adalah quiz
+          Visibility(
+            visible: contentTypeToShow ==
+                'game', // Tampilkan hanya jika konten yang ingin ditampilkan adalah game
             child: Flexible(
               child: TestPopularView(
-                contentType: contentTypeToShow,
+                contentType:
+                    contentTypeToShow, // Berikan nilai contentTypeToShow ke parameter contentType
                 callBack: toggleViews,
               ),
             ),
           ),
-
           Visibility(
-            visible: contentTypeToShow == 'game', // Tampilkan hanya jika konten yang ingin ditampilkan adalah game
+            visible: contentTypeToShow ==
+                'quiz', // Tampilkan hanya jika konten yang ingin ditampilkan adalah quiz
             child: Flexible(
               child: TestPopularView(
-                contentType: contentTypeToShow,
+                contentType:
+                    contentTypeToShow, // Berikan nilai contentTypeToShow ke parameter contentType
                 callBack: toggleViews,
               ),
             ),
