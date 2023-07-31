@@ -6,8 +6,8 @@ import 'design_course_app_theme.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
-const VideoScreen({Key? key, required this.userData}) : super(key: key);
-final UserData userData;
+  const VideoScreen({Key? key, required this.userData}) : super(key: key);
+  final UserData userData;
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
@@ -16,7 +16,7 @@ final UserData userData;
 class _VideoScreenState extends State<VideoScreen>
     with TickerProviderStateMixin {
   late FlickManager flickManager;
-   int _playCount = 0;
+  int _playCount = 0;
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
@@ -24,7 +24,12 @@ class _VideoScreenState extends State<VideoScreen>
   double opacity2 = 0.0;
   double opacity3 = 0.0;
   @override
-  
+  void dispose() {
+    flickManager.dispose(); // Menghentikan pemutar video
+    animationController?.dispose(); // Membebaskan sumber daya animasi
+    super.dispose();
+  }
+
   void initState() {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
@@ -33,10 +38,11 @@ class _VideoScreenState extends State<VideoScreen>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
     super.initState();
-     flickManager = FlickManager(
-      videoPlayerController: VideoPlayerController.network(
-           widget.userData.values.link),
-   );}
+    flickManager = FlickManager(
+      videoPlayerController:
+          VideoPlayerController.network(widget.userData.values.link),
+    );
+  }
 
   Future<void> setData() async {
     animationController?.forward();
@@ -69,31 +75,32 @@ class _VideoScreenState extends State<VideoScreen>
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1.4,
-                  child:SizedBox(
-            child: VisibilityDetector(
-              key: ObjectKey(flickManager),
-              onVisibilityChanged: (visibility) {
-                if (visibility.visibleFraction == 0 && this.mounted) {
-                  flickManager.flickControlManager?.autoPause();
-                } else if (visibility.visibleFraction == 1) {
-                  flickManager.flickControlManager?.autoResume();
-                  setState(() {
-                    _playCount++;
-                  });
-                }
-              },
-              child: FlickVideoPlayer(
-                flickManager: flickManager,
-                flickVideoWithControls: const FlickVideoWithControls(
-                  closedCaptionTextStyle: TextStyle(fontSize: 8),
-                  controls: FlickPortraitControls(),
-                ),
-                flickVideoWithControlsFullscreen: const FlickVideoWithControls(
-                  controls: FlickLandscapeControls(),
-                ),
-              ),
-            ),
-          ),
+                  child: SizedBox(
+                    child: VisibilityDetector(
+                      key: ObjectKey(flickManager),
+                      onVisibilityChanged: (visibility) {
+                        if (visibility.visibleFraction == 0 && this.mounted) {
+                          flickManager.flickControlManager?.autoPause();
+                        } else if (visibility.visibleFraction == 1) {
+                          flickManager.flickControlManager?.autoResume();
+                          setState(() {
+                            _playCount++;
+                          });
+                        }
+                      },
+                      child: FlickVideoPlayer(
+                        flickManager: flickManager,
+                        flickVideoWithControls: const FlickVideoWithControls(
+                          closedCaptionTextStyle: TextStyle(fontSize: 8),
+                          controls: FlickPortraitControls(),
+                        ),
+                        flickVideoWithControlsFullscreen:
+                            const FlickVideoWithControls(
+                          controls: FlickLandscapeControls(),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -128,11 +135,11 @@ class _VideoScreenState extends State<VideoScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 32.0, left: 18, right: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 32.0, left: 18, right: 16),
                             child: Text(
-                               widget.userData.values.materi,
+                              widget.userData.values.materi,
                               textAlign: TextAlign.left,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -332,21 +339,21 @@ class _VideoScreenState extends State<VideoScreen>
                 alignment: Alignment.center,
                 scale: CurvedAnimation(
                     parent: animationController!, curve: Curves.fastOutSlowIn),
-                child:     AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: <Widget>[
-                                  getTimeBoxUI('Diputar', '$_playCount'),
-                                  // getTimeBoxUI('2hours', 'Time'),
-                                  // getTimeBoxUI('24', 'Seat'),
-                                  // Text('Play Count: $_playCount'),
-                                ],
-                              ),
-                            ),
-                          ),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: opacity1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: <Widget>[
+                        getTimeBoxUI('Diputar', '$_playCount'),
+                        // getTimeBoxUI('2hours', 'Time'),
+                        // getTimeBoxUI('24', 'Seat'),
+                        // Text('Play Count: $_playCount'),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(
