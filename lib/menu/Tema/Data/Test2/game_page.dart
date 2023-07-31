@@ -17,18 +17,16 @@ class GamePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: null,
+        title: Text("List Game"),
       ),
       body: ListView(
-        children: [
-          CustomCard(
-              title: "Judul Card Pertama",
-              image:
-                  "https://images7.alphacoders.com/131/thumbbig-1311796.webp"),
-          CustomCard(
-              title: "Judul Card Kedua",
-              image:
-                  "https://images7.alphacoders.com/131/thumbbig-1311796.webp"),
+        padding: EdgeInsets.only(top: 8),
+        children: <Widget>[
+          for (var i = 0; i < 6; i++)
+            CustomCard(
+                title: "Judul Card",
+                image:
+                    "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1"),
         ],
       ),
     );
