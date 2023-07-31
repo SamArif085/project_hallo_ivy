@@ -46,6 +46,9 @@ class _TestPopularViewState extends State<TestPopularView>
                 Expanded(
                   child: getPRUI(), // Konten 'game' berada di sebelah kiri
                 ),
+                const SizedBox(
+                  width: 30,
+                ),
                 Expanded(
                   child: getQuizUI(), // Konten 'quiz' berada di sebelah kanan
                 ),

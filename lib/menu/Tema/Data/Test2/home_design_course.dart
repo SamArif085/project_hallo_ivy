@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Game/Game1.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/PR_Home.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular2.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/video_screen.dart';
-
 import '../../../../login.dart';
 import 'category_list_view.dart';
 import 'course_info_screen.dart';
@@ -40,7 +36,6 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   //         : 'game'; // Toggle antara game dan quiz saat tombol ditekan
   //   });
   // }
-
 
   // void initState() {
   //   super.initState();
@@ -132,11 +127,12 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               },
             ),
           ),
-        const Flexible(
-                        child:     TestPopularView(),
-                         
-                           ),
-                    
+          const Flexible(
+            child: TestPopularView(),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           const Text(
             'Game',
             textAlign: TextAlign.left,
@@ -240,22 +236,20 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-    void PRMove() {
+  void PRMove() {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) =>
-            const PRHome(),
+        builder: (BuildContext context) => const PRHome(),
       ),
     );
   }
 
-   void QuizMove() {
+  void QuizMove() {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) =>
-            const PlayQuiz(),
+        builder: (BuildContext context) => const PlayQuiz(),
       ),
     );
   }

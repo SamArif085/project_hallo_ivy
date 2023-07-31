@@ -2,8 +2,6 @@ class Category {
   Category({
     this.title = '',
     this.imagePath = '',
-
- 
   });
 
   String title;
@@ -21,8 +19,6 @@ class Category {
     Category(
       imagePath: 'assets/design_course/interFace4.png',
       title: 'Quiz',
-
-
     ), 
   ];
 
@@ -30,8 +26,6 @@ class Category {
     Category(
       imagePath: 'assets/design_course/interFace3.png',
       title: 'Tugas Rumah',
-
-
     ),
   ];
 
