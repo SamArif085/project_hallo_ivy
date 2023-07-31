@@ -9,19 +9,24 @@ class PRHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: const Text('PR'),
-        backgroundColor: DesignCourseAppTheme.nearlyWhite,
+        backgroundColor: HexColor('#85f29d'),
       ),
-      body: ListView(
-        padding: EdgeInsets.only(top: 8),
-        children: <Widget>[
-          // for (var i = 0; i < 1; i++)
-          CustomCard(
-              title: "Tugas Rumah",
-              text:
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus diam sit amet nibh sollicitudin hendrerit sed quis est. Cras accumsan consequat faucibus. Nullam ornare, ipsum eu convallis bibendum, metus lorem laoreet lectus, id vehicula lorem orci nec orci. Suspendisse potenti. Proin laoreet",
-              deadln: "31 Desember 2022"),
-        ],
+      body: Container(
+        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        child: Center(
+          child: Container(
+            width: 350.0,
+            height: 350.0,
+            padding: EdgeInsets.all(16.0),
+            child: CustomCard(
+                title: "Tugas Rumah",
+                text:
+                    "Lorem ipsum dolor silicitudin hendrerit sed quis est. Cras accumsan consequat faucibus. Nullam ornare, ipsum eu convallis bibendum, metus lorem laoreet lectehicula lorem orci nec orci. Suspendisse potenti. Proin laoreet",
+                deadln: "31 Desember 2022"),
+          ),
+        ),
       ),
     );
   }
@@ -38,65 +43,58 @@ class CustomCard extends StatelessWidget {
   String deadln;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30, right: 30, left: 30),
-      child: Card(
-        color: HexColor('#85f29d'),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
-        ),
-        elevation: 7,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(5.0),
-                  topRight: Radius.circular(5.0),
-                ),
-              ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
+      ),
+      elevation: 7,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Container(
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
-            Container(
-              color: Colors.white,
+          ),
+          Flexible(
+            flex: 3,
+            child: Container(
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   text,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ),
-            Container(
-              // color: Colors.white,
+          ),
+          Flexible(
+            flex: 1,
+            child: Container(
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   deadln,
-                  textAlign: TextAlign.right,
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Colors.red,
-
-                    // fontSize: 16,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+    // );
   }
 }
