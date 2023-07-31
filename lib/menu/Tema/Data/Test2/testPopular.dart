@@ -166,7 +166,7 @@ class CategoryView extends StatelessWidget {
           child: Transform(
             transform: Matrix4.translationValues(
                 0.0, 50 * (1.0 - animation!.value), 0.0),
-           child: InkWell(
+            child: InkWell(
               splashColor: Colors.transparent,
               onTap: onTap, // Panggil fungsi onTap di sini
               child: SizedBox(
