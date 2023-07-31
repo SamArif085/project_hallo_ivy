@@ -2,12 +2,12 @@ class Category {
   Category({
     this.title = '',
     this.imagePath = '',
-    this.pageToMove = '',
+
  
   });
 
   String title;
-  String pageToMove;
+
   String imagePath;
 
   static List<Category> categoryList = <Category>[
@@ -19,17 +19,20 @@ class Category {
 
   static List<Category> popularCourseList = <Category>[
     Category(
-      imagePath: 'assets/design_course/interFace3.png',
-      title: 'Tugas Rumah',
-      pageToMove: 'game',
-
-    ),
-    Category(
       imagePath: 'assets/design_course/interFace4.png',
       title: 'Quiz',
-      pageToMove: 'quiz',
+
 
     ), 
+  ];
+
+    static List<Category> TestCourseList = <Category>[
+    Category(
+      imagePath: 'assets/design_course/interFace3.png',
+      title: 'Tugas Rumah',
+
+
+    ),
   ];
 
    static List<Category> PRCourseList = <Category>[

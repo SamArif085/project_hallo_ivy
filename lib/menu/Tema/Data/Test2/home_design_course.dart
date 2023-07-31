@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Game/Game1.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/PR_Home.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testPopular2.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/video_screen.dart';
 
 import '../../../../login.dart';
@@ -29,20 +32,20 @@ class DesignCourseHomeScreen extends StatefulWidget {
 }
 
 class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
-  String contentTypeToShow = '';
-  void toggleViews() {
-    setState(() {
-      contentTypeToShow = (contentTypeToShow == 'game')
-          ? 'quiz'
-          : 'game'; // Toggle antara game dan quiz saat tombol ditekan
-    });
-  }
+  // String contentTypeToShow = '';
+  // void toggleViews() {
+  //   setState(() {
+  //     contentTypeToShow = (contentTypeToShow == 'game')
+  //         ? 'quiz'
+  //         : 'game'; // Toggle antara game dan quiz saat tombol ditekan
+  //   });
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    toggleViews(); // Ini akan menampilkan konten game saat halaman dimuat.
-  }
+
+  // void initState() {
+  //   super.initState();
+  //   toggleViews(); // Ini akan menampilkan konten game saat halaman dimuat.
+  // }
 
   CategoryType categoryType = CategoryType.ui;
   bool showTestPopularView = true;
@@ -129,28 +132,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               },
             ),
           ),
-          Visibility(
-            visible: contentTypeToShow ==
-                'game', // Tampilkan hanya jika konten yang ingin ditampilkan adalah game
-            child: Flexible(
-              child: TestPopularView(
-                contentType:
-                    contentTypeToShow, // Berikan nilai contentTypeToShow ke parameter contentType
-                callBack: toggleViews,
-              ),
-            ),
-          ),
-          Visibility(
-            visible: contentTypeToShow ==
-                'quiz', // Tampilkan hanya jika konten yang ingin ditampilkan adalah quiz
-            child: Flexible(
-              child: TestPopularView(
-                contentType:
-                    contentTypeToShow, // Berikan nilai contentTypeToShow ke parameter contentType
-                callBack: toggleViews,
-              ),
-            ),
-          ),
+        const Flexible(
+                        child:     TestPopularView(),
+                         
+                           ),
+                    
           const Text(
             'Game',
             textAlign: TextAlign.left,
@@ -254,23 +240,43 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  void moveToQuiz(String pageToMove) {
-    if (pageToMove == 'quiz') {
-      Navigator.push<dynamic>(
-        context,
-        MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => const HomePage(),
-        ),
-      );
-    } else if (pageToMove == 'game') {
-      Navigator.push<dynamic>(
-        context,
-        MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => const Game1(),
-        ),
-      );
-    }
+    void PRMove() {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) =>
+            const PRHome(),
+      ),
+    );
   }
+
+   void QuizMove() {
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) =>
+            const PlayQuiz(),
+      ),
+    );
+  }
+
+  // void moveToQuiz(String pageToMove) {
+  //   if (pageToMove == 'quiz') {
+  //     Navigator.push<dynamic>(
+  //       context,
+  //       MaterialPageRoute<dynamic>(
+  //         builder: (BuildContext context) => const HomePage(),
+  //       ),
+  //     );
+  //   } else if (pageToMove == 'game') {
+  //     Navigator.push<dynamic>(
+  //       context,
+  //       MaterialPageRoute<dynamic>(
+  //         builder: (BuildContext context) => const Game1(),
+  //       ),
+  //     );
+  //   }
+  // }
 
   //   void moveToQuiz() {
   //  Navigator.push<dynamic>(

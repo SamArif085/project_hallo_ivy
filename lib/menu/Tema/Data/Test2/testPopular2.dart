@@ -7,15 +7,15 @@ import 'package:project_hallo_ivy/menu/Tema/Data/Test2/PR_Home.dart';
 import 'design_course_app_theme.dart';
 import 'models/category.dart';
 
-class TestPopularView extends StatefulWidget {
-  const TestPopularView({Key? key, this.callBack}) : super(key: key);
+class Test2 extends StatefulWidget {
+  const Test2({Key? key, this.callBack}) : super(key: key);
   final Function()? callBack;
 
   @override
-  _TestPopularViewState createState() => _TestPopularViewState();
+  _Test2State createState() => _Test2State();
 }
 
-class _TestPopularViewState extends State<TestPopularView>
+class _Test2State extends State<Test2>
     with TickerProviderStateMixin {
   AnimationController? animationController;
   @override
@@ -36,12 +36,11 @@ class _TestPopularViewState extends State<TestPopularView>
       padding: const EdgeInsets.only(top: 8),
       child: FutureBuilder<bool>(
         future: getData(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
           } else {
-            return Row(
-              // Menggunakan Row untuk mengatur konten secara horizontal
+            return Row( // Menggunakan Row untuk mengatur konten secara horizontal
               children: <Widget>[
                 Expanded(
                   child: getPRUI(), // Konten 'game' berada di sebelah kiri
@@ -56,8 +55,28 @@ class _TestPopularViewState extends State<TestPopularView>
       ),
     );
   }
+    void prmove() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) =>
+             const PRHome(),
+      ),
+    );
+  }
 
-  Widget getPRUI() {
+   void quizmove() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) =>
+             const PlayQuiz(),
+      ),
+    );
+  }
+  
+
+    Widget getPRUI() {
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -73,7 +92,8 @@ class _TestPopularViewState extends State<TestPopularView>
             Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animationController!,
-            curve: Interval((1 / Category.TestCourseList.length) * index, 1.0,
+            curve: Interval(
+                (1 / Category.TestCourseList.length) * index, 1.0,
                 curve: Curves.fastOutSlowIn),
           ),
         );
@@ -83,14 +103,9 @@ class _TestPopularViewState extends State<TestPopularView>
           category: category,
           animation: animation,
           animationController: animationController,
-          onTap: () {
-            Navigator.push<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const PRHome(),
-              ),
-            );
-          },
+          onTap: (){
+           prmove;
+         }// Panggil callback PRMove di sini
         );
       },
     );
@@ -123,19 +138,17 @@ class _TestPopularViewState extends State<TestPopularView>
           category: category,
           animation: animation,
           animationController: animationController,
-          onTap: () {
-            Navigator.push<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const PlayQuiz(),
-              ),
-            );
-          },
+         onTap: (){
+           quizmove;
+         }
         );
       },
     );
   }
 }
+
+
+
 
 class CategoryView extends StatelessWidget {
   const CategoryView({
@@ -143,18 +156,17 @@ class CategoryView extends StatelessWidget {
     this.category,
     this.animationController,
     this.animation,
-    this.callback,
-    required this.onTap, // Tambahkan required untuk memastikan onTap tidak null
+    this.callback, this.onTap, 
   }) : super(key: key);
 
+  final VoidCallback? onTap;
   final VoidCallback? callback;
   final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
-  final VoidCallback onTap; // Gunakan tipe VoidCallback
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -163,9 +175,11 @@ class CategoryView extends StatelessWidget {
           child: Transform(
             transform: Matrix4.translationValues(
                 0.0, 50 * (1.0 - animation!.value), 0.0),
-           child: InkWell(
+            child: InkWell(
               splashColor: Colors.transparent,
-              onTap: onTap, // Panggil fungsi onTap di sini
+            onTap: () {
+             
+              },
               child: SizedBox(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
