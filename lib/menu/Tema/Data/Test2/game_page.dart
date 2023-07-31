@@ -49,17 +49,22 @@ class CustomCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 100,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                      image,
-                    ),
-                    fit: BoxFit.cover),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(5.0),
-                  topRight: Radius.circular(.0),
+            InkWell(
+              onTap: () {
+                debugPrint('Card tapped.');
+              },
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                        image,
+                      ),
+                      fit: BoxFit.cover),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5.0),
+                    topRight: Radius.circular(5.0),
+                  ),
                 ),
               ),
             ),
