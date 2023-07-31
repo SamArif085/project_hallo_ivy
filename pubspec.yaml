@@ -52,6 +52,8 @@ dependencies:
   fluttertoast: ^8.2.2
   get: ^4.6.5
   cached_network_image: ^3.2.3
+  syncfusion_flutter_charts: ^22.2.5
+  fl_chart: ^0.63.0
 
 dev_dependencies:
   flutter_test:
