@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
-
 class ChartApp extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
-  ChartApp({Key? key, AnimationController? animationController}) : super(key: key);
+  ChartApp({Key? key, AnimationController? animationController})
+      : super(key: key);
 
   @override
   _ChartAppState createState() => _ChartAppState();
