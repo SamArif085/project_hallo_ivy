@@ -1,75 +1,79 @@
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/models/chartmodel.dart';
 
 class ChartApp extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  ChartApp({Key? key, AnimationController? animationController}) : super(key: key);
+  const ChartApp({Key? key, AnimationController? animationController}) : super(key: key);
 
   @override
-  _ChartAppState createState() => _ChartAppState();
+  State<ChartApp> createState() => _BarChartAPIState();
 }
 
-class _ChartAppState extends State<ChartApp> {
-  List<_SalesData> data = [
-    _SalesData('Jan', 35),
-    _SalesData('Feb', 28),
-    _SalesData('Mar', 34),
-    _SalesData('Apr', 32),
-    _SalesData('May', 40)
-  ];
+class _BarChartAPIState extends State<ChartApp> {
+  List<GenderModel> genders = [];
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    var response = await http.get(
+      Uri.parse(
+        "https://api.genderize.io/?name[]=Eko&name[]=Asep&name[]=Ahmad&name[]=Ayu&name[]=Santi",
+      ),
+    );
+
+    List data = json.decode(response.body);
+
+    setState(() {
+      genders = genderModelFromJson(data);
+      loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Syncfusion Flutter chart'),
-        ),
-        body: Column(children: [
-          //Initialize the chart widget
-          SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              // Chart title
-              title: ChartTitle(text: 'Half yearly sales analysis'),
-              // Enable legend
-              legend: const Legend(isVisible: true),
-              // Enable tooltip
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <ChartSeries<_SalesData, String>>[
-                LineSeries<_SalesData, String>(
-                    dataSource: data,
-                    xValueMapper: (_SalesData sales, _) => sales.year,
-                    yValueMapper: (_SalesData sales, _) => sales.sales,
-                    name: 'Sales',
-                    // Enable data label
-                    dataLabelSettings: const DataLabelSettings(isVisible: true))
-              ]),
-          // Expanded(
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(8.0),
-          //     //Initialize the spark charts widget
-          //     child: SfSparkLineChart.custom(
-          //       //Enable the trackball
-          //       trackball: const SparkChartTrackball(
-          //           activationMode: SparkChartActivationMode.tap),
-          //       //Enable marker
-          //       marker: const SparkChartMarker(
-          //           displayMode: SparkChartMarkerDisplayMode.all),
-          //       //Enable data label
-          //       labelDisplayMode: SparkChartLabelDisplayMode.all,
-          //       xValueMapper: (int index) => data[index].year,
-          //       yValueMapper: (int index) => data[index].sales,
-          //       dataCount: 5,
-          //     ),
-          //   ),
-          // )
-        ]));
+    return SafeArea(
+      child: Center(
+        child: loading
+            ? const CircularProgressIndicator()
+            : Container(
+                height: 400,
+                padding: const EdgeInsets.all(15),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        const Text(
+                          "Jumlah Penduduk dengan Nama Berikut",
+                        ),
+                        Expanded(
+                          child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            series: <ChartSeries>[
+                              BarSeries<GenderModel, String>(
+                                dataSource: genders,
+                                yValueMapper: (GenderModel genderModel, _) =>
+                                   genderModel.count,
+                                xValueMapper: (GenderModel genderModel, _) =>
+                                    genderModel.name,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+      ),
+    );
   }
-}
-
-class _SalesData {
-  _SalesData(this.year, this.sales);
-
-  final String year;
-  final double sales;
 }
