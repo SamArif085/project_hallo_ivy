@@ -328,28 +328,33 @@ class LoginPage extends StatelessWidget {
                         const SizedBox(height: 25),
                         // Register button
                         Center(
-                            child: Container(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              SizedBox(
+                              Flexible(
+                                flex: 1,
                                 child: Image.asset(
                                   'assets/Lambang-AK.png',
-                                  height: 80,
-                                  width: 80,
+                                  height: 60,
                                 ),
                               ),
-                              Image.asset(
-                                'assets/patreon.png',
-                                height: 80,
+                              Flexible(
+                                flex: 1,
+                                child: Image.asset(
+                                  'assets/patreon.png',
+                                  height: 60,
+                                ),
                               ),
-                              Image.asset(
-                                'assets/jatim.png',
-                                height: 80,
+                              Flexible(
+                                flex: 1,
+                                child: Image.asset(
+                                  'assets/jatim.png',
+                                  height: 60,
+                                ),
                               )
                             ],
                           ),
-                        ))
+                        )
                       ],
                     ),
                   ),

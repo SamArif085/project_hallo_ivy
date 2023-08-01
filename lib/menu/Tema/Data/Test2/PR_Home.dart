@@ -10,7 +10,7 @@ class PRHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('PR'),
+        // title: const Text('PR'),
         backgroundColor: HexColor('#85f29d'),
       ),
       body: Container(
@@ -58,9 +58,7 @@ class CustomCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
