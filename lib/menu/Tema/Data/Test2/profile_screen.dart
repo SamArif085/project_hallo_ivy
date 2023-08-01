@@ -12,96 +12,12 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const Expanded(flex: 2, child: _TopPortion()),
-          Expanded(
-            flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Column(
-                children: [
-                  Text(
-                    userData.values.nama,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 50),
-                  Flexible(
-                    child: _buildProfileInfo(userData: userData),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-Widget _buildProfileInfo({required UserData userData}) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildInfoItem('NISN', userData.values.nisnSiswa),
-        _buildInfoItem('Kelas', userData.values.kelas),
-        _buildInfoItem('Jenis Kelamin', userData.values.Seks),
-        _buildInfoItem('Nama Orang Tua', userData.values.ortu),
-        _buildInfoItem('Alamat', userData.values.alamat),
-      ],
-    ),
-  );
-}
-
-Widget _buildInfoItem(String label, String value) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 16,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-class _TopPortion extends StatelessWidget {
-  const _TopPortion({Key? key}) : super(key: key);
-  void _logout() {
-    // Kembali ke halaman sebelumnya (halaman login) saat tombol logout ditekan
-    Get.off(() => LoginPage());
-    // Hapus controller yang digunakan dalam halaman AdminPage
-    Get.delete<LoginController>();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
       appBar: AppBar(
-        // Atur warna latar belakang AppBar menjadi transparan
-        backgroundColor: Colors.greenAccent,
-        elevation: 0,
-        // Sembunyikan judul AppBar
-        title: null,
-        // Sembunyikan tombol kembali (back button) di AppBar
-        automaticallyImplyLeading: false,
+        backgroundColor: HexColor('#85f29d'),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 50),
+          child: Center(child: Text('Profile')),
+        ),
         actions: [
           IconButton(
             icon: const Icon(
@@ -112,50 +28,141 @@ class _TopPortion extends StatelessWidget {
           ),
         ],
       ),
-      body: Stack(
-        fit: StackFit.expand,
+      body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 50),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  HexColor('#66e782'),
-                  Colors.greenAccent,
-                ],
-              ),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
-              ),
-            ),
+          userBar(
+            nama: userData.values.nama,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(
-              width: 150,
-              height: 150,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      // color: Colors.black,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/design_course/userImage.png'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          buildInfo(
+            label: "NISN",
+            value: userData.values.nisnSiswa,
+          ),
+          buildInfo(
+            label: "Kelas",
+            value: userData.values.kelas,
+          ),
+          buildInfo(
+            label: "Jenis Kelamin",
+            value: userData.values.Seks,
+          ),
+          buildInfo(
+            label: "Nama Orang Tua",
+            value: userData.values.ortu,
+          ),
+          buildInfo(
+            label: "Alamat",
+            value: userData.values.alamat,
           ),
         ],
       ),
     );
   }
+}
+
+class userBar extends StatelessWidget {
+  String nama;
+  userBar({super.key, required this.nama});
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      margin: EdgeInsets.only(bottom: 35),
+      width: screenWidth * 1,
+      height: 200,
+      decoration: BoxDecoration(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Flexible(
+          //   flex: 1,
+          //   child: IconButton(
+          //     icon: const Icon(
+          //       Icons.logout,
+          //       color: Colors.red,
+          //     ),
+          //     onPressed: _logout,
+          //   ),
+          // ),
+          Flexible(
+            flex: 3,
+            child: Center(
+              child: Image.asset('assets/design_course/userImage.png'),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Center(
+              child: Text(nama),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class buildInfo extends StatelessWidget {
+  String label;
+  String value;
+  buildInfo({
+    super.key,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                padding: EdgeInsets.only(
+                  left: 40,
+                ),
+                child: Text(
+                  label,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                )),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 40, right: 40, top: 15, bottom: 15),
+                child: Stack(
+                  children: [
+                    Container(
+                        padding: EdgeInsets.only(bottom: 15),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            value,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        )),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: 2.0,
+                        color: HexColor('#f0f1f2'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+void _logout() {
+  Get.off(() => LoginPage());
+  Get.delete<LoginController>();
 }
