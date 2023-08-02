@@ -6,9 +6,7 @@ import '../Test/bottom_navigation_view/bottom_bar_view.dart';
 
 class UserProfilePage extends StatelessWidget {
   final UserData userData;
-
   const UserProfilePage({Key? key, required this.userData}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,32 +26,35 @@ class UserProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          userBar(
-            nama: userData.values.nama,
-          ),
-          buildInfo(
-            label: "NISN",
-            value: userData.values.nisnSiswa,
-          ),
-          buildInfo(
-            label: "Kelas",
-            value: userData.values.kelas,
-          ),
-          buildInfo(
-            label: "Jenis Kelamin",
-            value: userData.values.Seks,
-          ),
-          buildInfo(
-            label: "Nama Orang Tua",
-            value: userData.values.ortu,
-          ),
-          buildInfo(
-            label: "Alamat",
-            value: userData.values.alamat,
-          ),
-        ],
+      body: Container(
+        padding: EdgeInsets.only(bottom: 70),
+        child: ListView(
+          children: [
+            userBar(
+              nama: userData.values.nama,
+            ),
+            buildInfo(
+              label: "NISN",
+              value: userData.values.nisnSiswa,
+            ),
+            buildInfo(
+              label: "Kelas",
+              value: userData.values.kelas,
+            ),
+            buildInfo(
+              label: "Jenis Kelamin",
+              value: userData.values.Seks,
+            ),
+            buildInfo(
+              label: "Nama Orang Tua",
+              value: userData.values.ortu,
+            ),
+            buildInfo(
+              label: "Alamat",
+              value: userData.values.alamat,
+            ),
+          ],
+        ),
       ),
     );
   }
