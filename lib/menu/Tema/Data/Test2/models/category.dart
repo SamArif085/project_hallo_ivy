@@ -22,14 +22,14 @@ class Category {
     ), 
   ];
 
-    static List<Category> TestCourseList = <Category>[
+    static List<Category> testcourseList = <Category>[
     Category(
       imagePath: 'assets/design_course/interFace3.png',
       title: 'Tugas Rumah',
     ),
   ];
 
-   static List<Category> PRCourseList = <Category>[
+   static List<Category> prcourseList = <Category>[
     Category(
       imagePath: 'assets/design_course/interFace3.png',
       title: 'Tugas Rumah',
@@ -42,19 +42,11 @@ class Category {
       title: 'Susun Kata',
 
     ),
+  ];
+      static List<Category> game1List = <Category>[
     Category(
       imagePath: 'assets/design_course/interFace2.png',
-      title: 'User interface Design',
-  
-    ),
-    Category(
-      imagePath: 'assets/design_course/interFace1.png',
-      title: 'User interface Design',
-
-    ),
-    Category(
-      imagePath: 'assets/design_course/interFace2.png',
-      title: 'User interface Design',
+      title: 'Susun Kata2',
 
     ),
   ];

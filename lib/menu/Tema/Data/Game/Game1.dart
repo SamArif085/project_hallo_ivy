@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Game1 extends StatelessWidget {
-  // static String tag = 'konten-Game1';
-
-
   const Game1({super.key});
 
   @override
@@ -21,7 +18,7 @@ class Game1 extends StatelessWidget {
 
 WebViewController controller = WebViewController()
   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  ..setBackgroundColor(const Color(0x00000000))
+  ..setBackgroundColor(Colors.greenAccent)
   ..setNavigationDelegate(
     NavigationDelegate(
       onProgress: (int progress) {

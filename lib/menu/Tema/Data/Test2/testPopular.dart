@@ -69,14 +69,14 @@ class _TestPopularViewState extends State<TestPopularView>
         crossAxisSpacing: 32.0,
         childAspectRatio: 0.8,
       ),
-      itemCount: Category.TestCourseList.length,
+      itemCount: Category.testcourseList.length,
       itemBuilder: (BuildContext context, int index) {
-        final Category category = Category.TestCourseList[index];
+        final Category category = Category.testcourseList[index];
         final Animation<double> animation =
             Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animationController!,
-            curve: Interval((1 / Category.TestCourseList.length) * index, 1.0,
+            curve: Interval((1 / Category.testcourseList.length) * index, 1.0,
                 curve: Curves.fastOutSlowIn),
           ),
         );

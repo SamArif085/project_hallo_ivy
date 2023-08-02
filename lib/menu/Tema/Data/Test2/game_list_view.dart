@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-
+import '../Game/Game1.dart';
 import 'design_course_app_theme.dart';
 import 'models/category.dart';
 
@@ -47,35 +46,85 @@ class _GameListViewState extends State<GameListView>
             if (!snapshot.hasData) {
               return const SizedBox();
             } else {
+              // Menggabungkan hasil dari getGame dan getGame2 ke dalam satu daftar
+              List<Widget> gameWidgets = [];
+              for (int index = 0; index < Category.gameList.length; index++) {
+                gameWidgets.add(getGame(index));
+                gameWidgets.add(getGame2(index));
+              }
               return ListView.builder(
                 padding: const EdgeInsets.only(
                     top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: Category.gameList.length,
+                itemCount: gameWidgets.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = Category.gameList.length > 10
-                      ? 10
-                      : Category.gameList.length;
-                  final Animation<double> animation =
-                      Tween<double>(begin: 0.0, end: 1.0).animate(
-                          CurvedAnimation(
-                              parent: animationController!,
-                              curve: Interval((1 / count) * index, 1.0,
-                                  curve: Curves.fastOutSlowIn)));
-                  animationController?.forward();
-
-                  return gameView(
-                    category: Category.gameList[index],
-                    animation: animation,
-                    animationController: animationController,
-                    callback: widget.callBack,
-                  );
+                  return gameWidgets[
+                      index]; // Ambil widget dari daftar sesuai indeks
                 },
               );
             }
           },
         ),
       ),
+    );
+  }
+
+  Widget getGame(int index) {
+    // Tambahkan argumen index di sini
+    final int count =
+        Category.gameList.length > 10 ? 10 : Category.gameList.length;
+    final Animation<double> animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController!,
+        curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn),
+      ),
+    );
+    animationController?.forward();
+
+    return gameView(
+      category: Category.gameList[index],
+      animation: animation,
+      animationController: animationController,
+      callback: widget.callBack,
+      onTap: () {
+        Navigator.push<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => const Game1(
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget getGame2(int index) {
+    // Tambahkan argumen index di sini
+    final int count =
+        Category.game1List.length > 10 ? 10 : Category.game1List.length;
+    final Animation<double> animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController!,
+        curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn),
+      ),
+    );
+    animationController?.forward();
+    return gameView(
+      category: Category.game1List[index],
+      animation: animation,
+      animationController: animationController,
+      callback: widget.callBack,
+      onTap: () {
+        Navigator.push<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) => const Game1(
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -86,13 +135,15 @@ class gameView extends StatelessWidget {
       this.category,
       this.animationController,
       this.animation,
-      this.callback})
+      this.callback,
+       required this.onTap, })
       : super(key: key);
 
   final VoidCallback? callback;
   final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
+    final VoidCallback onTap; 
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +157,7 @@ class gameView extends StatelessWidget {
                 100 * (1.0 - animation!.value), 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: callback,
+              onTap: onTap,
               child: SizedBox(
                 width: 280,
                 child: Stack(
@@ -121,8 +172,8 @@ class gameView extends StatelessWidget {
                             child: Container(
                               decoration: const BoxDecoration(
                                 color: Color.fromRGBO(105, 240, 155, 1),
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(16.0)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16.0)),
                               ),
                               child: Row(
                                 children: <Widget>[
@@ -224,7 +275,8 @@ class gameView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Container(
-                                                  decoration: const BoxDecoration(
+                                                  decoration:
+                                                      const BoxDecoration(
                                                     color: DesignCourseAppTheme
                                                         .nearlyWhite,
                                                     borderRadius:
@@ -234,8 +286,7 @@ class gameView extends StatelessWidget {
                                                   ),
                                                   child: const Padding(
                                                     padding:
-                                                        EdgeInsets.all(
-                                                            4.0),
+                                                        EdgeInsets.all(4.0),
                                                     child: Icon(
                                                       Icons.play_arrow_rounded,
                                                       color:
