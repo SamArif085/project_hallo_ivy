@@ -1,13 +1,17 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/fitness_app_theme.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/materi.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test2/profile_screen.dart';
 
 import '../models/tabIcon_data.dart';
 
 class BottomBarView extends StatefulWidget {
+  final UserData userData;
   const BottomBarView(
-      {Key? key, this.tabIconsList, this.changeIndex, this.addClick})
+      {Key? key, this.tabIconsList, this.changeIndex, this.addClick, required this.userData})
       : super(key: key);
 
   final Function(int index)? changeIndex;
@@ -163,7 +167,14 @@ class _BottomBarViewState extends State<BottomBarView>
                           splashColor: Colors.white.withOpacity(0.1),
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
-                          onTap: widget.addClick,
+                         onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => MateriPage(userData: widget.userData,),
+    ),
+  );
+},
                           child: const Icon(
                             Icons.add,
                             color: FitnessAppTheme.white,
