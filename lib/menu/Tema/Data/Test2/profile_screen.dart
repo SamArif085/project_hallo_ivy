@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_hallo_ivy/login.dart';
-
 import '../Test/bottom_navigation_view/bottom_bar_view.dart';
 
 class UserProfilePage extends StatelessWidget {

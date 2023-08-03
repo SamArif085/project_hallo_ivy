@@ -22,7 +22,7 @@ class _GamePageState extends State<GamePage> {
         title: Text("List Game"),
       ),
       body: Container(
-        padding: EdgeInsets.only(bottom: 70),
+        padding: EdgeInsets.only(bottom: 62),
         child: ListView(
           padding: EdgeInsets.only(top: 8),
           children: <Widget>[

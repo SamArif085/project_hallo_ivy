@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
-import 'design_course_app_theme.dart';
 
 class PRHome extends StatelessWidget {
   const PRHome({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
+import '../Test/bottom_navigation_view/bottom_bar_view.dart';
 import 'design_course_app_theme.dart';
 
 class MateriPage extends StatefulWidget {
@@ -18,17 +19,28 @@ class _MateriPageState extends State<MateriPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Text("List Materi"),
+        backgroundColor: HexColor('#85f29d'),
+        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
+        title: Padding(
+          padding: const EdgeInsets.only(right: 50),
+          child: Center(child: Text('Materi')),
+        ),
       ),
       body: Container(
-        padding: const EdgeInsets.only(bottom: 70),
+        decoration: BoxDecoration(color: HexColor('#85f29d')),
         child: ListView(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 20),
           children: <Widget>[
-            for (var i = 0; i < 6; i++)
+            for (var i = 0; i < 3; i++)
               CustomCard(
-                  title: "Judul Game",
+                  title: "Judul Materi",
+                  status: "1",
+                  image:
+                      "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1"),
+            for (var i = 0; i < 3; i++)
+              CustomCard(
+                  title: "Judul Materi",
+                  status: "0",
                   image:
                       "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1"),
           ],
@@ -39,18 +51,23 @@ class _MateriPageState extends State<MateriPage> {
 }
 
 class CustomCard extends StatelessWidget {
-  CustomCard({super.key, required this.title, required this.image});
+  CustomCard(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.status});
   String title;
+  String status;
   String image;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+      padding: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
+          borderRadius: BorderRadius.circular(5.0),
         ),
-        elevation: 5,
+        elevation: 7,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -73,13 +90,29 @@ class CustomCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Center(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                ),
+            Container(
+              // decoration: BoxDecoration(color: HexColor('#85f29d')),
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 40, right: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                  ),
+                  Container(
+                    child: status == "1"
+                        ? Image.asset(
+                            'assets/icon/unlock_icon.png',
+                            height: 20,
+                          )
+                        : Image.asset(
+                            'assets/icon/lock_icon.png',
+                            height: 20,
+                          ),
+                  ),
+                ],
               ),
             )
           ],
