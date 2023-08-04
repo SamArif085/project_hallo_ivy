@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testmateri.dart';
 import '../Test/bottom_navigation_view/bottom_bar_view.dart';
-import 'design_course_app_theme.dart';
 
 class MateriPage extends StatefulWidget {
-
   void navigateToDetail(BuildContext context, LinkMateri materi) {
     // Navigasi ke halaman detail dan kirim data materi yang dipilih
     Navigator.push(
@@ -18,6 +16,7 @@ class MateriPage extends StatefulWidget {
       ),
     );
   }
+
   final UserData userData;
   final List<LinkMateri> userDataMateri;
   const MateriPage(
@@ -25,8 +24,6 @@ class MateriPage extends StatefulWidget {
       required this.userData,
       AnimationController? animationController,
       required this.userDataMateri});
-
-
 
   @override
   State<MateriPage> createState() => _MateriPageState();
@@ -51,14 +48,15 @@ class _MateriPageState extends State<MateriPage> {
         child: ListView(
           padding: const EdgeInsets.only(top: 20),
           children: <Widget>[
-          for (var materi in widget.userDataMateri)
+            for (var materi in widget.userDataMateri)
               CustomCard(
                 key: Key(materi.id),
                 title: materi.judulMateri,
                 status: "1",
-                image: "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1",
+                image:
+                    "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1",
                 userData: widget.userData,
-                 onTap: () {
+                onTap: () {
                   widget.navigateToDetail(context, materi);
                 },
               ),
@@ -70,7 +68,7 @@ class _MateriPageState extends State<MateriPage> {
 }
 
 class CustomCard extends StatelessWidget {
- final VoidCallback onTap;
+  final VoidCallback onTap;
   // void navigateToDetail(
   //   BuildContext context,
   //   LinkMateri id,
