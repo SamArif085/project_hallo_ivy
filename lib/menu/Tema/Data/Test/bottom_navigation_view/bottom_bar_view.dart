@@ -11,7 +11,11 @@ import '../models/tabIcon_data.dart';
 class BottomBarView extends StatefulWidget {
   final UserData userData;
   const BottomBarView(
-      {Key? key, this.tabIconsList, this.changeIndex, this.addClick, required this.userData})
+      {Key? key,
+      this.tabIconsList,
+      this.changeIndex,
+      this.addClick,
+      required this.userData, required List<LinkMateri> userDataMateri})
       : super(key: key);
 
   final Function(int index)? changeIndex;
@@ -147,7 +151,7 @@ class _BottomBarViewState extends State<BottomBarView>
                         color: FitnessAppTheme.nearlyWhite,
                         gradient: LinearGradient(
                             colors: [
-                               HexColor('#66e782'),
+                              HexColor('#66e782'),
                               Colors.greenAccent,
                             ],
                             begin: Alignment.topLeft,
@@ -167,20 +171,22 @@ class _BottomBarViewState extends State<BottomBarView>
                           splashColor: Colors.white.withOpacity(0.1),
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
-                         onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => MateriPage(userData: widget.userData,),
-    ),
-  );
-},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MateriPage(
+                                  userData: widget.userData, userDataMateri: widget.userData.linkMateriFull,
+                                ),
+                              ),
+                            );
+                          },
                           child: const Icon(
-                            Icons.add,
+                            Icons.library_books_sharp,
                             color: FitnessAppTheme.white,
                             size: 32,
                           ),
-                        ),                                                                                                
+                        ),
                       ),
                     ),
                   ),

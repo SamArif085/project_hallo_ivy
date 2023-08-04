@@ -51,7 +51,24 @@ class _BarChartAPIState extends State<ChartApp> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          "Jumlah Penduduk dengan Nama Berikut",
+                          "Laporan Mingguan",
+                        ),
+                        Expanded(
+                          child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            series: <ChartSeries>[
+                              BarSeries<GenderModel, String>(
+                                dataSource: genders,
+                                yValueMapper: (GenderModel genderModel, _) =>
+                                   genderModel.count,
+                                xValueMapper: (GenderModel genderModel, _) =>
+                                    genderModel.name,
+                              ),
+                            ],
+                          ),
+                        ),
+                          const Text(
+                          "Laporan Bulanan",
                         ),
                         Expanded(
                           child: SfCartesianChart(

@@ -4,10 +4,14 @@ import 'design_course_app_theme.dart';
 
 class GamePage extends StatefulWidget {
   final UserData userData;
+  final List<LinkMateri> userDataMateri;
+  final List<LinkGame> dataGame;
   const GamePage(
       {super.key,
       required this.userData,
-      AnimationController? animationController});
+      AnimationController? animationController,
+      required this.userDataMateri,
+      required this.dataGame});
   @override
   State<GamePage> createState() => _GamePageState();
 }
@@ -19,16 +23,16 @@ class _GamePageState extends State<GamePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: Text("List Game"),
+        title: const Text("List Game"),
       ),
       body: Container(
-        padding: EdgeInsets.only(bottom: 62),
+        padding: const EdgeInsets.only(bottom: 62),
         child: ListView(
-          padding: EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 8),
           children: <Widget>[
-            for (var i = 0; i < 6; i++)
+            for (var game in widget.dataGame)
               CustomCard(
-                  title: "Judul Game",
+                  title: game.namaGame,
                   image:
                       "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1"),
           ],

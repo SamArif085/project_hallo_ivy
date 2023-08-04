@@ -15,11 +15,12 @@ class DashboardHome extends StatefulWidget {
       {super.key,
       required this.username,
       required this.password,
-      required this.userData,
+      required this.userData, required userDataMateri,
      });
   final String username;
   final String password;
   final UserData userData;
+  
 
 
   @override
@@ -38,9 +39,9 @@ class _DashboardHomeState extends State<DashboardHome>
 
   @override
   void initState() {
-    tabIconsList.forEach((TabIconData tab) {
+    for (var tab in tabIconsList) {
       tab.isSelected = false;
-    });
+    }
     tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
@@ -49,7 +50,6 @@ class _DashboardHomeState extends State<DashboardHome>
       animationController: animationController, password: widget.password,
       userData: widget.userData, // Gunakan userData dari widget ini
       username: widget.username,
- 
     );
     super.initState();
   }
@@ -132,7 +132,7 @@ class _DashboardHomeState extends State<DashboardHome>
                 }
                 setState(() {
                   tabBody =
-                      GamePage(userData: widget.userData);
+                      GamePage(userData: widget.userData, dataGame: widget.userData.linkGame, userDataMateri: widget.userData.linkMateriFull,);
                 });
               });
             }else if (index == 3) {
@@ -146,7 +146,7 @@ class _DashboardHomeState extends State<DashboardHome>
                 });
               });
             }
-          }, userData: widget.userData,
+          }, userData: widget.userData, userDataMateri: widget.userData.linkMateriFull, 
         ),
       ],
     );

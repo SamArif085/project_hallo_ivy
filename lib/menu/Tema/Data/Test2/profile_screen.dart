@@ -11,13 +11,13 @@ class UserProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: HexColor('#85f29d'),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 50),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 50),
           child: Center(child: Text('Profile')),
         ),
-        actions: [
+        actions: const [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.logout,
               color: Colors.red,
             ),
@@ -26,10 +26,11 @@ class UserProfilePage extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(bottom: 70),
+        padding: const EdgeInsets.only(bottom: 70),
         child: ListView(
           children: [
             userBar(
+            
               nama: userData.values.nama,
             ),
             buildInfo(
@@ -42,7 +43,7 @@ class UserProfilePage extends StatelessWidget {
             ),
             buildInfo(
               label: "Jenis Kelamin",
-              value: userData.values.Seks,
+              value: userData.values.seks,
             ),
             buildInfo(
               label: "Nama Orang Tua",
@@ -66,10 +67,10 @@ class userBar extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.only(bottom: 35),
+      margin: const EdgeInsets.only(bottom: 35),
       width: screenWidth * 1,
       height: 200,
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -92,7 +93,8 @@ class userBar extends StatelessWidget {
           Flexible(
             flex: 1,
             child: Center(
-              child: Text(nama),
+              child: Text(nama,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
             ),
           )
         ],
@@ -120,12 +122,12 @@ class buildInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 40,
                 ),
                 child: Text(
                   label,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 )),
             Center(
               child: Padding(
@@ -134,12 +136,12 @@ class buildInfo extends StatelessWidget {
                 child: Stack(
                   children: [
                     Container(
-                        padding: EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.only(bottom: 15),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             value,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         )),
                     Positioned(

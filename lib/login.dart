@@ -29,11 +29,14 @@ class LoginController extends GetxController {
 
     if (response.statusCode == 200 && datauser['status'] == true) {
       print("Login Success");
+      
       // Berpindah ke halaman berikutnya jika login berhasil
       Get.off(() => DashboardHome(
             username: usernameController.text,
             password: passwordController.text,
-            userData: userData, // Kirim data userData ke halaman berikutnya
+            userData: userData,
+            userDataMateri: userData.linkMateriFull,
+            // userDataMateri: userData.values.linkMateriFull, // Kirim data userData ke halaman berikutnya
           ));
     } else {
       print("Login Failed");
@@ -64,7 +67,7 @@ class UserDataValues {
   final String link;
   final String alamat;
   final String ortu;
-  final String Seks;
+  final String seks;
 
   UserDataValues({
     required this.id,
@@ -76,28 +79,74 @@ class UserDataValues {
     required this.link,
     required this.alamat,
     required this.ortu,
-    required this.Seks,
+    required this.seks,
   });
 
-  factory UserDataValues.fromJson(Map<String, dynamic> json,
-      {required id,
-      required nisnSiswa,
-      required password,
-      required nama,
-      required kelas,
-      required materi,
-      required link}) {
+  factory UserDataValues.fromJson(Map<String, dynamic> json) {
     return UserDataValues(
       id: json['id'],
       nisnSiswa: json['nisn_siswa'],
       password: json['password'],
       nama: json['nama'],
       kelas: json['kelas'],
-      materi: json['judul_materi'],
+      materi: json['judul'],
       link: json['link_materi'],
       alamat: json['alamat_ortu'],
       ortu: json['nama_ortu'],
-      Seks: json['jenis_kelamin'],
+      seks: json['jenis_kelamin'],
+    );
+  }
+}
+
+
+class LinkMateri {
+  final String id;
+  final String judulMateri;
+  final String linkMateri;
+  final String createdAt;
+  final String idMateri;
+  final String kodeKelas;
+
+  LinkMateri({
+    required this.id,
+    required this.judulMateri,
+    required this.linkMateri,
+    required this.createdAt,
+    required this.idMateri,
+    required this.kodeKelas,
+  });
+
+  factory LinkMateri.fromJson(Map<String, dynamic> json) {
+    return LinkMateri(
+      id: json['id'],
+      judulMateri: json['judul_materi'],
+      linkMateri: json['link_materi'],
+      createdAt: json['created_at'],
+      idMateri: json['id_materi'],
+      kodeKelas: json['kode_kelas'],
+    );
+  }
+}
+
+class LinkGame {
+  final String id;
+  final String namaGame;
+  final String linkGame;
+  final String createdAt;
+
+  LinkGame({
+    required this.id,
+    required this.namaGame,
+    required this.linkGame,
+    required this.createdAt,
+  });
+
+  factory LinkGame.fromJson(Map<String, dynamic> json) {
+    return LinkGame(
+      id: json['id'],
+      namaGame: json['nama_game'],
+      linkGame: json['link_game'],
+      createdAt: json['created_at'],
     );
   }
 }
@@ -107,12 +156,16 @@ class UserData {
   final int statusCode;
   final int message;
   final UserDataValues values;
+  final List<LinkMateri> linkMateriFull;
+  final List<LinkGame> linkGame;
 
   UserData({
     required this.status,
     required this.statusCode,
     required this.message,
     required this.values,
+    required this.linkMateriFull,
+    required this.linkGame,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -121,18 +174,7 @@ class UserData {
       statusCode: int.tryParse(json['statusCode'].toString()) ?? 0,
       message: int.tryParse(json['message'].toString()) ?? 0,
       values: json['values'] != null
-          ? UserDataValues(
-              id: json['values']['id'],
-              nisnSiswa: json['values']['nisn_siswa'],
-              password: json['values']['password'],
-              nama: json['values']['nama'],
-              kelas: json['values']['kelas'],
-              materi: json['values']['judul'],
-              link: json['values']['link_materi'],
-              alamat: json['values']['alamat_ortu'],
-              ortu: json['values']['nama_ortu'],
-              Seks: json['values']['jenis_kelamin'],
-            )
+          ? UserDataValues.fromJson(json['values'])
           : UserDataValues(
               id: '',
               nisnSiswa: '',
@@ -143,8 +185,14 @@ class UserData {
               link: '',
               alamat: '',
               ortu: '',
-              Seks: '',
+              seks: '',
             ),
+      linkMateriFull: List<LinkMateri>.from(
+        json['link_materi_full']?.map((x) => LinkMateri.fromJson(x)) ?? [],
+      ),
+      linkGame: List<LinkGame>.from(
+        json['link_game']?.map((x) => LinkGame.fromJson(x)) ?? [],
+      ),
     );
   }
 }
