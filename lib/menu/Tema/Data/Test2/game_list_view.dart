@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import '../Game/Game1.dart';
+import 'package:project_hallo_ivy/login.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Game/TestGame.dart';
 import 'design_course_app_theme.dart';
-import 'models/category.dart';
 
 class GameListView extends StatefulWidget {
-  const GameListView({Key? key, this.callBack}) : super(key: key);
+  const GameListView(
+      {Key? key, this.callBack, required this.userData, required this.dataGame})
+      : super(key: key);
+
+  final UserData userData;
+  final List<LinkGame> dataGame;
 
   final Function()? callBack;
   @override
@@ -48,9 +53,8 @@ class _GameListViewState extends State<GameListView>
             } else {
               // Menggabungkan hasil dari getGame dan getGame2 ke dalam satu daftar
               List<Widget> gameWidgets = [];
-              for (int index = 0; index < Category.gameList.length; index++) {
-                gameWidgets.add(getGame(index));
-                gameWidgets.add(getGame2(index));
+              for (int index = 0; index < widget.dataGame.length; index++) {
+                gameWidgets.add(getGame(widget.dataGame[index], index));
               }
               return ListView.builder(
                 padding: const EdgeInsets.only(
@@ -69,21 +73,19 @@ class _GameListViewState extends State<GameListView>
     );
   }
 
-  Widget getGame(int index) {
-    // Tambahkan argumen index di sini
-    final int count =
-        Category.gameList.length > 10 ? 10 : Category.gameList.length;
+  Widget getGame(LinkGame game, int index) {
+    // Tambahkan argumen indeks di sini
+    final int count = widget.dataGame.length > 10 ? 10 : widget.dataGame.length;
     final Animation<double> animation =
         Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController!,
-        curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn),
+        curve: Interval((widget.dataGame.length / count) * index, 1.0,
+            curve: Curves.fastOutSlowIn),
       ),
     );
     animationController?.forward();
-
     return gameView(
-      category: Category.gameList[index],
       animation: animation,
       animationController: animationController,
       callback: widget.callBack,
@@ -91,59 +93,35 @@ class _GameListViewState extends State<GameListView>
         Navigator.push<dynamic>(
           context,
           MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => const Game1(
+            builder: (BuildContext context) => GameTest(
+              userData: widget.userData,
+              dataGame: widget.dataGame[index], // Ambil data game sesuai indeks
             ),
           ),
         );
       },
-    );
-  }
-
-  Widget getGame2(int index) {
-    // Tambahkan argumen index di sini
-    final int count =
-        Category.game1List.length > 10 ? 10 : Category.game1List.length;
-    final Animation<double> animation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: animationController!,
-        curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn),
-      ),
-    );
-    animationController?.forward();
-    return gameView(
-      category: Category.game1List[index],
-      animation: animation,
-      animationController: animationController,
-      callback: widget.callBack,
-      onTap: () {
-        Navigator.push<dynamic>(
-          context,
-          MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => const Game1(
-            ),
-          ),
-        );
-      },
+      dataGame: widget.dataGame[index],
     );
   }
 }
 
 class gameView extends StatelessWidget {
-  const gameView(
-      {Key? key,
-      this.category,
-      this.animationController,
-      this.animation,
-      this.callback,
-       required this.onTap, })
-      : super(key: key);
+  const gameView({
+    Key? key,
+    // this.category,
+    this.animationController,
+    this.animation,
+    this.callback,
+    required this.onTap,
+    required this.dataGame,
+  }) : super(key: key);
 
   final VoidCallback? callback;
-  final Category? category;
+  // final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
-    final VoidCallback onTap; 
+  final VoidCallback onTap;
+  final LinkGame dataGame;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +166,7 @@ class gameView extends StatelessWidget {
                                             padding:
                                                 const EdgeInsets.only(top: 16),
                                             child: Text(
-                                              category!.title,
+                                              dataGame.namaGame,
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
@@ -310,17 +288,17 @@ class gameView extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 24, bottom: 24, left: 16),
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 24, bottom: 24, left: 16),
                         child: Row(
                           children: <Widget>[
                             ClipRRect(
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
+                                  BorderRadius.all(Radius.circular(16.0)),
                               child: AspectRatio(
-                                  aspectRatio: 1.0,
-                                  child: Image.asset(category!.imagePath)),
+                                aspectRatio: 1.0,
+                                child: Image(image: AssetImage('assets/design_course/interFace2.png')),
+                              ),
                             )
                           ],
                         ),

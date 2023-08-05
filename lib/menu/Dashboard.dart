@@ -15,7 +15,7 @@ class DashboardHome extends StatefulWidget {
       {super.key,
       required this.username,
       required this.password,
-      required this.userData, required userDataMateri,
+      required this.userData, required userDataMateri,required List<LinkGame> dataGame,
      });
   final String username;
   final String password;
@@ -49,7 +49,7 @@ class _DashboardHomeState extends State<DashboardHome>
     tabBody = DesignCourseHomeScreen(
       animationController: animationController, password: widget.password,
       userData: widget.userData, // Gunakan userData dari widget ini
-      username: widget.username,
+      username: widget.username, dataGame: widget.userData.linkGame,
     );
     super.initState();
   }
@@ -111,7 +111,7 @@ class _DashboardHomeState extends State<DashboardHome>
                     password: widget.password,
                     userData:
                         widget.userData,// Gunakan userData dari widget ini
-                    username: widget.username,
+                    username: widget.username, dataGame: widget.userData.linkGame,
                   );
                 });
               });

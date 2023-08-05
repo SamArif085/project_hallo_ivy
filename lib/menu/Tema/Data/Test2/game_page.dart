@@ -10,7 +10,7 @@ class GamePage extends StatefulWidget {
       context,
       MaterialPageRoute(
         builder: (context) => GameTest(
-         userData: userData,
+          userData: userData,
           dataGame: game,
         ),
       ),
@@ -47,13 +47,14 @@ class _GamePageState extends State<GamePage> {
             for (var game in widget.dataGame)
               CustomCard(
                 key: Key(game.id),
-                title: game.namaGame,
+                // title: game.namaGame,
                 image:
                     "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1",
                 userData: widget.userData,
                 onTap: () {
                   widget.navigateToDetail(context, game);
                 },
+                dataGame: game,
               ),
           ],
         ),
@@ -65,15 +66,17 @@ class _GamePageState extends State<GamePage> {
 class CustomCard extends StatelessWidget {
   final VoidCallback onTap;
   final UserData userData;
+  final LinkGame dataGame;
   CustomCard({
     super.key,
-    required this.title,
+    // required this.title,
     required this.image,
     required this.onTap,
     required this.userData,
+    required this.dataGame,
   });
 
-  String title;
+  // String title;
   String image;
   @override
   Widget build(BuildContext context) {
@@ -108,8 +111,7 @@ class CustomCard extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Center(
                 child: Text(
-                  title,
-                  textAlign: TextAlign.center,
+                  dataGame.namaGame,
                 ),
               ),
             )

@@ -36,6 +36,7 @@ class LoginController extends GetxController {
             password: passwordController.text,
             userData: userData,
             userDataMateri: userData.linkMateriFull,
+            dataGame: userData.linkGame,
             // userDataMateri: userData.values.linkMateriFull, // Kirim data userData ke halaman berikutnya
           ));
     } else {

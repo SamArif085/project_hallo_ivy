@@ -13,13 +13,14 @@ class DesignCourseHomeScreen extends StatefulWidget {
   final String username;
   final String password;
   final UserData userData;
+    final List<LinkGame> dataGame;
 
   const DesignCourseHomeScreen({
     Key? key,
     this.animationController,
     required this.username,
     required this.password,
-    required this.userData,
+    required this.userData, required this.dataGame,
   }) : super(key: key);
   final AnimationController? animationController;
 
@@ -147,7 +148,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             child: GameListView(
               callBack: () {
                 moveTo();
-              },
+              }, dataGame: widget.dataGame, userData: widget.userData,
             ),
           ),
         ],
