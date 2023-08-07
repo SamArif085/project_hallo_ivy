@@ -1,6 +1,8 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'design_course_app_theme.dart';
 import 'package:video_player/video_player.dart';
@@ -209,9 +211,34 @@ class _VideoScreenState extends State<VideoScreen>
                             child: AnimatedOpacity(
                               duration: const Duration(milliseconds: 500),
                               opacity: opacity2,
-                              child: const Padding(
+                              child: Padding(
                                 padding: EdgeInsets.only(
                                     left: 16, right: 16, top: 8, bottom: 8),
+                                child: Container(
+                                  height: 300,
+                                  child: SfCartesianChart(
+                                    primaryXAxis:
+                                        CategoryAxis(), // Menggunakan axis kategori di sumbu X
+                                    primaryYAxis:
+                                        NumericAxis(), // Menggunakan axis numerik di sumbu Y
+                                    series: <ChartSeries>[
+                                      ColumnSeries<Map, String>(
+                                        color: HexColor('#85f29d'),
+                                        dataSource: [
+                                          {'x': 'A', 'y': 10},
+                                          {'x': 'B', 'y': 15},
+                                          {'x': 'C', 'y': 15},
+                                          {'x': 'D', 'y': 15},
+                                          // Tambahkan data lainnya sesuai kebutuhan
+                                        ],
+                                        xValueMapper: (Map data, _) =>
+                                            data['x'],
+                                        yValueMapper: (Map data, _) =>
+                                            data['y'],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 // child: Text(
                                 //   'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
                                 //   textAlign: TextAlign.justify,
