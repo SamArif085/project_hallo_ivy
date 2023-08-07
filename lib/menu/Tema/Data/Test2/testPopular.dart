@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/login.dart';
 
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
 
@@ -8,12 +11,15 @@ import 'design_course_app_theme.dart';
 import 'models/category.dart';
 
 class TestPopularView extends StatefulWidget {
-  const TestPopularView({Key? key, this.callBack}) : super(key: key);
+  const TestPopularView({Key? key, this.callBack, required this.userData, required this.dataTugas}) : super(key: key);
+  final UserData userData;
+  final List<Linktugasrumah> dataTugas;
   final Function()? callBack;
 
   @override
   _TestPopularViewState createState() => _TestPopularViewState();
 }
+
 
 class _TestPopularViewState extends State<TestPopularView>
     with TickerProviderStateMixin {
@@ -90,7 +96,7 @@ class _TestPopularViewState extends State<TestPopularView>
             Navigator.push<dynamic>(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const PRHome(),
+                builder: (BuildContext context) => PRHome(userData: widget.userData, dataTugas: widget.dataTugas,),
               ),
             );
           },

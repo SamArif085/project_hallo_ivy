@@ -1,6 +1,7 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'design_course_app_theme.dart';
 import 'package:video_player/video_player.dart';
@@ -209,22 +210,33 @@ class _VideoScreenState extends State<VideoScreen>
                             child: AnimatedOpacity(
                               duration: const Duration(milliseconds: 500),
                               opacity: opacity2,
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: 8, bottom: 8),
-                                // child: Text(
-                                //   'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                //   textAlign: TextAlign.justify,
-                                //   style: TextStyle(
-                                //     fontWeight: FontWeight.w200,
-                                //     fontSize: 14,
-                                //     letterSpacing: 0.27,
-                                //     color: DesignCourseAppTheme.grey,
-                                //   ),
-                                //   maxLines: 3,
-                                //   overflow: TextOverflow.ellipsis,
-                                // ),
-                              ),
+                              child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16, right: 16, top: 8, bottom: 8),
+                                  child: Container(
+                          height: 300,
+                          child: Card(
+                            child: SfCartesianChart(
+                              primaryXAxis:
+                                  CategoryAxis(), // Menggunakan axis kategori di sumbu X
+                              primaryYAxis:
+                                  NumericAxis(), // Menggunakan axis numerik di sumbu Y
+                              series: <ChartSeries>[
+                                ColumnSeries<Map, String>(
+                                  dataSource: [
+                                    {'x': 'A', 'y': 10},
+                                    {'x': 'B', 'y': 15},
+                                    {'x': 'C', 'y': 15},
+                                    {'x': 'D', 'y': 15},
+                                    // Tambahkan data lainnya sesuai kebutuhan
+                                  ],
+                                  xValueMapper: (Map data, int index ) => data['x'],
+                                  yValueMapper: (Map data, int index) => data['y'],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),),
                             ),
                           ),
                           AnimatedOpacity(
@@ -333,7 +345,7 @@ class _VideoScreenState extends State<VideoScreen>
             //   ),
             // ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
+              top: (MediaQuery.of(context).size.width / 1.2) - 20.0 - 25,
               right: 10,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -347,6 +359,7 @@ class _VideoScreenState extends State<VideoScreen>
                     child: Row(
                       children: <Widget>[
                         getTimeBoxUI('Diputar', '$_playCount'),
+                         quiz('Quiz'),
                         // getTimeBoxUI('2hours', 'Time'),
                         // getTimeBoxUI('24', 'Seat'),
                         // Text('Play Count: $_playCount'),
@@ -389,7 +402,7 @@ class _VideoScreenState extends State<VideoScreen>
       child: Container(
         decoration: BoxDecoration(
           color: DesignCourseAppTheme.nearlyWhite,
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: DesignCourseAppTheme.grey.withOpacity(0.2),
@@ -400,7 +413,7 @@ class _VideoScreenState extends State<VideoScreen>
         child: Padding(
           padding: const EdgeInsets.only(
               left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -413,15 +426,56 @@ class _VideoScreenState extends State<VideoScreen>
                   letterSpacing: 0.27,
                   color: DesignCourseAppTheme.nearlyBlack,
                 ),
+              ), const SizedBox(
+              width: 3,
               ),
               const SizedBox(
-                height: 10,
+              width: 10,
+                child: Text(':'),
               ),
               Text(
                 txt2,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontWeight: FontWeight.w200,
+                  fontSize: 14,
+                  letterSpacing: 0.27,
+                  color: DesignCourseAppTheme.nearlyBlack,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+    Widget quiz(String text1) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: DesignCourseAppTheme.nearlyWhite,
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: DesignCourseAppTheme.grey.withOpacity(0.2),
+                offset: const Offset(1.1, 1.1),
+                blurRadius: 8.0),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                text1,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
                   color: DesignCourseAppTheme.nearlyBlack,

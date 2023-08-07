@@ -37,6 +37,7 @@ class LoginController extends GetxController {
             userData: userData,
             userDataMateri: userData.linkMateriFull,
             dataGame: userData.linkGame,
+            dataTugas: userData.tugasRumah,
             // userDataMateri: userData.values.linkMateriFull, // Kirim data userData ke halaman berikutnya
           ));
     } else {
@@ -152,6 +153,55 @@ class LinkGame {
   }
 }
 
+class Linktugasrumah {
+  final String id;
+  final String judulPr;
+  final String deskripsi;
+  final String tenggat;
+
+  Linktugasrumah({
+    required this.id,
+    required this.judulPr,
+    required this.deskripsi,
+    required this.tenggat,
+  });
+
+  factory Linktugasrumah.fromJson(Map<String, dynamic> json) {
+    return Linktugasrumah(
+      id: json['id'],
+      judulPr: json['judulPr'],
+      deskripsi: json['deskripsi'],
+      tenggat: json['tenggat'],
+    );
+  }
+}
+
+class Linkquiz {
+  final String iddqm;
+  final String idquiz;
+  final String idmateri;
+  final String pertanyaan;
+  final String jawaban;
+
+   Linkquiz({
+    required this.iddqm,
+    required this.idquiz,
+    required this.idmateri,
+    required this.pertanyaan,
+    required this.jawaban,
+  });
+
+  factory Linkquiz.fromJson(Map<String, dynamic> json) {
+    return Linkquiz(
+      iddqm: json['id_dqm'],
+      idquiz: json['id_quiz'],
+      idmateri: json['id_materi'],
+      pertanyaan: json['pertanyaan'], 
+      jawaban: json['jawaban'],
+    );
+  }
+}
+
 class UserData {
   final bool status;
   final int statusCode;
@@ -159,6 +209,8 @@ class UserData {
   final UserDataValues values;
   final List<LinkMateri> linkMateriFull;
   final List<LinkGame> linkGame;
+  final List<Linktugasrumah> tugasRumah;
+    final List<Linkquiz> quiz;
 
   UserData({
     required this.status,
@@ -167,6 +219,8 @@ class UserData {
     required this.values,
     required this.linkMateriFull,
     required this.linkGame,
+    required this.tugasRumah,
+     required this.quiz,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -194,6 +248,12 @@ class UserData {
       linkGame: List<LinkGame>.from(
         json['link_game']?.map((x) => LinkGame.fromJson(x)) ?? [],
       ),
+      tugasRumah: List<Linktugasrumah>.from(
+        json['tugas_rumah']?.map((x) => Linktugasrumah.fromJson(x)) ?? [],
+      ),
+      quiz: List<Linkquiz>.from(
+        json['quiz']?.map((x) => Linkquiz.fromJson(x)) ?? [],
+      )
     );
   }
 }

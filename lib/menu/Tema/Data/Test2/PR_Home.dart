@@ -1,8 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
 
 class PRHome extends StatelessWidget {
-  const PRHome({super.key});
+  const PRHome({super.key, required this.userData, required this.dataTugas});
+  final UserData userData;
+  final List<Linktugasrumah> dataTugas; // Perubahan pada bagian ini
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +22,13 @@ class PRHome extends StatelessWidget {
           child: Container(
             width: 350.0,
             height: 350.0,
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: CustomCard(
-                title: "Tugas Rumah",
-                text:
-                    "Lorem ipsum dolor silicitudin hendrerit sed quis est. Cras accumsan consequat faucibus. Nullam ornare, ipsum eu convallis bibendum, metus lorem laoreet lectehicula lorem orci nec orci. Suspendisse potenti. Proin laoreet",
-                deadln: "31 Desember 2022"),
+              title: userData.tugasRumah[0].judulPr, // Tambahkan judul yang sesuai di sini
+              text:
+                 userData.tugasRumah[0].deskripsi,
+              deadln: userData.tugasRumah[0].tenggat,
+            ),
           ),
         ),
       ),
@@ -32,11 +37,7 @@ class PRHome extends StatelessWidget {
 }
 
 class CustomCard extends StatelessWidget {
-  CustomCard(
-      {super.key,
-      required this.title,
-      required this.text,
-      required this.deadln});
+  CustomCard({super.key, required this.title, required this.text, required this.deadln});
   String title;
   String text;
   String deadln;
@@ -44,7 +45,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
+        borderRadius: BorderRadius.circular(5.0),
       ),
       elevation: 7,
       child: Column(
@@ -57,7 +58,7 @@ class CustomCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -82,7 +83,7 @@ class CustomCard extends StatelessWidget {
                 child: Text(
                   deadln,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                   ),
                 ),
@@ -92,6 +93,5 @@ class CustomCard extends StatelessWidget {
         ],
       ),
     );
-    // );
   }
 }

@@ -98,6 +98,7 @@ class _DefaultPlayerState extends State<VideoApp> {
               ),
             ),
           ),
+          
         ],
       ),
       bottomNavigationBar: BottomAppBar(

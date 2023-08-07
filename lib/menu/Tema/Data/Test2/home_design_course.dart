@@ -13,14 +13,17 @@ class DesignCourseHomeScreen extends StatefulWidget {
   final String username;
   final String password;
   final UserData userData;
-    final List<LinkGame> dataGame;
+  final List<LinkGame> dataGame;
+  final List<Linktugasrumah> dataTugas;
 
   const DesignCourseHomeScreen({
     Key? key,
     this.animationController,
     required this.username,
     required this.password,
-    required this.userData, required this.dataGame,
+    required this.userData, 
+    required this.dataGame, 
+    required this.dataTugas, 
   }) : super(key: key);
   final AnimationController? animationController;
 
@@ -128,8 +131,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               },
             ),
           ),
-          const Flexible(
-            child: TestPopularView(),
+            Flexible(
+            child: TestPopularView(userData: widget.userData, dataTugas: widget.dataTugas,),
           ),
           const SizedBox(
             height: 10,
@@ -241,7 +244,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => const PRHome(),
+        builder: (BuildContext context) => PRHome(userData: widget.userData, dataTugas: widget.dataTugas,),
       ),
     );
   }

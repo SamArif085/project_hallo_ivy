@@ -39,7 +39,7 @@ class TabIconData {
       animationController: null,
     ),
     TabIconData(
-      imagePath: 'assets/fitness_app/tab_4.png',
+      imagePath: 'assets/icon/usertest.png',
       selectedImagePath: 'assets/fitness_app/tab_4s.png',
       index: 3,
       isSelected: false,
