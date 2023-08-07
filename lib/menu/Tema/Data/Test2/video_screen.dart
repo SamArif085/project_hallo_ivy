@@ -1,6 +1,7 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'design_course_app_theme.dart';
@@ -211,32 +212,34 @@ class _VideoScreenState extends State<VideoScreen>
                               duration: const Duration(milliseconds: 500),
                               opacity: opacity2,
                               child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16, right: 16, top: 8, bottom: 8),
-                                  child: Container(
-                          height: 300,
-                          child: Card(
-                            child: SfCartesianChart(
-                              primaryXAxis:
-                                  CategoryAxis(), // Menggunakan axis kategori di sumbu X
-                              primaryYAxis:
-                                  NumericAxis(), // Menggunakan axis numerik di sumbu Y
-                              series: <ChartSeries>[
-                                ColumnSeries<Map, String>(
-                                  dataSource: [
-                                    {'x': 'A', 'y': 10},
-                                    {'x': 'B', 'y': 15},
-                                    {'x': 'C', 'y': 15},
-                                    {'x': 'D', 'y': 15},
-                                    // Tambahkan data lainnya sesuai kebutuhan
-                                  ],
-                                  xValueMapper: (Map data, int index ) => data['x'],
-                                  yValueMapper: (Map data, int index) => data['y'],
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 8, bottom: 8),
+                                child: Container(
+                                  height: 300,
+                                  child: SfCartesianChart(
+                                    primaryXAxis:
+                                        CategoryAxis(), // Menggunakan axis kategori di sumbu X
+                                    primaryYAxis:
+                                        NumericAxis(), // Menggunakan axis numerik di sumbu Y
+                                    series: <ChartSeries>[
+                                      ColumnSeries<Map, String>(
+                                        color: HexColor('#85f29d'),
+                                        dataSource: [
+                                          {'x': 'A', 'y': 10},
+                                          {'x': 'B', 'y': 15},
+                                          {'x': 'C', 'y': 15},
+                                          {'x': 'D', 'y': 15},
+                                          // Tambahkan data lainnya sesuai kebutuhan
+                                        ],
+                                        xValueMapper: (Map data, int index) =>
+                                            data['x'],
+                                        yValueMapper: (Map data, int index) =>
+                                            data['y'],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),),
+                              ),
                             ),
                           ),
                           AnimatedOpacity(
@@ -359,7 +362,7 @@ class _VideoScreenState extends State<VideoScreen>
                     child: Row(
                       children: <Widget>[
                         getTimeBoxUI('Diputar', '$_playCount'),
-                         quiz('Quiz'),
+                        quiz('Quiz'),
                         // getTimeBoxUI('2hours', 'Time'),
                         // getTimeBoxUI('24', 'Seat'),
                         // Text('Play Count: $_playCount'),
@@ -426,11 +429,12 @@ class _VideoScreenState extends State<VideoScreen>
                   letterSpacing: 0.27,
                   color: DesignCourseAppTheme.nearlyBlack,
                 ),
-              ), const SizedBox(
-              width: 3,
               ),
               const SizedBox(
-              width: 10,
+                width: 3,
+              ),
+              const SizedBox(
+                width: 10,
                 child: Text(':'),
               ),
               Text(
@@ -450,12 +454,12 @@ class _VideoScreenState extends State<VideoScreen>
     );
   }
 
-    Widget quiz(String text1) {
+  Widget quiz(String text1) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: DesignCourseAppTheme.nearlyWhite,
+          color: HexColor('#85f29d'),
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(

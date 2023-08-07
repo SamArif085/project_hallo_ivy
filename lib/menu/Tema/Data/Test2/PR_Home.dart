@@ -67,10 +67,10 @@ class CustomCard extends StatelessWidget {
             flex: 3,
             child: Container(
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   text,
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
               ),
             ),
