@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', // Atur rute awal aplikasi (biasanya '/' untuk halaman beranda)
       routes: {
         '/': (context) =>  LoginPage(), // Rute untuk halaman beranda
-        '/quiz': (context) => const HomePage(), // Rute untuk halaman kuis, sesuaikan dengan halaman kuis Anda jika berbeda
+        // '/quiz': (context) => HomePage(), // Rute untuk halaman kuis, sesuaikan dengan halaman kuis Anda jika berbeda
         // Jika Anda memiliki halaman lain, Anda dapat menambahkan rute lain di sini
       }, 
     );
