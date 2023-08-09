@@ -38,6 +38,7 @@ class LoginController extends GetxController {
             userDataMateri: userData.linkMateriFull,
             dataGame: userData.linkGame,
             dataTugas: userData.tugasRumah,
+            dataQuiz : userData.dataQuiz
             // userDataMateri: userData.values.linkMateriFull, // Kirim data userData ke halaman berikutnya
           ));
     } else {
@@ -182,6 +183,7 @@ class Linkquiz {
   final String idmateri;
   final String pertanyaan;
   final String jawaban;
+  final String imagelink;
 
    Linkquiz({
     required this.iddqm,
@@ -189,6 +191,7 @@ class Linkquiz {
     required this.idmateri,
     required this.pertanyaan,
     required this.jawaban,
+    required this.imagelink, 
   });
 
   factory Linkquiz.fromJson(Map<String, dynamic> json) {
@@ -198,6 +201,7 @@ class Linkquiz {
       idmateri: json['id_materi'],
       pertanyaan: json['pertanyaan'], 
       jawaban: json['jawaban'],
+      imagelink: json['image'],
     );
   }
 }
@@ -210,7 +214,7 @@ class UserData {
   final List<LinkMateri> linkMateriFull;
   final List<LinkGame> linkGame;
   final List<Linktugasrumah> tugasRumah;
-    final List<Linkquiz> quiz;
+  final List<Linkquiz> dataQuiz;
 
   UserData({
     required this.status,
@@ -220,7 +224,7 @@ class UserData {
     required this.linkMateriFull,
     required this.linkGame,
     required this.tugasRumah,
-     required this.quiz,
+     required this.dataQuiz,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -251,7 +255,7 @@ class UserData {
       tugasRumah: List<Linktugasrumah>.from(
         json['tugas_rumah']?.map((x) => Linktugasrumah.fromJson(x)) ?? [],
       ),
-      quiz: List<Linkquiz>.from(
+      dataQuiz: List<Linkquiz>.from(
         json['quiz']?.map((x) => Linkquiz.fromJson(x)) ?? [],
       )
     );

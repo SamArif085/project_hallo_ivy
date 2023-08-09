@@ -1,32 +1,30 @@
+import '../data/data.dart';
+
 class QuestionModel {
   String question;
   String answer;
   String imageUrl;
 
-  QuestionModel({required this.question, required this.answer, this.imageUrl = ''});
+  QuestionModel(
+      {required this.question, required this.answer, this.imageUrl = ''});
 
-  void setQuestion(String getQuestion){
-    question = getQuestion;
-  }
-
-  void setAnswer(String getAnswer){
+  void setAnswer(String getAnswer) {
     answer = getAnswer;
   }
 
-  void setImageUrl(String getImageUrl){
+  void setImageUrl(String getImageUrl) {
     imageUrl = getImageUrl;
   }
 
-  String getQuestion(){
+  String getQuestion() {
     return question;
   }
 
-  String getAnswer(){
+  String getAnswer() {
     return answer;
   }
 
-  String getImageUrl(){
+  String getImageUrl() {
     return imageUrl;
   }
-
 }

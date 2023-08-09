@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/data/data.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/models/question_model.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/result.dart';
 
 class PlayQuiz extends StatefulWidget {
-  const PlayQuiz({super.key});
+  final UserData userData; // Add this line
+
+  const PlayQuiz({required this.userData, Key? key}) : super(key: key);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -20,11 +23,8 @@ class _PlayQuizState extends State<PlayQuiz>
   int incorrect = 0;
 
   late AnimationController controller;
-
   late Animation animation;
-
   double beginAnim = 0.0;
-
   double endAnim = 1.0;
 
   void replayQuiz(BuildContext context) {
@@ -45,7 +45,7 @@ class _PlayQuizState extends State<PlayQuiz>
   void initState() {
     super.initState();
 
-    questions = getQuestions();
+    questions = getQuestions(widget.userData);
 
     controller =
         AnimationController(duration: const Duration(seconds: 10), vsync: this);
@@ -73,6 +73,7 @@ class _PlayQuizState extends State<PlayQuiz>
                         totalQuestion: questions.length,
                         correct: correct,
                         incorrect: incorrect,
+                        userData: widget.userData,
                       )));
         }
       }
@@ -105,6 +106,7 @@ class _PlayQuizState extends State<PlayQuiz>
                     totalQuestion: questions.length,
                     correct: correct,
                     incorrect: incorrect,
+                    userData: widget.userData,
                   )));
     }
   }
@@ -181,9 +183,10 @@ class _PlayQuizState extends State<PlayQuiz>
               height: 20,
             ),
             Container(
-                child: LinearProgressIndicator(
-              value: animation.value,
-            )),
+              child: LinearProgressIndicator(
+                value: animation.value,
+              ),
+            ),
             FractionallySizedBox(
               widthFactor: 0.8, // Ukuran gambar sebesar 80% lebar layar
               child:
@@ -196,72 +199,74 @@ class _PlayQuizState extends State<PlayQuiz>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      if (questions[index].getAnswer() == "True") {
-                        setState(() {
-                          points = points + 20;
-                          nextQuestion();
-                          correct++;
-                        });
-                      } else {
-                        setState(() {
-                          points = points - 5;
-                          nextQuestion();
-                          incorrect++;
-                        });
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                          color: Colors.lightBlue,
-                          borderRadius: BorderRadius.circular(24)),
-                      child: const Text(
-                        "True",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400),
-                        textAlign: TextAlign.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (questions[index].getAnswer() == "True") {
+                          setState(() {
+                            points = points + 20;
+                            nextQuestion();
+                            correct++;
+                          });
+                        } else {
+                          setState(() {
+                            points = points - 5;
+                            nextQuestion();
+                            incorrect++;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                            color: Colors.lightBlue,
+                            borderRadius: BorderRadius.circular(24)),
+                        child: const Text(
+                          "True",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                   const SizedBox(
                     width: 20,
                   ),
                   Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      if (questions[index].getAnswer() == "False") {
-                        setState(() {
-                          points = points + 20;
-                          nextQuestion();
-                          correct++;
-                        });
-                      } else {
-                        setState(() {
-                          points = points - 5;
-                          nextQuestion();
-                          incorrect++;
-                        });
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(24)),
-                      child: const Text(
-                        "False",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400),
-                        textAlign: TextAlign.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (questions[index].getAnswer() == "False") {
+                          setState(() {
+                            points = points + 20;
+                            nextQuestion();
+                            correct++;
+                          });
+                        } else {
+                          setState(() {
+                            points = points - 5;
+                            nextQuestion();
+                            incorrect++;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(24)),
+                        child: const Text(
+                          "False",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               ),
             )
