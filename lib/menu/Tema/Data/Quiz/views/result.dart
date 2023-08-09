@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
+void replayQuiz(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PlayQuiz(),
+      ),
+    );
+  }
 
-// Inisialisasi objek userData
-void replayQuiz(BuildContext context, UserData userData) {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => PlayQuiz(userData: userData),
-    ),
-  );
-}
-
-void Home(BuildContext context, UserData userData) {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => HomePage(userData: userData),
-    ),
-  );
-}
+  void Home(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePage(),
+      ),
+    );
+  }
 
 class Result extends StatelessWidget {
   final int score;
   final int totalQuestion;
   final int correct;
   final int incorrect;
-  final UserData userData; // Add this line
 
-  const Result({
-    Key? key,
+  const Result({super.key, 
     required this.score,
     required this.totalQuestion,
     required this.correct,
     required this.incorrect,
-    required this.userData, // Add this line
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +50,17 @@ class Result extends StatelessWidget {
             Text('Total Questions: $totalQuestion'),
             Text('Correct Answers: $correct'),
             Text('Incorrect Answers: $incorrect'),
-            ElevatedButton(
+               ElevatedButton(
               onPressed: () {
                 // Ketika tombol "Play Again" ditekan, panggil fungsi untuk mengulang kuis.
-                Home(context, userData);
+                replayQuiz(context);
+              },
+              child: const Text('Play Again'),
+            ),
+             ElevatedButton(
+              onPressed: () {
+                // Ketika tombol "Play Again" ditekan, panggil fungsi untuk mengulang kuis.
+                Home(context);
               },
               child: const Text('Home'),
             ),

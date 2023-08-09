@@ -18,8 +18,7 @@ class DashboardHome extends StatefulWidget {
       required this.userData, 
       required userDataMateri,
       required List<LinkGame> dataGame,
-      required List<Linktugasrumah> dataTugas, 
-      required List<Linkquiz> dataQuiz,
+      required List<Linktugasrumah> dataTugas
      });
   final String username;
   final String password;

@@ -253,7 +253,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => PlayQuiz(userData: widget.userData,),
+        builder: (BuildContext context) => const PlayQuiz(),
       ),
     );
   }
