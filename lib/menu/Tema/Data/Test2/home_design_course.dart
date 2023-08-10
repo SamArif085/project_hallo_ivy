@@ -240,7 +240,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  void PRMove() {
+  void prmove() {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
@@ -249,7 +249,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  void QuizMove() {
+  void quizmove() {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(

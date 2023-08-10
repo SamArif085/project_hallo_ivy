@@ -7,8 +7,7 @@ import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/result.dart';
 
 class PlayQuiz extends StatefulWidget {
   final UserData userData; // Add this line
-
-  const PlayQuiz({required this.userData, Key? key}) : super(key: key);
+   PlayQuiz({required this.userData, Key? key}) : super(key: key);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -21,6 +20,7 @@ class _PlayQuizState extends State<PlayQuiz>
   int points = 0;
   int correct = 0;
   int incorrect = 0;
+  late List<Linkquiz> dataQuiz; // Declare dataQuiz here
 
   late AnimationController controller;
   late Animation animation;
@@ -58,26 +58,30 @@ class _PlayQuizState extends State<PlayQuiz>
 
     startProgress();
 
-    animation.addStatusListener((AnimationStatus animationStatus) {
-      if (animationStatus == AnimationStatus.completed) {
-        if (index < questions.length - 1) {
-          index++;
-          resetProgress();
-          startProgress();
-        } else {
-          Navigator.pushReplacement(
+    animation.addStatusListener(
+      (AnimationStatus animationStatus) {
+        if (animationStatus == AnimationStatus.completed) {
+          if (index < questions.length - 1) {
+            index++;
+            resetProgress();
+            startProgress();
+          } else {
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Result(
-                        score: points,
-                        totalQuestion: questions.length,
-                        correct: correct,
-                        incorrect: incorrect,
-                        userData: widget.userData,
-                      )));
+                builder: (context) => Result(
+                  score: points,
+                  totalQuestion: questions.length,
+                  correct: correct,
+                  incorrect: incorrect,
+                  userData: widget.userData,
+                ),
+              ),
+            );
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   startProgress() {
@@ -99,15 +103,17 @@ class _PlayQuizState extends State<PlayQuiz>
       startProgress();
     } else {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Result(
-                    score: points,
-                    totalQuestion: questions.length,
-                    correct: correct,
-                    incorrect: incorrect,
-                    userData: widget.userData,
-                  )));
+        context,
+        MaterialPageRoute(
+          builder: (context) => Result(
+            score: points,
+            totalQuestion: questions.length,
+            correct: correct,
+            incorrect: incorrect,
+            userData: widget.userData,
+          ),
+        ),
+      );
     }
   }
 
@@ -201,7 +207,7 @@ class _PlayQuizState extends State<PlayQuiz>
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (questions[index].getAnswer() == "benar") {
+                        if (questions[index].getAnswer() == widget.userData.dataQuiz[0].jawaban) {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
@@ -220,13 +226,8 @@ class _PlayQuizState extends State<PlayQuiz>
                         decoration: BoxDecoration(
                             color: Colors.lightBlue,
                             borderRadius: BorderRadius.circular(24)),
-                        child: const Text(
-                          "True",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w400),
-                          textAlign: TextAlign.center,
+                        child: const Icon(
+                          Icons.thumb_up_outlined,
                         ),
                       ),
                     ),
@@ -237,7 +238,7 @@ class _PlayQuizState extends State<PlayQuiz>
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (questions[index].getAnswer() == "salah") {
+                        if (questions[index].getAnswer() == "false") {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
@@ -256,13 +257,9 @@ class _PlayQuizState extends State<PlayQuiz>
                         decoration: BoxDecoration(
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(24)),
-                        child: const Text(
-                          "False",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w400),
-                          textAlign: TextAlign.center,
+                        child: const Icon(
+                          Icons.thumb_down_outlined,
+                         
                         ),
                       ),
                     ),

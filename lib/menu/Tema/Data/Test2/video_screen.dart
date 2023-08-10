@@ -1,6 +1,7 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -139,7 +140,7 @@ class _VideoScreenState extends State<VideoScreen>
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 32.0, left: 18, right: 16),
+                                top: 20.0, left: 18, right: 16),
                             child: Text(
                               widget.userData.values.materi,
                               textAlign: TextAlign.left,
@@ -213,7 +214,7 @@ class _VideoScreenState extends State<VideoScreen>
                               opacity: opacity2,
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 8, bottom: 8),
+                                    left: 16, right: 16, top: 35, bottom: 8),
                                 child: Container(
                                   height: 300,
                                   child: SfCartesianChart(
@@ -348,8 +349,37 @@ class _VideoScreenState extends State<VideoScreen>
             //   ),
             // ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 20.0 - 25,
-              right: 10,
+              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+              right: 0,
+              child: ScaleTransition(
+                alignment: Alignment.center,
+                scale: CurvedAnimation(
+                    parent: animationController!, curve: Curves.fastOutSlowIn),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: opacity1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: <Widget>[
+                        quiz('Quiz', () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HomePage(userData: widget.userData),
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+              left: 0,
               child: ScaleTransition(
                 alignment: Alignment.center,
                 scale: CurvedAnimation(
@@ -362,10 +392,6 @@ class _VideoScreenState extends State<VideoScreen>
                     child: Row(
                       children: <Widget>[
                         getTimeBoxUI('Diputar', '$_playCount'),
-                        quiz('Quiz'),
-                        // getTimeBoxUI('2hours', 'Time'),
-                        // getTimeBoxUI('24', 'Seat'),
-                        // Text('Play Count: $_playCount'),
                       ],
                     ),
                   ),
@@ -454,38 +480,46 @@ class _VideoScreenState extends State<VideoScreen>
     );
   }
 
-  Widget quiz(String text1) {
+  Widget quiz(String text, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: HexColor('#85f29d'),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: HexColor('#85f29d'),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
                 color: DesignCourseAppTheme.grey.withOpacity(0.2),
                 offset: const Offset(1.1, 1.1),
-                blurRadius: 8.0),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                text1,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  letterSpacing: 0.27,
-                  color: DesignCourseAppTheme.nearlyBlack,
-                ),
+                blurRadius: 8.0,
               ),
             ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 18.0,
+              right: 18.0,
+              top: 12.0,
+              bottom: 12.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    letterSpacing: 0.27,
+                    color: DesignCourseAppTheme.nearlyBlack,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

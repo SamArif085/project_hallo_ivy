@@ -11,7 +11,7 @@ class Category {
   static List<Category> categoryList = <Category>[
     Category(
       imagePath: 'assets/design_course/interFace2.png',
-      title: 'Materi Tema 1',
+      title: 'Materi Tema',
     ),
   ];
 

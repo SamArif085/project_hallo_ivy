@@ -67,6 +67,7 @@ class _LaporanListState extends State<LaporanList> {
   }
 }
 
+// ignore: must_be_immutable
 class CustomCard extends StatelessWidget {
   final VoidCallback onTap;
   // void navigateToDetail(
