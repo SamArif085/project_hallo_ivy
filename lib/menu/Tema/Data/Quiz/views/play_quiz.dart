@@ -201,7 +201,7 @@ class _PlayQuizState extends State<PlayQuiz>
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (questions[index].getAnswer() == "True") {
+                        if (questions[index].getAnswer() == "benar") {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
@@ -237,7 +237,7 @@ class _PlayQuizState extends State<PlayQuiz>
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (questions[index].getAnswer() == "False") {
+                        if (questions[index].getAnswer() == "salah") {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
