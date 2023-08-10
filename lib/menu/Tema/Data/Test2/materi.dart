@@ -129,7 +129,7 @@ class CustomCard extends StatelessWidget {
             Container(
               // decoration: BoxDecoration(color: HexColor('#85f29d')),
               padding: const EdgeInsets.only(
-                  top: 10, bottom: 10, left: 40, right: 40),
+                  top: 10, bottom: 10, left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

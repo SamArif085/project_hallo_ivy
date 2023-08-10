@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/laporantema.dart';
-import '../Test/bottom_navigation_view/bottom_bar_view.dart';
+// import '../Test/bottom_navigation_view/bottom_bar_view.dart';
+import 'design_course_app_theme.dart';
 
 class LaporanList extends StatefulWidget {
   void navigateToDetail(BuildContext context, LinkMateri materi) {
-    // Navigasi ke halaman detail dan kirim data materi yang dipilih
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -36,19 +36,16 @@ class _LaporanListState extends State<LaporanList> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
-        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Padding(
-          padding: EdgeInsets.only(right: 50),
-          child: Center(child: Text('Materi')),
-        ),
+        backgroundColor: DesignCourseAppTheme.nearlyWhite,
+        title: Text('Laporan'),
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: BoxDecoration(color: DesignCourseAppTheme.nearlyWhite),
         child: ListView(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 8),
           children: <Widget>[
             for (var materi in widget.userDataMateri)
+              // if (materi.status == "1")
               CustomCard(
                 key: Key(materi.id),
                 title: materi.judulMateri,
@@ -129,26 +126,11 @@ class CustomCard extends StatelessWidget {
             Container(
               // decoration: BoxDecoration(color: HexColor('#85f29d')),
               padding: const EdgeInsets.only(
-                  top: 10, bottom: 10, left: 40, right: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(
-                    child: status == "1"
-                        ? Image.asset(
-                            'assets/icon/unlock_icon.png',
-                            height: 20,
-                          )
-                        : Image.asset(
-                            'assets/icon/lock_icon.png',
-                            height: 20,
-                          ),
-                  ),
-                ],
+                  top: 10, bottom: 10, left: 20, right: 20),
+              child: Center(
+                child: Text(
+                  title,
+                ),
               ),
             )
           ],
