@@ -5,7 +5,6 @@ import 'design_course_app_theme.dart';
 
 class GamePage extends StatefulWidget {
   void navigateToDetail(BuildContext context, LinkGame game) {
-    // Navigasi ke halaman detail dan kirim data materi yang dipilih
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -81,7 +80,7 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+      padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
