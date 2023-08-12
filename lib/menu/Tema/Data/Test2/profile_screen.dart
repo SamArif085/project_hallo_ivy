@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_hallo_ivy/login.dart';
@@ -30,7 +32,6 @@ class UserProfilePage extends StatelessWidget {
         child: ListView(
           children: [
             userBar(
-            
               nama: userData.values.nama,
             ),
             buildInfo(
@@ -60,6 +61,7 @@ class UserProfilePage extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class userBar extends StatelessWidget {
   String nama;
   userBar({super.key, required this.nama});
@@ -93,8 +95,11 @@ class userBar extends StatelessWidget {
           Flexible(
             flex: 1,
             child: Center(
-              child: Text(nama,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
+              child: Text(
+                nama,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              ),
             ),
           )
         ],
@@ -103,6 +108,7 @@ class userBar extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class buildInfo extends StatelessWidget {
   String label;
   String value;
@@ -114,7 +120,6 @@ class buildInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -127,7 +132,8 @@ class buildInfo extends StatelessWidget {
                 ),
                 child: Text(
                   label,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 )),
             Center(
               child: Padding(
