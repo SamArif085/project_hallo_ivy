@@ -1,7 +1,10 @@
+// ignore_for_file: camel_case_types, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
+import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
 
 // Inisialisasi objek userData
 void replayQuiz(BuildContext context, UserData userData) {
@@ -13,6 +16,7 @@ void replayQuiz(BuildContext context, UserData userData) {
   );
 }
 
+// ignore: non_constant_identifier_names
 void Home(BuildContext context, UserData userData) {
   Navigator.pushReplacement(
     context,
@@ -46,25 +50,127 @@ class Result extends StatelessWidget {
     // Contoh:
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Result'),
+        title: Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 55, 0),
+            child: const Center(
+              child: Text('Result'),
+            )),
+        elevation: 0,
+        backgroundColor: HexColor('#85f29d'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Your Score: $score'),
-            Text('Total Questions: $totalQuestion'),
-            Text('Correct Answers: $correct'),
-            Text('Incorrect Answers: $incorrect'),
-            ElevatedButton(
-              onPressed: () {
-                // Ketika tombol "Play Again" ditekan, panggil fungsi untuk mengulang kuis.
-                Home(context, userData);
-              },
-              child: const Text('Home'),
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: HexColor('#85f29d'),
         ),
+        child: Center(
+          child: Container(
+            height: 350,
+            margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Card(
+              elevation: 7,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Your Score',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    '$score',
+                    style: const TextStyle(
+                      fontSize: 130,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      resultInfo(
+                        value: '$totalQuestion',
+                        color: 'ADC4CE',
+                        info: 'Total',
+                      ),
+                      resultInfo(
+                        value: '$correct',
+                        color: '9BE8D8',
+                        info: 'Correct',
+                      ),
+                      resultInfo(
+                        value: '$incorrect',
+                        color: 'EF6262',
+                        info: 'incorrect',
+                      ),
+                    ],
+                  ),
+                  // nilai seng perlu dirubah
+                  // if (score <= 10)
+                  if (correct <= totalQuestion / 2)
+                    ElevatedButton(
+                      onPressed: () {
+                        Home(context, userData);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: HexColor('F24C3D'),
+                        elevation: 8,
+                      ),
+                      child: const Text(
+                        'Ulang Quiz',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  else
+                    ElevatedButton(
+                      onPressed: () {
+                        Home(context, userData);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: HexColor('85f29d'),
+                        elevation: 8,
+                      ),
+                      child: const Text(
+                        'Next Materi',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class resultInfo extends StatelessWidget {
+  String value;
+  String color;
+  String info;
+  resultInfo(
+      {super.key,
+      required this.value,
+      required this.color,
+      required this.info});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: HexColor(color),
+        ),
+        padding: const EdgeInsets.all(10),
+        child: Text('$info: $value'),
       ),
     );
   }

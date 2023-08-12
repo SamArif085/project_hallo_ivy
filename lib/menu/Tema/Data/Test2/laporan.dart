@@ -97,8 +97,8 @@ class CustomCard extends StatelessWidget {
   String image;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
+    return Container(
+      margin: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
