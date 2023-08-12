@@ -9,7 +9,7 @@ import 'design_course_app_theme.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
-  const VideoScreen({Key? key, required this.userData}) : super(key: key);
+  const VideoScreen({Key? key, required this.userData, required MateriUser userDataMateri}) : super(key: key);
   final UserData userData;
 
   @override

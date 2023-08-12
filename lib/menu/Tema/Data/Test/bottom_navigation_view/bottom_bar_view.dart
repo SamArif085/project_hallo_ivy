@@ -176,7 +176,7 @@ class _BottomBarViewState extends State<BottomBarView>
                               context,
                               MaterialPageRoute(
                                 builder: (context) => MateriPage(
-                                  userData: widget.userData, userDataMateri: widget.userData.linkMateriFull,
+                                  userData: widget.userData, userDataMateri: widget.userData.values.materiuser,
                                 ),
                               ),
                             );

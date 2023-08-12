@@ -15,6 +15,7 @@ class DesignCourseHomeScreen extends StatefulWidget {
   final UserData userData;
   final List<LinkGame> dataGame;
   final List<Linktugasrumah> dataTugas;
+  final MateriUser userDataMateri;
 
   const DesignCourseHomeScreen({
     Key? key,
@@ -24,6 +25,7 @@ class DesignCourseHomeScreen extends StatefulWidget {
     required this.userData, 
     required this.dataGame, 
     required this.dataTugas, 
+    required this.userDataMateri, 
   }) : super(key: key);
   final AnimationController? animationController;
 
@@ -235,7 +237,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       context,
       MaterialPageRoute<dynamic>(
         builder: (BuildContext context) =>
-            VideoScreen(userData: widget.userData),
+            VideoScreen(userData: widget.userData, userDataMateri: widget.userDataMateri,),
       ),
     );
   }

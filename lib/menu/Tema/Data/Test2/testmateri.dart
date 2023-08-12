@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 class TestMateri extends StatefulWidget {
 const TestMateri({super.key, required this.userData, required this.userDataMateri});
  final UserData userData;
-final LinkMateri userDataMateri;
+final MateriUser userDataMateri;
 
 
   @override

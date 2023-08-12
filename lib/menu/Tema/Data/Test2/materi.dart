@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:project_hallo_ivy/login.dart';
 import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testmateri.dart';
 import '../Test/bottom_navigation_view/bottom_bar_view.dart';
+import 'video_screen.dart';
 
 class MateriPage extends StatefulWidget {
-  void navigateToDetail(BuildContext context, LinkMateri materi) {
+  void navigateToDetail(BuildContext context, MateriUser materi) {
     // Navigasi ke halaman detail dan kirim data materi yang dipilih
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => TestMateri(
+        builder: (context) => VideoScreen(
           userData: userData,
           userDataMateri: materi,
         ),
@@ -18,12 +19,13 @@ class MateriPage extends StatefulWidget {
   }
 
   final UserData userData;
-  final List<LinkMateri> userDataMateri;
+  final List<MateriUser> userDataMateri;
   const MateriPage(
       {super.key,
       required this.userData,
-      AnimationController? animationController,
-      required this.userDataMateri});
+      AnimationController? animationController, 
+      required this.userDataMateri,
+      });
 
   @override
   State<MateriPage> createState() => _MateriPageState();
@@ -32,7 +34,6 @@ class MateriPage extends StatefulWidget {
 class _MateriPageState extends State<MateriPage> {
   @override
   Widget build(BuildContext context) {
-    print(widget.userDataMateri.length);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -48,7 +49,7 @@ class _MateriPageState extends State<MateriPage> {
         child: ListView(
           padding: const EdgeInsets.only(top: 20),
           children: <Widget>[
-            for (var materi in widget.userDataMateri)
+            for (var materi in widget.userData.values.materiuser)
               CustomCard(
                 key: Key(materi.id),
                 title: materi.judulMateri,
@@ -57,7 +58,7 @@ class _MateriPageState extends State<MateriPage> {
                     "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1",
                 userData: widget.userData,
                 onTap: () {
-                  widget.navigateToDetail(context, materi);
+                  widget.navigateToDetail(context, materi );
                 },
               ),
           ],

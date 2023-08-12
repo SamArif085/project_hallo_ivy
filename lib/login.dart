@@ -35,7 +35,7 @@ class LoginController extends GetxController {
             username: usernameController.text,
             password: passwordController.text,
             userData: userData,
-            userDataMateri: userData.linkMateriFull,
+            userDataMateri: userData.values.materiuser[0],
             dataGame: userData.linkGame,
             dataTugas: userData.tugasRumah,
             dataQuiz : userData.dataQuiz
@@ -71,6 +71,7 @@ class UserDataValues {
   final String alamat;
   final String ortu;
   final String seks;
+  final List<MateriUser> materiuser;
 
   UserDataValues({
     required this.id,
@@ -83,6 +84,7 @@ class UserDataValues {
     required this.alamat,
     required this.ortu,
     required this.seks,
+    required this.materiuser,
   });
 
   factory UserDataValues.fromJson(Map<String, dynamic> json) {
@@ -96,10 +98,33 @@ class UserDataValues {
       link: json['link_materi'],
       alamat: json['alamat_ortu'],
       ortu: json['nama_ortu'],
-      seks: json['jenis_kelamin'],
+      seks: json['jenis_kelamin'], 
+      materiuser: List<MateriUser>.from(json['materi_user']?.map((x) => MateriUser.fromJson(x)) ?? []),
     );
   }
 }
+
+class MateriUser {
+  final String id;
+  final String judulMateri;
+  final String linkMateri;
+
+  MateriUser({
+    required this.id,
+    required this.judulMateri,
+    required this.linkMateri,
+  });
+
+  factory MateriUser.fromJson(Map<String, dynamic> json) {
+    return MateriUser(
+      id: json['id'],
+      judulMateri: json['judul_materi'],
+      linkMateri: json['link_materi'],
+
+    );
+  }
+}
+
 
 
 class LinkMateri {
@@ -224,7 +249,7 @@ class UserData {
     required this.linkMateriFull,
     required this.linkGame,
     required this.tugasRumah,
-     required this.dataQuiz,
+    required this.dataQuiz,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -244,7 +269,8 @@ class UserData {
               link: '',
               alamat: '',
               ortu: '',
-              seks: '',
+              seks: '', 
+              materiuser: List<MateriUser>.from(json['materi_user']?.map((x) => MateriUser.fromJson(x)) ?? []),
             ),
       linkMateriFull: List<LinkMateri>.from(
         json['link_materi_full']?.map((x) => LinkMateri.fromJson(x)) ?? [],
