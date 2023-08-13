@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'design_course_app_theme.dart';
@@ -48,14 +47,12 @@ class _CategoryListViewState extends State<CategoryListView>
               return const SizedBox();
             } else {
               return ListView.builder(
-                padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, right: 0, left: 0),
+                padding:
+                    const EdgeInsets.only(top: 0, bottom: 0, right: 0, left: 0),
                 itemCount: 1,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = 1 > 1
-                      ? 1
-                      : Category.categoryList.length;
+                  final int count = 1 > 1 ? 1 : Category.categoryList.length;
                   final Animation<double> animation =
                       Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
@@ -107,7 +104,8 @@ class CategoryView extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: callback,
               child: SizedBox(
-                width: 380,
+                width: MediaQuery.of(context).size.width * 0.91,
+                // height: MediaQuery.of(context).size.height * 0.9,
                 child: Stack(
                   children: <Widget>[
                     Container(
@@ -120,8 +118,8 @@ class CategoryView extends StatelessWidget {
                             child: Container(
                               decoration: const BoxDecoration(
                                 color: Color.fromRGBO(105, 240, 155, 1),
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(16.0)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16.0)),
                               ),
                               child: Row(
                                 children: <Widget>[
@@ -142,7 +140,7 @@ class CategoryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
                                                 letterSpacing: 0.27,
-                                                color:  DesignCourseAppTheme
+                                                color: DesignCourseAppTheme
                                                     .darkerText,
                                               ),
                                             ),
@@ -223,7 +221,8 @@ class CategoryView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Container(
-                                                  decoration: const BoxDecoration(
+                                                  decoration:
+                                                      const BoxDecoration(
                                                     color: DesignCourseAppTheme
                                                         .notWhite,
                                                     borderRadius:
@@ -233,12 +232,10 @@ class CategoryView extends StatelessWidget {
                                                   ),
                                                   child: const Padding(
                                                     padding:
-                                                        EdgeInsets.all(
-                                                            4.0),
+                                                        EdgeInsets.all(4.0),
                                                     child: Icon(
                                                       Icons.bookmark,
-                                                      color:
-                                                         Colors.greenAccent,
+                                                      color: Colors.greenAccent,
                                                     ),
                                                   ),
                                                 )

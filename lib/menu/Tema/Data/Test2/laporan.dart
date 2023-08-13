@@ -37,10 +37,11 @@ class _LaporanListState extends State<LaporanList> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: Text('Laporan'),
+        title: const Text('Laporan'),
       ),
       body: Container(
         decoration: BoxDecoration(color: DesignCourseAppTheme.nearlyWhite),
+        padding: const EdgeInsets.only(bottom: 62),
         child: ListView(
           padding: const EdgeInsets.only(top: 8),
           children: <Widget>[

@@ -7,7 +7,7 @@ import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/result.dart';
 
 class PlayQuiz extends StatefulWidget {
   final UserData userData; // Add this line
-   PlayQuiz({required this.userData, Key? key}) : super(key: key);
+  PlayQuiz({required this.userData, Key? key}) : super(key: key);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -121,7 +121,7 @@ class _PlayQuizState extends State<PlayQuiz>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 80),
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +175,7 @@ class _PlayQuizState extends State<PlayQuiz>
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 20,
             ),
             Text(
               "${questions[index].getQuestion()}?",
@@ -194,7 +194,7 @@ class _PlayQuizState extends State<PlayQuiz>
               ),
             ),
             FractionallySizedBox(
-              widthFactor: 0.8, // Ukuran gambar sebesar 80% lebar layar
+              widthFactor: 0.7, // Ukuran gambar sebesar 80% lebar layar
               child:
                   CachedNetworkImage(imageUrl: questions[index].getImageUrl()),
             ),
@@ -207,7 +207,8 @@ class _PlayQuizState extends State<PlayQuiz>
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (questions[index].getAnswer() == widget.userData.dataQuiz[0].jawaban) {
+                        if (questions[index].getAnswer() ==
+                            widget.userData.dataQuiz[0].jawaban) {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
@@ -259,7 +260,6 @@ class _PlayQuizState extends State<PlayQuiz>
                             borderRadius: BorderRadius.circular(24)),
                         child: const Icon(
                           Icons.thumb_down_outlined,
-                         
                         ),
                       ),
                     ),

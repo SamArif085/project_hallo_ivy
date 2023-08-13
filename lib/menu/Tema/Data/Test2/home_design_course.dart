@@ -22,10 +22,10 @@ class DesignCourseHomeScreen extends StatefulWidget {
     this.animationController,
     required this.username,
     required this.password,
-    required this.userData, 
-    required this.dataGame, 
-    required this.dataTugas, 
-    required this.userDataMateri, 
+    required this.userData,
+    required this.dataGame,
+    required this.dataTugas,
+    required this.userDataMateri,
   }) : super(key: key);
   final AnimationController? animationController;
 
@@ -66,26 +66,29 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             ),
             getAppBarUI(),
             Expanded(
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    children: <Widget>[
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      //   Flexible(
-                      //   child: getPopularCourseUI(),
-                      // ),
-                      Flexible(
-                        child: getCategoryUI(),
-                      ),
-                      // Flexible(
-                      //   child: getGameUI(),
-                      // ),
-                    ],
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    // height: 600,
+                    child: Column(
+                      children: <Widget>[
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
+                        //   Flexible(
+                        //   child: getPopularCourseUI(),
+                        // ),
+                        Flexible(
+                          child: getCategoryUI(),
+                        ),
+                        // Flexible(
+                        //   child: getGameUI(),
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ],
@@ -96,7 +99,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
 
   Widget getCategoryUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 40.0, left: 18, right: 16),
+      padding: const EdgeInsets.only(top: 30, left: 18, right: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -133,8 +136,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               },
             ),
           ),
-            Flexible(
-            child: TestPopularView(userData: widget.userData, dataTugas: widget.dataTugas,),
+          Flexible(
+            child: TestPopularView(
+              userData: widget.userData,
+              dataTugas: widget.dataTugas,
+            ),
           ),
           const SizedBox(
             height: 10,
@@ -153,7 +159,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             child: GameListView(
               callBack: () {
                 moveTo();
-              }, dataGame: widget.dataGame, userData: widget.userData,
+              },
+              dataGame: widget.dataGame,
+              userData: widget.userData,
             ),
           ),
         ],
@@ -167,7 +175,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 0.0, left: 18, right: 16),
+          padding: EdgeInsets.only(left: 18, right: 16),
           child: Text(
             'Game',
             textAlign: TextAlign.left,
@@ -196,7 +204,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
 
   Widget getPopularCourseUI() {
     return const Padding(
-      padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+      padding: EdgeInsets.only(left: 18, right: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,8 +244,10 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) =>
-            VideoScreen(userData: widget.userData, userDataMateri: widget.userDataMateri,),
+        builder: (BuildContext context) => VideoScreen(
+          userData: widget.userData,
+          userDataMateri: widget.userDataMateri,
+        ),
       ),
     );
   }
@@ -246,7 +256,10 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => PRHome(userData: widget.userData, dataTugas: widget.dataTugas,),
+        builder: (BuildContext context) => PRHome(
+          userData: widget.userData,
+          dataTugas: widget.dataTugas,
+        ),
       ),
     );
   }
@@ -255,7 +268,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => PlayQuiz(userData: widget.userData,),
+        builder: (BuildContext context) => PlayQuiz(
+          userData: widget.userData,
+        ),
       ),
     );
   }

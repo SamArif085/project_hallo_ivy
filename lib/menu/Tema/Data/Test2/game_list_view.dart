@@ -297,7 +297,9 @@ class gameView extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(16.0)),
                               child: AspectRatio(
                                 aspectRatio: 1.0,
-                                child: Image(image: AssetImage('assets/design_course/interFace2.png')),
+                                child: Image(
+                                    image: AssetImage(
+                                        'assets/design_course/interFace2.png')),
                               ),
                             )
                           ],
