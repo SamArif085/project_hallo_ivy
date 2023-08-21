@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
+import 'play_quiz.dart';
+
 
 class HomePage extends StatefulWidget {
- final UserData userData; // Add this line
- const HomePage({super.key, required this.userData}); 
+
+ const HomePage({super.key,}); 
   @override
   _HomePageState createState() => _HomePageState();
    
@@ -18,13 +18,13 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         width: MediaQuery.of(context).size.width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             GestureDetector(
               onTap: (){
                 Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) =>  PlayQuiz(userData: widget.userData,)
+                  builder: (context) =>  const PlayQuiz()
                 ));
               },
               child: Container(

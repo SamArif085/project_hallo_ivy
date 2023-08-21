@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
+import 'package:hello_ivy_test/menu/Tema/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'design_course_app_theme.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
 
 class LaporanHome extends StatelessWidget {
-  const LaporanHome(
-      {super.key,
-      required UserData userData,
-      required LinkMateri userDataMateri});
+  final Map<String, dynamic> materi;
+  const LaporanHome({
+    super.key,
+    required this.materi,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class LaporanHome extends StatelessWidget {
         child: Center(
           child: ListView(
             children: [
-              pesanGuru(),
+              pesanGuru(materi: materi),
               chartVideo(),
             ],
           ),
@@ -105,8 +105,8 @@ class chartVideo extends StatelessWidget {
 }
 
 class pesanGuru extends StatelessWidget {
-  const pesanGuru({super.key});
-
+  const pesanGuru({super.key, required this.materi});
+  final Map<String, dynamic> materi;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,7 +140,7 @@ class pesanGuru extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.fromLTRB(30, 0, 30, 15),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu auctor sapien. Cras ut velit et risus efficitur suscipit vitae vitae odio. In blandit sapien convallis turpis laoreet, eget commodo massa lobortis. Aenean eu dignissim arcu, eu elementum mi. Aenean viverra massa a ligula commodo, at tempor nisl pulvinar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu auctor sap',
+                  materi['isi_pesan'],
                   textAlign: TextAlign.justify,
                 ),
               ),

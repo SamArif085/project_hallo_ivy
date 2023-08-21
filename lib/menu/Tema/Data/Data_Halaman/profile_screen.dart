@@ -1,13 +1,30 @@
 // ignore_for_file: must_be_immutable
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:project_hallo_ivy/login.dart';
-import '../Test/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hello_ivy_test/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 
 class UserProfilePage extends StatelessWidget {
-  final UserData userData;
-  const UserProfilePage({Key? key, required this.userData}) : super(key: key);
+
+  const UserProfilePage({Key? key,}) : super(key: key);
+  Future<void> _logout(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove('userData');
+    Fluttertoast.showToast(
+        msg: "Logout Successful",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.amber,
+        textColor: Colors.white,
+        fontSize: 16.0);
+
+    // ignore: use_build_context_synchronously
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,50 +34,54 @@ class UserProfilePage extends StatelessWidget {
           padding: EdgeInsets.only(left: 50),
           child: Center(child: Text('Profile')),
         ),
-        actions: const [
+        actions:  [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.red,
             ),
-            onPressed: _logout,
+            onPressed:() => _logout(context),
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.only(bottom: 70),
-        child: ListView(
-          children: [
-            userBar(
-              nama: userData.values.nama,
-            ),
-            buildInfo(
-              label: "NISN",
-              value: userData.values.nisnSiswa,
-            ),
-            buildInfo(
-              label: "Kelas",
-              value: userData.values.kelas,
-            ),
-            buildInfo(
-              label: "Jenis Kelamin",
-              value: userData.values.seks,
-            ),
-            buildInfo(
-              label: "Nama Orang Tua",
-              value: userData.values.ortu,
-            ),
-            buildInfo(
-              label: "Alamat",
-              value: userData.values.alamat,
-            ),
-          ],
-        ),
+      body: FutureBuilder(
+        future: fetchUserData(), // Fetch user data from SharedPreferences
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            Map<String, dynamic> userData = snapshot.data as Map<String, dynamic>;
+            return Container(
+              padding: const EdgeInsets.only(bottom: 70),
+              child: ListView(
+                children: [
+                  userBar(nama: userData['nama']),
+                  buildInfo(label: "NISN", value: userData['nisn_siswa']),
+                  buildInfo(label: "Kelas", value: userData['kelas']),
+                  buildInfo(label: "Jenis Kelamin", value: userData['jenis_kelamin']),
+                  buildInfo(label: "Nama Orang Tua", value: userData['nama_ortu']),
+                  buildInfo(label: "Alamat", value: userData['alamat_ortu']),
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }
+    Future<Map<String, dynamic>> fetchUserData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userDataString = preferences.getString('userData');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      return userData['values'];
+    } else {
+      return {}; // Return an empty map if no user data is found
+    }
+  }
 }
-
 // ignore: camel_case_types
 class userBar extends StatelessWidget {
   String nama;
@@ -76,16 +97,6 @@ class userBar extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // Flexible(
-          //   flex: 1,
-          //   child: IconButton(
-          //     icon: const Icon(
-          //       Icons.logout,
-          //       color: Colors.red,
-          //     ),
-          //     onPressed: _logout,
-          //   ),
-          // ),
           Flexible(
             flex: 3,
             child: Center(
@@ -110,10 +121,10 @@ class userBar extends StatelessWidget {
 
 // ignore: camel_case_types
 class buildInfo extends StatelessWidget {
-  String label;
-  String value;
-  buildInfo({
-    super.key,
+ final String label;
+  final String value;
+
+  const buildInfo({super.key, 
     required this.label,
     required this.value,
   });
@@ -168,9 +179,4 @@ class buildInfo extends StatelessWidget {
       ],
     );
   }
-}
-
-void _logout() {
-  Get.off(() => LoginPage());
-  Get.delete<LoginController>();
 }

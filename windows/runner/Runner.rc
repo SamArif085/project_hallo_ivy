@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "project_hallo_ivy" "\0"
+            VALUE "FileDescription", "hello_ivy_test" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "project_hallo_ivy" "\0"
+            VALUE "InternalName", "hello_ivy_test" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "project_hallo_ivy.exe" "\0"
-            VALUE "ProductName", "project_hallo_ivy" "\0"
+            VALUE "OriginalFilename", "hello_ivy_test.exe" "\0"
+            VALUE "ProductName", "hello_ivy_test" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

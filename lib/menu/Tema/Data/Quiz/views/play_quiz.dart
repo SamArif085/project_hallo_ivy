@@ -1,27 +1,27 @@
+import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/data/data.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/models/question_model.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/result.dart';
+import 'package:hello_ivy_test/menu/Tema/Data/Quiz/models/question_model.dart';
+import 'package:hello_ivy_test/menu/Tema/Data/Quiz/views/result.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/data.dart';
+
+
 
 class PlayQuiz extends StatefulWidget {
-  final UserData userData; // Add this line
-  PlayQuiz({required this.userData, Key? key}) : super(key: key);
+  const PlayQuiz({Key? key}) : super(key: key);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
 }
 
-class _PlayQuizState extends State<PlayQuiz>
-    with SingleTickerProviderStateMixin {
-  List<QuestionModel> questions = List<QuestionModel>.empty();
+class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
+ List<QuestionModel> Quest = [];
   int index = 0;
   int points = 0;
   int correct = 0;
   int incorrect = 0;
-  late List<Linkquiz> dataQuiz; // Declare dataQuiz here
-
   late AnimationController controller;
   late Animation animation;
   double beginAnim = 0.0;
@@ -29,25 +29,27 @@ class _PlayQuizState extends State<PlayQuiz>
 
   void replayQuiz(BuildContext context) {
     setState(() {
-      // Atur kembali nilai-nilai awal
+      // Reset values
       index = 0;
       points = 0;
       correct = 0;
       incorrect = 0;
 
-      // Atur ulang animasi dan timer (jika ada)
+      // Reset animation and timer
       resetProgress();
       startProgress();
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    questions = getQuestions(widget.userData);
-
-    controller =
+@override
+void initState() {
+  super.initState();
+  controller = AnimationController(
+    duration: const Duration(seconds: 10),
+    vsync: this,
+  );
+  
+ controller =
         AnimationController(duration: const Duration(seconds: 10), vsync: this);
     animation = Tween(begin: beginAnim, end: endAnim).animate(controller)
       ..addListener(() {
@@ -55,71 +57,91 @@ class _PlayQuizState extends State<PlayQuiz>
           // Change here any Animation object value.
         });
       });
+  startProgress();
 
-    startProgress();
+   populateQuestions();
 
-    animation.addStatusListener(
-      (AnimationStatus animationStatus) {
-        if (animationStatus == AnimationStatus.completed) {
-          if (index < questions.length - 1) {
-            index++;
-            resetProgress();
-            startProgress();
-          } else {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Result(
-                  score: points,
-                  totalQuestion: questions.length,
-                  correct: correct,
-                  incorrect: incorrect,
-                  userData: widget.userData,
-                ),
+  animation.addStatusListener(
+    (AnimationStatus animationStatus) {
+      if (animationStatus == AnimationStatus.completed) {
+        if (index < Quest.length - 1) {
+          index++;
+          resetProgress();
+          startProgress();
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Result(
+                score: points,
+                totalQuestion: Quest.length,
+                correct: correct,
+                incorrect: incorrect,
               ),
-            );
-          }
+            ),
+          );
         }
-      },
-    );
+      }
+    },
+  );
+}
+
+ Future<void> populateQuestions() async {
+  final userData = await getUserData();
+  if (userData != null) {
+    Quest = await getQuestions(userData);
+    setState(() {}); // Memicu rebuild UI
+  }
+}
+
+  Future<Map<String, dynamic>?> getUserData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userDataString = preferences.getString('userData');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      return userData;
+    }
+    return null;
   }
 
   startProgress() {
     controller.forward();
   }
 
-  stopProgress() {
-    controller.stop();
-  }
-
   resetProgress() {
     controller.reset();
   }
 
-  void nextQuestion() {
-    if (index < questions.length - 1) {
-      index++;
-      resetProgress();
-      startProgress();
-    } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Result(
-            score: points,
-            totalQuestion: questions.length,
-            correct: correct,
-            incorrect: incorrect,
-            userData: widget.userData,
-          ),
+void nextQuestion() {
+  if (index < Quest.length - 1) {
+    index++;
+    resetProgress();
+    startProgress();
+  } else {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Result(
+          score: points,
+          totalQuestion: Quest.length,
+          correct: correct,
+          incorrect: incorrect,
         ),
-      );
-    }
+      ),
+    );
   }
+}
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+ Widget build(BuildContext context) {
+    if (Quest.isEmpty) {
+      // Loading indicator or message if questions are still loading
+      return const CircularProgressIndicator();
+    }
+
+    final currentQuestion = Quest[index];
+
+return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
         width: MediaQuery.of(context).size.width,
@@ -138,7 +160,7 @@ class _PlayQuizState extends State<PlayQuiz>
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        "${index + 1}/${questions.length}",
+                        "${index + 1}/${currentQuestion.question.length}",
                         style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.w500),
                       ),
@@ -178,7 +200,7 @@ class _PlayQuizState extends State<PlayQuiz>
               height: 20,
             ),
             Text(
-              "${questions[index].getQuestion()}?",
+              "${currentQuestion.getQuestion()}?",
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.black87,
@@ -196,7 +218,7 @@ class _PlayQuizState extends State<PlayQuiz>
             FractionallySizedBox(
               widthFactor: 0.7, // Ukuran gambar sebesar 80% lebar layar
               child:
-                  CachedNetworkImage(imageUrl: questions[index].getImageUrl()),
+                  CachedNetworkImage(imageUrl: currentQuestion.getImageUrl()),
             ),
             const Spacer(),
             Container(
@@ -207,8 +229,8 @@ class _PlayQuizState extends State<PlayQuiz>
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (questions[index].getAnswer() ==
-                            widget.userData.dataQuiz[0].jawaban) {
+                        if (currentQuestion.getAnswer() ==
+                          "Betul" ) {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
@@ -238,8 +260,9 @@ class _PlayQuizState extends State<PlayQuiz>
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        if (questions[index].getAnswer() == "false") {
+                            onTap: () {
+                        if (currentQuestion.getAnswer() == "salah") {
+                          // Update this condition
                           setState(() {
                             points = points + 20;
                             nextQuestion();

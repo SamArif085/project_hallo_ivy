@@ -1,22 +1,18 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test/fitness_app_theme.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/materi.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/profile_screen.dart';
+import 'package:hello_ivy_test/menu/Tema/Data/Data_Halaman/materi.dart';
 
+import '../fitness_app_theme.dart';
 import '../models/tabIcon_data.dart';
 
 class BottomBarView extends StatefulWidget {
-  final UserData userData;
-  const BottomBarView(
-      {Key? key,
-      this.tabIconsList,
-      this.changeIndex,
-      this.addClick,
-      required this.userData, required List<LinkMateri> userDataMateri})
-      : super(key: key);
+  const BottomBarView({
+    Key? key,
+    this.tabIconsList,
+    this.changeIndex,
+    this.addClick,
+  }) : super(key: key);
 
   final Function(int index)? changeIndex;
   final Function()? addClick;
@@ -175,9 +171,7 @@ class _BottomBarViewState extends State<BottomBarView>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MateriPage(
-                                  userData: widget.userData, userDataMateri: widget.userData.values.materiuser,
-                                ),
+                                builder: (context) => const MateriPage(),
                               ),
                             );
                           },

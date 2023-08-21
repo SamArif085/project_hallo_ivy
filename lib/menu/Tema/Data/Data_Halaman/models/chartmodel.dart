@@ -1,4 +1,3 @@
- import 'dart:convert';
 
     List<GenderModel> genderModelFromJson(List data) => List<GenderModel>.from(
           data.map(

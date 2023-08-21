@@ -1,21 +1,25 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
+
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'design_course_app_theme.dart';
+
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'Color_Theme.dart';
+
 import 'package:video_player/video_player.dart';
 
-class TestMateri extends StatefulWidget {
-const TestMateri({super.key, required this.userData, required this.userDataMateri});
- final UserData userData;
-final MateriUser userDataMateri;
-
-
+class VideoScreen extends StatefulWidget {
+  const VideoScreen({
+    Key? key,
+    required this.materi,
+  }) : super(key: key);
+  final Map<String, dynamic> materi;
   @override
-  _TestMateriState createState() => _TestMateriState();
+  _VideoScreenState createState() => _VideoScreenState();
 }
 
-class _TestMateriState extends State<TestMateri>
+class _VideoScreenState extends State<VideoScreen>
     with TickerProviderStateMixin {
   late FlickManager flickManager;
   int _playCount = 0;
@@ -41,8 +45,9 @@ class _TestMateriState extends State<TestMateri>
     setData();
     super.initState();
     flickManager = FlickManager(
-      videoPlayerController:
-          VideoPlayerController.network( widget.userDataMateri.linkMateri,),
+      videoPlayerController: VideoPlayerController.network(
+        widget.materi['link_materi'],
+      ),
     );
   }
 
@@ -139,9 +144,9 @@ class _TestMateriState extends State<TestMateri>
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 32.0, left: 18, right: 16),
+                                top: 20.0, left: 18, right: 16),
                             child: Text(
-                             widget.userDataMateri.judulMateri,
+                              widget.materi['judul_materi'],
                               textAlign: TextAlign.left,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -158,74 +163,46 @@ class _TestMateriState extends State<TestMateri>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                // const Text(
-                                //   '\$28.99',
-                                //   textAlign: TextAlign.left,
-                                //   style: TextStyle(
-                                //     fontWeight: FontWeight.w200,
-                                //     fontSize: 22,
-                                //     letterSpacing: 0.27,
-                                //     color: DesignCourseAppTheme.nearlyBlue,
-                                //   ),
-                                // ),
                                 Container(
                                   child: const Row(
-                                    children: <Widget>[
-                                      // Text(
-                                      //   '4.3',
-                                      //   textAlign: TextAlign.left,
-                                      //   style: TextStyle(
-                                      //     fontWeight: FontWeight.w200,
-                                      //     fontSize: 22,
-                                      //     letterSpacing: 0.27,
-                                      //     color: DesignCourseAppTheme.grey,
-                                      //   ),
-                                      // ),
-                                      // Icon(
-                                      //   Icons.star,
-                                      //   color: DesignCourseAppTheme.nearlyBlue,
-                                      //   size: 24,
-                                      // ),
-                                    ],
+                                    children: <Widget>[],
                                   ),
                                 )
                               ],
                             ),
                           ),
-                          // AnimatedOpacity(
-                          //   duration: const Duration(milliseconds: 500),
-                          //   opacity: opacity1,
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(8),
-                          //     child: Row(
-                          //       children: <Widget>[
-                          //         getTimeBoxUI('Video Diputar', '$_playCount'),
-                          //         // getTimeBoxUI('2hours', 'Time'),
-                          //         // getTimeBoxUI('24', 'Seat'),
-                          //         // Text('Play Count: $_playCount'),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
                           Expanded(
                             child: AnimatedOpacity(
                               duration: const Duration(milliseconds: 500),
                               opacity: opacity2,
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: 8, bottom: 8),
-                                // child: Text(
-                                //   'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                //   textAlign: TextAlign.justify,
-                                //   style: TextStyle(
-                                //     fontWeight: FontWeight.w200,
-                                //     fontSize: 14,
-                                //     letterSpacing: 0.27,
-                                //     color: DesignCourseAppTheme.grey,
-                                //   ),
-                                //   maxLines: 3,
-                                //   overflow: TextOverflow.ellipsis,
-                                // ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 35, bottom: 8),
+                                child: Container(
+                                  height: 300,
+                                  child: SfCartesianChart(
+                                    primaryXAxis:
+                                        CategoryAxis(), // Menggunakan axis kategori di sumbu X
+                                    primaryYAxis:
+                                        NumericAxis(), // Menggunakan axis numerik di sumbu Y
+                                    series: <ChartSeries>[
+                                      ColumnSeries<Map, String>(
+                                        color: HexColor('#85f29d'),
+                                        dataSource: [
+                                          {'x': 'A', 'y': 10},
+                                          {'x': 'B', 'y': 15},
+                                          {'x': 'C', 'y': 15},
+                                          {'x': 'D', 'y': 15},
+                                          // Tambahkan data lainnya sesuai kebutuhan
+                                        ],
+                                        xValueMapper: (Map data, int index) =>
+                                            data['x'],
+                                        yValueMapper: (Map data, int index) =>
+                                            data['y'],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -308,35 +285,38 @@ class _TestMateriState extends State<TestMateri>
                 ),
               ),
             ),
-            // Positioned(
-            //   top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
-            //   right: 35,
-            //   child: ScaleTransition(
-            //     alignment: Alignment.center,
-            //     scale: CurvedAnimation(
-            //         parent: animationController!, curve: Curves.fastOutSlowIn),
-            //     child: Card(
-            //       color: DesignCourseAppTheme.nearlyGreen,
-            //       shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(50.0)),
-            //       elevation: 10.0,
-            //       child: Container(
-            //         width: 60,
-            //         height: 60,
-            //         child: const Center(
-            //           child: Icon(
-            //             Icons.thumb_up_alt_sharp,
-            //             color: DesignCourseAppTheme.nearlyWhite,
-            //             size: 30,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
-              right: 10,
+              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+              right: 0,
+              child: ScaleTransition(
+                alignment: Alignment.center,
+                scale: CurvedAnimation(
+                    parent: animationController!, curve: Curves.fastOutSlowIn),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: opacity1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: <Widget>[
+                        // quiz('Quiz', () {
+                        //   Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           HomePage(userData: widget.userData),
+                        //     ),
+                        //   );
+                        // }),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+              left: 0,
               child: ScaleTransition(
                 alignment: Alignment.center,
                 scale: CurvedAnimation(
@@ -349,9 +329,6 @@ class _TestMateriState extends State<TestMateri>
                     child: Row(
                       children: <Widget>[
                         getTimeBoxUI('Diputar', '$_playCount'),
-                        // getTimeBoxUI('2hours', 'Time'),
-                        // getTimeBoxUI('24', 'Seat'),
-                        // Text('Play Count: $_playCount'),
                       ],
                     ),
                   ),
@@ -391,7 +368,7 @@ class _TestMateriState extends State<TestMateri>
       child: Container(
         decoration: BoxDecoration(
           color: DesignCourseAppTheme.nearlyWhite,
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: DesignCourseAppTheme.grey.withOpacity(0.2),
@@ -402,7 +379,7 @@ class _TestMateriState extends State<TestMateri>
         child: Padding(
           padding: const EdgeInsets.only(
               left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -417,7 +394,11 @@ class _TestMateriState extends State<TestMateri>
                 ),
               ),
               const SizedBox(
-                height: 10,
+                width: 3,
+              ),
+              const SizedBox(
+                width: 10,
+                child: Text(':'),
               ),
               Text(
                 txt2,
@@ -430,6 +411,52 @@ class _TestMateriState extends State<TestMateri>
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget quiz(String text, VoidCallback onTap) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: HexColor('#85f29d'),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: DesignCourseAppTheme.grey.withOpacity(0.2),
+                offset: const Offset(1.1, 1.1),
+                blurRadius: 8.0,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 18.0,
+              right: 18.0,
+              top: 12.0,
+              bottom: 12.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    letterSpacing: 0.27,
+                    color: DesignCourseAppTheme.nearlyBlack,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

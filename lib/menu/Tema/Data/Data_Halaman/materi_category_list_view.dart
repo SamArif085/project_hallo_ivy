@@ -1,25 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Game/TestGame.dart';
-import 'design_course_app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class GameListView extends StatefulWidget {
-  const GameListView(
-      {Key? key, this.callBack, required this.userData, required this.dataGame})
-      : super(key: key);
+import 'color_Theme.dart';
+import 'models/materi_category.dart';
 
-  final UserData userData;
-  final List<LinkGame> dataGame;
+class CategoryListView extends StatefulWidget {
+  const CategoryListView({Key? key, this.callBack}) : super(key: key);
 
-  final Function()? callBack;
+    final void Function(Category category)? callBack;
   @override
-  _GameListViewState createState() => _GameListViewState();
+  _CategoryListViewState createState() => _CategoryListViewState();
 }
 
-class _GameListViewState extends State<GameListView>
+class _CategoryListViewState extends State<CategoryListView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
-
+ int? _selectedCategoryIndex; 
   @override
   void initState() {
     animationController = AnimationController(
@@ -27,9 +25,20 @@ class _GameListViewState extends State<GameListView>
     super.initState();
   }
 
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
-    return true;
+  Future<List<Category>> getData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userDataString = preferences.getString('userData');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      List<Map<String, dynamic>> materiList =
+          userData['values']['materi_user'].cast<Map<String, dynamic>>();
+
+      List<Category> categories =
+          materiList.map((map) => Category.fromMap(map)).toList();
+      return categories;
+    } else {
+      return []; // Return an empty list if no user data is found
+    }
   }
 
   @override
@@ -43,27 +52,42 @@ class _GameListViewState extends State<GameListView>
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 16),
       child: Container(
-        height: 134,
+        height: 140,
         width: double.infinity,
-        child: FutureBuilder<bool>(
+        child: FutureBuilder<List<Category>>(
           future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
             if (!snapshot.hasData) {
               return const SizedBox();
             } else {
-              // Menggabungkan hasil dari getGame dan getGame2 ke dalam satu daftar
-              List<Widget> gameWidgets = [];
-              for (int index = 0; index < widget.dataGame.length; index++) {
-                gameWidgets.add(getGame(widget.dataGame[index], index));
-              }
+              List<Category> categoryList = snapshot.data!;
               return ListView.builder(
-                padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: gameWidgets.length,
+                padding:
+                    const EdgeInsets.only(top: 0, bottom: 0, right: 0, left: 0),
+                itemCount: categoryList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  return gameWidgets[
-                      index]; // Ambil widget dari daftar sesuai indeks
+                  final int count = categoryList.length;
+                  final Animation<double> animation =
+                      Tween<double>(begin: 0.0, end: 1.0).animate(
+                          CurvedAnimation(
+                              parent: animationController!,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn)));
+                  animationController?.forward();
+                  return CategoryView(
+                    category: categoryList[index],
+                    animation: animation,
+                    animationController: animationController,
+                    isSelected: _selectedCategoryIndex == index,
+                    onTap: () {
+                      setState(() {
+                        _selectedCategoryIndex = index;
+                      });
+                      widget.callBack!(categoryList[index]);
+                    },
+                  );
                 },
               );
             }
@@ -72,56 +96,24 @@ class _GameListViewState extends State<GameListView>
       ),
     );
   }
-
-  Widget getGame(LinkGame game, int index) {
-    // Tambahkan argumen indeks di sini
-    final int count = widget.dataGame.length > 10 ? 10 : widget.dataGame.length;
-    final Animation<double> animation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: animationController!,
-        curve: Interval((widget.dataGame.length / count) * index, 1.0,
-            curve: Curves.fastOutSlowIn),
-      ),
-    );
-    animationController?.forward();
-    return gameView(
-      animation: animation,
-      animationController: animationController,
-      callback: widget.callBack,
-      onTap: () {
-        Navigator.push<dynamic>(
-          context,
-          MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => GameTest(
-              userData: widget.userData,
-              dataGame: widget.dataGame[index], // Ambil data game sesuai indeks
-            ),
-          ),
-        );
-      },
-      dataGame: widget.dataGame[index],
-    );
-  }
 }
 
-class gameView extends StatelessWidget {
-  const gameView({
-    Key? key,
-    // this.category,
-    this.animationController,
-    this.animation,
-    this.callback,
-    required this.onTap,
-    required this.dataGame,
-  }) : super(key: key);
+class CategoryView extends StatelessWidget {
+  const CategoryView(
+      {Key? key,
+      this.category,
+      this.animationController,
+      this.animation,
+      required this.isSelected,
+      required this.onTap,
+      })
+      : super(key: key);
 
-  final VoidCallback? callback;
-  // final Category? category;
+final bool isSelected;
+  final VoidCallback onTap;
+  final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
-  final VoidCallback onTap;
-  final LinkGame dataGame;
 
   @override
   Widget build(BuildContext context) {
@@ -137,15 +129,13 @@ class gameView extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: onTap,
               child: SizedBox(
-                width: 280,
+                width: MediaQuery.of(context).size.width * 0.91,
+                // height: MediaQuery.of(context).size.height * 0.9,
                 child: Stack(
                   children: <Widget>[
                     Container(
                       child: Row(
                         children: <Widget>[
-                          const SizedBox(
-                            width: 48,
-                          ),
                           Expanded(
                             child: Container(
                               decoration: const BoxDecoration(
@@ -166,7 +156,7 @@ class gameView extends StatelessWidget {
                                             padding:
                                                 const EdgeInsets.only(top: 16),
                                             child: Text(
-                                              dataGame.namaGame,
+                                              category?.title ?? '',
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
@@ -256,7 +246,7 @@ class gameView extends StatelessWidget {
                                                   decoration:
                                                       const BoxDecoration(
                                                     color: DesignCourseAppTheme
-                                                        .nearlyWhite,
+                                                        .notWhite,
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
@@ -266,10 +256,8 @@ class gameView extends StatelessWidget {
                                                     padding:
                                                         EdgeInsets.all(4.0),
                                                     child: Icon(
-                                                      Icons.play_arrow_rounded,
-                                                      color:
-                                                          DesignCourseAppTheme
-                                                              .nearlyGreen,
+                                                      Icons.bookmark,
+                                                      color: Colors.greenAccent,
                                                     ),
                                                   ),
                                                 )
@@ -288,20 +276,20 @@ class gameView extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 24, bottom: 24, left: 16),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 24, bottom: 24, left: 16),
                         child: Row(
                           children: <Widget>[
-                            ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16.0)),
-                              child: AspectRatio(
-                                aspectRatio: 1.0,
-                                child: Image(
-                                    image: AssetImage(
-                                        'assets/design_course/interFace2.png')),
-                              ),
-                            )
+                          ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: category != null
+                              ? Image.network(category!.imagePath) // Use Image.network for server images
+                              : SizedBox(),
+                        ),
+                      ),
                           ],
                         ),
                       ),

@@ -1,37 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/testmateri.dart';
-import '../Test/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'video_screen.dart';
 
 class MateriPage extends StatefulWidget {
-  void navigateToDetail(BuildContext context, MateriUser materi) {
-    // Navigasi ke halaman detail dan kirim data materi yang dipilih
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => VideoScreen(
-          userData: userData,
-          userDataMateri: materi,
-        ),
-      ),
-    );
-  }
-
-  final UserData userData;
-  final List<MateriUser> userDataMateri;
-  const MateriPage(
-      {super.key,
-      required this.userData,
-      AnimationController? animationController, 
-      required this.userDataMateri,
-      });
+  const MateriPage({
+    super.key,
+    AnimationController? animationController,
+  });
 
   @override
   State<MateriPage> createState() => _MateriPageState();
 }
 
 class _MateriPageState extends State<MateriPage> {
+  List<Map<String, dynamic>> linkMateriFull = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,56 +33,77 @@ class _MateriPageState extends State<MateriPage> {
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
-        child: ListView(
-          padding: const EdgeInsets.only(top: 20),
-          children: <Widget>[
-            for (var materi in widget.userData.values.materiuser)
-              CustomCard(
-                key: Key(materi.id),
-                title: materi.judulMateri,
-                status: "1",
-                image:
-                    "https://i0.wp.com/www.gimbot.com/wp-content/uploads/2022/11/Gaming_1-1.png?fit=1200%2C628&ssl=1",
-                userData: widget.userData,
-                onTap: () {
-                  widget.navigateToDetail(context, materi );
+        child: FutureBuilder(
+          future: fetchUserMaterials(), // Fetch the user's materials
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(); // Show loading indicator
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              // Populate linkMateriFull with fetched data
+              linkMateriFull = snapshot.data as List<Map<String, dynamic>>;
+              print('linkMateriFull: $linkMateriFull');
+              return ListView.builder(
+                padding: const EdgeInsets.only(top: 20),
+                itemCount: linkMateriFull.length,
+                itemBuilder: (context, index) {
+                  var materi = linkMateriFull[index];
+                  return CustomCard(
+                    key: Key(materi['id'].toString()),
+                    title: materi['judul_materi'],
+                    status: "1",
+                    image: materi["gambar_materi"],
+                    materi: materi['link_materi'],
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoScreen(
+                            materi: materi,
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
-              ),
-          ],
+              );
+            }
+          },
         ),
       ),
     );
   }
+
+  // Replace this with your actual fetching logic
+  Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userDataString = preferences.getString('userData');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      // Assuming "materi_user" is the key for user's materials
+      return userData['values']['materi_user'].cast<Map<String, dynamic>>();
+    } else {
+      return []; // Return an empty list if no user data is found
+    }
+  }
 }
 
+// ignore: must_be_immutable
 class CustomCard extends StatelessWidget {
   final VoidCallback onTap;
-  // void navigateToDetail(
-  //   BuildContext context,
-  //   LinkMateri id,
-  // ) {
-  //   // Navigasi ke halaman detail dan kirim data materi yang dipilih
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => TestMateri(
-  //         userData: userData,
-  //         userDataMateri: id,
-  //       ), // Ganti DetailPage dengan nama halaman detail Anda
-  //     ),
-  //   );
-  // }
 
   CustomCard({
     Key? key,
     required this.title,
     required this.image,
     required this.status,
-    required this.userData,
     required this.onTap,
+    required this.materi,
   }) : super(key: key);
-  final UserData userData;
+
   String title;
+  String materi;
   String status;
   String image;
   @override
@@ -116,10 +124,9 @@ class CustomCard extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(
-                        image,
-                      ),
-                      fit: BoxFit.cover),
+                    image: NetworkImage(image), // Use a placeholder image URL
+                    fit: BoxFit.cover,
+                  ),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(5.0),
                     topRight: Radius.circular(5.0),
@@ -128,7 +135,6 @@ class CustomCard extends StatelessWidget {
               ),
             ),
             Container(
-              // decoration: BoxDecoration(color: HexColor('#85f29d')),
               padding: const EdgeInsets.only(
                   top: 10, bottom: 10, left: 20, right: 20),
               child: Row(

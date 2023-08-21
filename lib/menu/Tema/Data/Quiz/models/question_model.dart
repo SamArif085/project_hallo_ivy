@@ -1,12 +1,16 @@
-import '../data/data.dart';
 
 class QuestionModel {
+  String id;
   String question;
   String answer;
   String imageUrl;
 
-  QuestionModel(
-      {required this.question, required this.answer, this.imageUrl = ''});
+  QuestionModel({
+    required this.id,
+    required this.question,
+    required this.answer,
+    this.imageUrl = '',
+  });
 
   void setAnswer(String getAnswer) {
     answer = getAnswer;

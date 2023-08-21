@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'design_course_app_theme.dart';
+import 'color_Theme.dart';
 
 class CourseInfoScreen extends StatefulWidget {
 const CourseInfoScreen({super.key,});

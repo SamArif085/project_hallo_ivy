@@ -1,6 +1,6 @@
 {
-    "name": "project_hallo_ivy",
-    "short_name": "project_hallo_ivy",
+    "name": "hello_ivy_test",
+    "short_name": "hello_ivy_test",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

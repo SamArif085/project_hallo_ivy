@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class GameTest extends StatelessWidget {
-  final UserData userData;
-  final LinkGame dataGame;
 
-  const GameTest({super.key, required this.userData, required this.dataGame});
+class GamePage extends StatelessWidget {
+  final Map<String, dynamic> materi; 
+  const GamePage({super.key,required this.materi });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class GameTest extends StatelessWidget {
         ),
       );
 
-    controller.loadRequest(Uri.parse(dataGame.linkGame));
+    controller.loadRequest(Uri.parse(materi['link_game']));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

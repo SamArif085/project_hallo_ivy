@@ -1,27 +1,27 @@
 // ignore_for_file: camel_case_types, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/login.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/homepage.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Quiz/views/play_quiz.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
+
+import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'homepage.dart';
+import 'play_quiz.dart';
 
 // Inisialisasi objek userData
-void replayQuiz(BuildContext context, UserData userData) {
+void replayQuiz(BuildContext context,) {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => PlayQuiz(userData: userData),
+      builder: (context) => PlayQuiz(),
     ),
   );
 }
 
 // ignore: non_constant_identifier_names
-void Home(BuildContext context, UserData userData) {
+void Home(BuildContext context,) {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => HomePage(userData: userData),
+      builder: (context) => HomePage(),
     ),
   );
 }
@@ -31,7 +31,7 @@ class Result extends StatelessWidget {
   final int totalQuestion;
   final int correct;
   final int incorrect;
-  final UserData userData; // Add this line
+
 
   const Result({
     Key? key,
@@ -39,7 +39,7 @@ class Result extends StatelessWidget {
     required this.totalQuestion,
     required this.correct,
     required this.incorrect,
-    required this.userData, // Add this line
+    // Add this line
   }) : super(key: key);
 
   @override
@@ -111,7 +111,7 @@ class Result extends StatelessWidget {
                   if (correct <= totalQuestion / 2)
                     ElevatedButton(
                       onPressed: () {
-                        Home(context, userData);
+                        Home(context,);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('F24C3D'),
@@ -127,7 +127,7 @@ class Result extends StatelessWidget {
                   else
                     ElevatedButton(
                       onPressed: () {
-                        Home(context, userData);
+                        Home(context,);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('85f29d'),

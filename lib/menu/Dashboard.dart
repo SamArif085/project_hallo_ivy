@@ -1,33 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test/bottom_navigation_view/bottom_bar_view.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test/fitness_app_theme.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test/models/tabIcon_data.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/laporan.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/game_page.dart';
-import 'package:project_hallo_ivy/menu/Tema/Data/Test2/home_design_course.dart';
 
-import '../login.dart';
-import 'Tema/Data/Test2/profile_screen.dart';
+import 'Tema/Data/Data_Halaman/list_laporan.dart';
+import 'Tema/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'Tema/Data/Module/fitness_app_theme.dart';
+import 'Tema/Data/Module/models/tabIcon_data.dart';
+import 'Tema/Data/Data_Halaman/list_game_page.dart';
+import 'Tema/Data/Data_Halaman/list_menu_dashboard.dart';
+import 'Tema/Data/Data_Halaman/profile_screen.dart';
 
 class DashboardHome extends StatefulWidget {
   const DashboardHome(
-      {super.key,
-      required this.username,
-      required this.password,
-      required this.userData, 
-      required List<LinkGame> dataGame,
-      required List<Linktugasrumah> dataTugas, 
-      required List<Linkquiz> dataQuiz, 
-      required this.userDataMateri,
-      
-     });
-  final String username;
-  final String password;
-  final UserData userData;
-  final MateriUser userDataMateri;
-  
-
-
+      {super.key,});
   @override
   _DashboardHomeState createState() => _DashboardHomeState();
 }
@@ -52,12 +35,7 @@ class _DashboardHomeState extends State<DashboardHome>
     animationController = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
     tabBody = DesignCourseHomeScreen(
-      animationController: animationController, password: widget.password,
-      userData: widget.userData, // Gunakan userData dari widget ini
-      username: widget.username, 
-      dataGame: widget.userData.linkGame, 
-      dataTugas: widget.userData.tugasRumah, 
-      userDataMateri: widget.userDataMateri,
+      animationController: animationController,
     );
     super.initState();
   }
@@ -116,10 +94,7 @@ class _DashboardHomeState extends State<DashboardHome>
                 setState(() {
                   tabBody = DesignCourseHomeScreen(
                     animationController: animationController,
-                    password: widget.password,
-                    userData:
-                        widget.userData,// Gunakan userData dari widget ini
-                    username: widget.username, dataGame: widget.userData.linkGame,  dataTugas: widget.userData.tugasRumah, userDataMateri: widget.userDataMateri,
+                  
                   );
                 });
               });
@@ -130,7 +105,8 @@ class _DashboardHomeState extends State<DashboardHome>
                 }
                 setState(() {
                   tabBody =
-                      LaporanList(animationController: animationController, userData: widget.userData, userDataMateri: widget.userData.linkMateriFull);
+                       const ListLaporan();
+                   
                 });
               });
             } else if (index == 2) {
@@ -140,7 +116,8 @@ class _DashboardHomeState extends State<DashboardHome>
                 }
                 setState(() {
                   tabBody =
-                      GamePage(userData: widget.userData, dataGame: widget.userData.linkGame, userDataMateri: widget.userData.linkMateriFull,);
+                       const ListGamePage();
+                   
                 });
               });
             }else if (index == 3) {
@@ -150,11 +127,11 @@ class _DashboardHomeState extends State<DashboardHome>
                 }
                 setState(() {
                   tabBody =
-                      UserProfilePage(userData: widget.userData);
+                       const UserProfilePage();
                 });
               });
             }
-          }, userData: widget.userData, userDataMateri: widget.userData.linkMateriFull, 
+          }, 
         ),
       ],
     );
