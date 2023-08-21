@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-import 'package:hello_ivy_test/menu/Tema/Data/Quiz/models/question_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/question_model.dart';
 
 Future<List<QuestionModel>> getQuestions(userData) async {
   List<QuestionModel> questions = [];

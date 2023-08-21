@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_ivy_test/menu/Tema/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 // import 'design_course_app_theme.dart';
 
 class LaporanHome extends StatelessWidget {

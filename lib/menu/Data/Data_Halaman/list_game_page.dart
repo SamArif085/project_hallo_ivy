@@ -1,33 +1,28 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hello_ivy_test/menu/Tema/Data/Data_Halaman/laporan_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Game/game_page.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'color_Theme.dart';
 
-class ListLaporan extends StatefulWidget {
-  const ListLaporan({
+class ListGamePage extends StatefulWidget {
+  const ListGamePage({
     super.key,
     AnimationController? animationController,
   });
-
   @override
-  State<ListLaporan> createState() => _ListLaporanState();
+  State<ListGamePage> createState() => _ListGamePageState();
 }
 
-class _ListLaporanState extends State<ListLaporan> {
+class _ListGamePageState extends State<ListGamePage> {
   List<Map<String, dynamic>> linkMateriFull = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
-        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Padding(
-          padding: EdgeInsets.only(right: 50),
-          child: Center(child: Text('Materi')),
-        ),
+        backgroundColor: DesignCourseAppTheme.nearlyWhite,
+        title: const Text("List Game"),
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
@@ -49,20 +44,18 @@ class _ListLaporanState extends State<ListLaporan> {
                   var materi = linkMateriFull[index];
                   return CustomCard(
                     key: Key(materi['id'].toString()),
-                    title: materi['judul_materi'],
-                    status: "1",
-                    image: materi['gambar_materi'],
-                    materi: materi['id_pesan'],
+                    image: materi["gambar_game"],
                     onTap: () {
-                      Navigator.push(
+                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LaporanHome(
+                          builder: (context) => GamePage(
                             materi: materi,
                           ),
                         ),
                       );
                     },
+                    dataGame: materi['nama_game'],
                   );
                 },
               );
@@ -73,14 +66,13 @@ class _ListLaporanState extends State<ListLaporan> {
     );
   }
 
-  // Replace this with your actual fetching logic
   Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userDataString = preferences.getString('userData');
     if (userDataString != null) {
       Map<String, dynamic> userData = jsonDecode(userDataString);
       // Assuming "materi_user" is the key for user's materials
-      return userData['values']['materi_user'].cast<Map<String, dynamic>>();
+      return userData['link_game'].cast<Map<String, dynamic>>();
     } else {
       return []; // Return an empty list if no user data is found
     }
@@ -91,28 +83,26 @@ class _ListLaporanState extends State<ListLaporan> {
 class CustomCard extends StatelessWidget {
   final VoidCallback onTap;
 
+  String dataGame;
   CustomCard({
-    Key? key,
-    required this.title,
+    super.key,
+    // required this.title,
     required this.image,
-    required this.status,
     required this.onTap,
-    required this.materi,
-  }) : super(key: key);
+    required this.dataGame,
+  });
 
-  String title;
-  String materi;
-  String status;
+  // String title;
   String image;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
         ),
-        elevation: 7,
+        elevation: 5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -122,9 +112,10 @@ class CustomCard extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(image), // Use a placeholder image URL
-                    fit: BoxFit.cover,
-                  ),
+                      image: NetworkImage(
+                        image,
+                      ),
+                      fit: BoxFit.cover),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(5.0),
                     topRight: Radius.circular(5.0),
@@ -132,28 +123,12 @@ class CustomCard extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 10, left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(
-                    child: status == "1"
-                        ? Image.asset(
-                            'assets/icon/unlock_icon.png',
-                            height: 20,
-                          )
-                        : Image.asset(
-                            'assets/icon/lock_icon.png',
-                            height: 20,
-                          ),
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Text(
+                  dataGame,
+                ),
               ),
             )
           ],

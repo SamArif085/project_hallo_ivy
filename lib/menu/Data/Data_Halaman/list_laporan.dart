@@ -1,29 +1,33 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hello_ivy_test/menu/Tema/Data/Game/game_page.dart';
-import 'package:hello_ivy_test/menu/Tema/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'laporan_page.dart';
 
-import 'color_Theme.dart';
-
-class ListGamePage extends StatefulWidget {
-  const ListGamePage({
+class ListLaporan extends StatefulWidget {
+  const ListLaporan({
     super.key,
     AnimationController? animationController,
   });
+
   @override
-  State<ListGamePage> createState() => _ListGamePageState();
+  State<ListLaporan> createState() => _ListLaporanState();
 }
 
-class _ListGamePageState extends State<ListGamePage> {
+class _ListLaporanState extends State<ListLaporan> {
   List<Map<String, dynamic>> linkMateriFull = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Text("List Game"),
+        backgroundColor: HexColor('#85f29d'),
+        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
+        title: const Padding(
+          padding: EdgeInsets.only(right: 50),
+          child: Center(child: Text('Materi')),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
@@ -45,18 +49,20 @@ class _ListGamePageState extends State<ListGamePage> {
                   var materi = linkMateriFull[index];
                   return CustomCard(
                     key: Key(materi['id'].toString()),
-                    image: materi["gambar_game"],
+                    title: materi['judul_materi'],
+                    status: "1",
+                    image: materi['gambar_materi'],
+                    materi: materi['id_pesan'],
                     onTap: () {
-                       Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GamePage(
+                          builder: (context) => LaporanHome(
                             materi: materi,
                           ),
                         ),
                       );
                     },
-                    dataGame: materi['nama_game'],
                   );
                 },
               );
@@ -67,13 +73,14 @@ class _ListGamePageState extends State<ListGamePage> {
     );
   }
 
+  // Replace this with your actual fetching logic
   Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userDataString = preferences.getString('userData');
     if (userDataString != null) {
       Map<String, dynamic> userData = jsonDecode(userDataString);
       // Assuming "materi_user" is the key for user's materials
-      return userData['link_game'].cast<Map<String, dynamic>>();
+      return userData['values']['materi_user'].cast<Map<String, dynamic>>();
     } else {
       return []; // Return an empty list if no user data is found
     }
@@ -84,26 +91,28 @@ class _ListGamePageState extends State<ListGamePage> {
 class CustomCard extends StatelessWidget {
   final VoidCallback onTap;
 
-  String dataGame;
   CustomCard({
-    super.key,
-    // required this.title,
+    Key? key,
+    required this.title,
     required this.image,
+    required this.status,
     required this.onTap,
-    required this.dataGame,
-  });
+    required this.materi,
+  }) : super(key: key);
 
-  // String title;
+  String title;
+  String materi;
+  String status;
   String image;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10, right: 30, left: 30),
+      padding: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0), //<-- SEE HERE
+          borderRadius: BorderRadius.circular(5.0),
         ),
-        elevation: 5,
+        elevation: 7,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -113,10 +122,9 @@ class CustomCard extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(
-                        image,
-                      ),
-                      fit: BoxFit.cover),
+                    image: NetworkImage(image), // Use a placeholder image URL
+                    fit: BoxFit.cover,
+                  ),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(5.0),
                     topRight: Radius.circular(5.0),
@@ -124,12 +132,28 @@ class CustomCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Center(
-                child: Text(
-                  dataGame,
-                ),
+            Container(
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                  ),
+                  Container(
+                    child: status == "1"
+                        ? Image.asset(
+                            'assets/icon/unlock_icon.png',
+                            height: 20,
+                          )
+                        : Image.asset(
+                            'assets/icon/lock_icon.png',
+                            height: 20,
+                          ),
+                  ),
+                ],
               ),
             )
           ],

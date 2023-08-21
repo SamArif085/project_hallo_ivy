@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'Tema/Data/Data_Halaman/list_laporan.dart';
-import 'Tema/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
-import 'Tema/Data/Module/fitness_app_theme.dart';
-import 'Tema/Data/Module/models/tabIcon_data.dart';
-import 'Tema/Data/Data_Halaman/list_game_page.dart';
-import 'Tema/Data/Data_Halaman/list_menu_dashboard.dart';
-import 'Tema/Data/Data_Halaman/profile_screen.dart';
+import 'Data/Data_Halaman/list_game_page.dart';
+import 'Data/Data_Halaman/list_laporan.dart';
+import 'Data/Data_Halaman/list_menu_dashboard.dart';
+import 'Data/Data_Halaman/profile_screen.dart';
+import 'Data/Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'Data/Module/fitness_app_theme.dart';
+import 'Data/Module/models/tabIcon_data.dart';
+
 
 class DashboardHome extends StatefulWidget {
   const DashboardHome(

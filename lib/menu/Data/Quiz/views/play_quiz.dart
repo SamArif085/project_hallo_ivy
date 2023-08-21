@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_ivy_test/menu/Tema/Data/Quiz/models/question_model.dart';
-import 'package:hello_ivy_test/menu/Tema/Data/Quiz/views/result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/data.dart';
+import '../models/question_model.dart';
+import 'result.dart';
 
 
 
