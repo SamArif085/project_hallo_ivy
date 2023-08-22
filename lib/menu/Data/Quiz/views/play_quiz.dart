@@ -7,8 +7,6 @@ import '../data/data.dart';
 import '../models/question_model.dart';
 import 'result.dart';
 
-
-
 class PlayQuiz extends StatefulWidget {
   const PlayQuiz({Key? key}) : super(key: key);
 
@@ -17,7 +15,7 @@ class PlayQuiz extends StatefulWidget {
 }
 
 class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
- List<QuestionModel> Quest = [];
+  List<QuestionModel> Quest = [];
   int index = 0;
   int points = 0;
   int correct = 0;
@@ -41,15 +39,15 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
     });
   }
 
-@override
-void initState() {
-  super.initState();
-  controller = AnimationController(
-    duration: const Duration(seconds: 10),
-    vsync: this,
-  );
-  
- controller =
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(seconds: 10),
+      vsync: this,
+    );
+
+    controller =
         AnimationController(duration: const Duration(seconds: 10), vsync: this);
     animation = Tween(begin: beginAnim, end: endAnim).animate(controller)
       ..addListener(() {
@@ -57,42 +55,42 @@ void initState() {
           // Change here any Animation object value.
         });
       });
-  startProgress();
+    startProgress();
 
-   populateQuestions();
+    populateQuestions();
 
-  animation.addStatusListener(
-    (AnimationStatus animationStatus) {
-      if (animationStatus == AnimationStatus.completed) {
-        if (index < Quest.length - 1) {
-          index++;
-          resetProgress();
-          startProgress();
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Result(
-                score: points,
-                totalQuestion: Quest.length,
-                correct: correct,
-                incorrect: incorrect,
+    animation.addStatusListener(
+      (AnimationStatus animationStatus) {
+        if (animationStatus == AnimationStatus.completed) {
+          if (index < Quest.length - 1) {
+            index++;
+            resetProgress();
+            startProgress();
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Result(
+                  score: points,
+                  totalQuestion: Quest.length,
+                  correct: correct,
+                  incorrect: incorrect,
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
-      }
-    },
-  );
-}
-
- Future<void> populateQuestions() async {
-  final userData = await getUserData();
-  if (userData != null) {
-    Quest = await getQuestions(userData);
-    setState(() {}); // Memicu rebuild UI
+      },
+    );
   }
-}
+
+  Future<void> populateQuestions() async {
+    final userData = await getUserData();
+    if (userData != null) {
+      Quest = await getQuestions(userData);
+      setState(() {}); // Memicu rebuild UI
+    }
+  }
 
   Future<Map<String, dynamic>?> getUserData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -112,28 +110,28 @@ void initState() {
     controller.reset();
   }
 
-void nextQuestion() {
-  if (index < Quest.length - 1) {
-    index++;
-    resetProgress();
-    startProgress();
-  } else {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Result(
-          score: points,
-          totalQuestion: Quest.length,
-          correct: correct,
-          incorrect: incorrect,
+  void nextQuestion() {
+    if (index < Quest.length - 1) {
+      index++;
+      resetProgress();
+      startProgress();
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Result(
+            score: points,
+            totalQuestion: Quest.length,
+            correct: correct,
+            incorrect: incorrect,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
-}
 
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     if (Quest.isEmpty) {
       // Loading indicator or message if questions are still loading
       return const CircularProgressIndicator();
@@ -141,7 +139,7 @@ void nextQuestion() {
 
     final currentQuestion = Quest[index];
 
-return Scaffold(
+    return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
         width: MediaQuery.of(context).size.width,
@@ -229,8 +227,7 @@ return Scaffold(
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (currentQuestion.getAnswer() ==
-                          "Betul" ) {
+                        if (currentQuestion.getAnswer() == "Betul") {
                           setState(() {
                             points = points + 20;
                             nextQuestion();
@@ -260,8 +257,8 @@ return Scaffold(
                   ),
                   Expanded(
                     child: GestureDetector(
-                            onTap: () {
-                        if (currentQuestion.getAnswer() == "salah") {
+                      onTap: () {
+                        if (currentQuestion.getAnswer() == "Salah") {
                           // Update this condition
                           setState(() {
                             points = points + 20;
