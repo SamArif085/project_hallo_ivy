@@ -17,7 +17,6 @@ class PRHome extends StatefulWidget {
 class _PRHomeState extends State<PRHome> {
   late Future<List<Map<String, dynamic>>> userMaterials;
 
-
   @override
   void initState() {
     super.initState();
@@ -62,17 +61,17 @@ class _PRHomeState extends State<PRHome> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-             List<Map<String, dynamic>>? userMaterials = snapshot.data
-             ?.where((material) => material['status'] == 'selesai')
+            List<Map<String, dynamic>>? userMaterials = snapshot.data
+                ?.where((material) => material['status'] == 'selesai')
                 .toList();
             List<Map<String, dynamic>>? activeMaterials = snapshot.data
                 ?.where((material) => material['status'] == 'aktif')
                 .toList();
-            return ListView(
-              children: [
-                Center(
-                  child: Container(
-                    // padding: EdgeInsets.only(bottom: 16),
+            return Container(
+              decoration: BoxDecoration(color: HexColor('#85f29d')),
+              child: ListView(
+                children: [
+                  Center(
                     child: const Text(
                       '- - - Terbaru - - -',
                       style: TextStyle(
@@ -82,47 +81,73 @@ class _PRHomeState extends State<PRHome> {
                       ),
                     ),
                   ),
-                ),
-                 for (var material in activeMaterials!)
+                  if (activeMaterials!.isEmpty)
+                    Center(
+                      child: Container(
+                        width: 350.0,
+                        height: 100.0,
+                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
+                        child: CustomCard(
+                          title: '',
+                          text: 'Belum Ada PR',
+                          deadln: '',
+                        ),
+                      ),
+                    ),
+                  for (var material in activeMaterials)
+                    Center(
+                      child: Container(
+                        width: 350.0,
+                        height: 300.0,
+                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
+                        child: CustomCard(
+                          title: material['judulPr'],
+                          text: material['deskripsi'],
+                          deadln: material['tenggat'],
+                        ),
+                      ),
+                    ),
                   Center(
                     child: Container(
-                      width: 350.0,
-                      height: 300.0,
-                      padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
-                      child: CustomCard(
-                        title: material['judulPr'],
-                        text: material['deskripsi'],
-                        deadln: material['tenggat'],
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: const Text(
+                        '- - - Riwayat - - -',
+                        style: TextStyle(
+                          // color: HexColor('#85f29d'),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: const Text(
-                      '- - - Riwayat - - -',
-                      style: TextStyle(
-                        // color: HexColor('#85f29d'),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  if (userMaterials!.isEmpty)
+                    Center(
+                      child: Container(
+                        width: 350.0,
+                        height: 100.0,
+                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
+                        child: CustomCard(
+                          title: '',
+                          text: 'Belum Ada PR Yang Selesai',
+                          deadln: '',
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                for (var material in userMaterials!)
-                  Center(
-                    child: Container(
-                      width: 350.0,
-                      height: 300.0,
-                      padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
-                      child: CustomCard(
-                        title: material['judulPr'],
-                        text: material['deskripsi'],
-                        deadln: material['status'],
+                  for (var material in userMaterials)
+                    Center(
+                      child: Container(
+                        width: 350.0,
+                        height: 300.0,
+                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
+                        child: CustomCard(
+                          title: material['judulPr'],
+                          text: material['deskripsi'],
+                          deadln: material['status'],
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             );
           }
         },
