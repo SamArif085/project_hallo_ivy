@@ -289,8 +289,9 @@ class Category2View extends StatelessWidget {
                             ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(16.0)),
-                              child: AspectRatio(
-                                aspectRatio: 1.0,
+                              child: ClipRRect(
+                                // aspectRatio: 1.0,
+                                borderRadius: BorderRadius.circular(10.0),
                                 child: category != null
                                     ? Image.network(category!
                                         .imagePath1) // Use Image.network for server images

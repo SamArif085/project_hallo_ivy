@@ -22,15 +22,19 @@ class _ListLaporanState extends State<ListLaporan> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
+        backgroundColor: HexColor('#ffffff'),
         // backgroundColor: DesignCourseAppTheme.nearlyWhite,
         title: const Padding(
-          padding: EdgeInsets.only(right: 50),
-          child: Center(child: Text('Materi')),
+          padding: EdgeInsets.only(right: 0),
+          child: Center(
+              child: Text(
+            'Laporan',
+            style: TextStyle(color: Colors.black),
+          )),
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: BoxDecoration(color: HexColor('#ffffff')),
         child: FutureBuilder(
           future: fetchUserMaterials(), // Fetch the user's materials
           builder: (context, snapshot) {
@@ -136,23 +140,23 @@ class CustomCard extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 10, bottom: 10, left: 20, right: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     title,
                     textAlign: TextAlign.center,
                   ),
-                  Container(
-                    child: status == "1"
-                        ? Image.asset(
-                            'assets/icon/unlock_icon.png',
-                            height: 20,
-                          )
-                        : Image.asset(
-                            'assets/icon/lock_icon.png',
-                            height: 20,
-                          ),
-                  ),
+                  // Container(
+                  //   child: status == "1"
+                  //       ? Image.asset(
+                  //           'assets/icon/unlock_icon.png',
+                  //           height: 20,
+                  //         )
+                  //       : Image.asset(
+                  //           'assets/icon/lock_icon.png',
+                  //           height: 20,
+                  //         ),
+                  // ),
                 ],
               ),
             )

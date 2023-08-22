@@ -22,10 +22,12 @@ class _ListGamePageState extends State<ListGamePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Text("List Game"),
+        title: Center(
+            child:
+                const Text("List Game", style: TextStyle(color: Colors.black))),
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: BoxDecoration(color: HexColor('#ffffff')),
         child: FutureBuilder(
           future: fetchUserMaterials(), // Fetch the user's materials
           builder: (context, snapshot) {
@@ -46,7 +48,7 @@ class _ListGamePageState extends State<ListGamePage> {
                     key: Key(materi['id'].toString()),
                     image: materi["gambar_game"],
                     onTap: () {
-                       Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => GamePage(
