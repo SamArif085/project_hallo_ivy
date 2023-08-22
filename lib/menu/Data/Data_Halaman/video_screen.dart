@@ -156,19 +156,27 @@ class _VideoScreenState extends State<VideoScreen>
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16, right: 16, bottom: 8, top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  child: const Row(
-                                    children: <Widget>[],
+                          Container(
+                            // top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+                            // left: 0,
+                            // padding: EdgeInsets.all(20),
+                            child: ScaleTransition(
+                              alignment: Alignment.center,
+                              scale: CurvedAnimation(
+                                  parent: animationController!,
+                                  curve: Curves.fastOutSlowIn),
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: <Widget>[
+                                      getTimeBoxUI('Diputar', '$_playCount'),
+                                    ],
                                   ),
-                                )
-                              ],
+                                ),
+                              ),
                             ),
                           ),
                           Expanded(
@@ -177,7 +185,7 @@ class _VideoScreenState extends State<VideoScreen>
                               opacity: opacity2,
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 35, bottom: 8),
+                                    left: 16, right: 16, bottom: 8),
                                 child: Container(
                                   height: 300,
                                   child: SfCartesianChart(
@@ -275,9 +283,6 @@ class _VideoScreenState extends State<VideoScreen>
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom,
-                          )
                         ],
                       ),
                     ),
@@ -308,27 +313,6 @@ class _VideoScreenState extends State<VideoScreen>
                         //     ),
                         //   );
                         // }),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
-              left: 0,
-              child: ScaleTransition(
-                alignment: Alignment.center,
-                scale: CurvedAnimation(
-                    parent: animationController!, curve: Curves.fastOutSlowIn),
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 500),
-                  opacity: opacity1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      children: <Widget>[
-                        getTimeBoxUI('Diputar', '$_playCount'),
                       ],
                     ),
                   ),
