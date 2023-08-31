@@ -42,17 +42,19 @@ class Category {
     required this.id,
     required this.title,
     required this.imagePath,
+    required this.imagePathCover,
   });
   String id;
   String title;
   String imagePath;
+  String imagePathCover;
 
   factory Category.fromMap(Map<String, dynamic> map) {
     return Category(
-      id: map['id'] ?? '',
-      title: map['judul_materi'] ?? '',
-      imagePath: map['gambar_materi'] ?? '',
-    );
+        id: map['id'] ?? '',
+        title: map['judul_materi'] ?? '',
+        imagePath: map['gambar_materi'] ?? '',
+        imagePathCover: map['gambar_cover'] ?? '');
   }
 
   Future<List<Category>> getData() async {
@@ -71,14 +73,6 @@ class Category {
     }
   }
 
-  static List<Category> categoryList = <Category>[
-    Category(
-      id: '',
-      imagePath: 'assets/design_course/interFace2.png',
-      title: 'Materi Tema',
-    ),
-  ];
-
   static List<Category2> categoryList1 = <Category2>[
     Category2(
       imagePath1: 'assets/design_course/interFace2.png',
@@ -92,6 +86,7 @@ class Category {
       id: '',
       imagePath: 'assets/design_course/interFace4.png',
       title: 'Quiz',
+      imagePathCover: '',
     ),
   ];
 
@@ -100,29 +95,7 @@ class Category {
       id: '',
       imagePath: 'assets/design_course/interFace3.png',
       title: 'Tugas Rumah',
-    ),
-  ];
-
-  static List<Category> prcourseList = <Category>[
-    Category(
-      id: '',
-      imagePath: 'assets/design_course/interFace3.png',
-      title: 'Tugas Rumah',
-    ),
-  ];
-
-  static List<Category> gameList = <Category>[
-    Category(
-      id: '',
-      imagePath: 'assets/design_course/interFace2.png',
-      title: 'Susun Kata',
-    ),
-  ];
-  static List<Category> game1List = <Category>[
-    Category(
-      id: '',
-      imagePath: 'assets/design_course/interFace2.png',
-      title: 'Susun Kata2',
+      imagePathCover: '',
     ),
   ];
 }

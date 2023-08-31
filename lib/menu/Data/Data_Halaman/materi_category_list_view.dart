@@ -9,7 +9,7 @@ import 'models/materi_category.dart';
 class CategoryListView extends StatefulWidget {
   const CategoryListView({Key? key, this.callBack}) : super(key: key);
 
-    final void Function(Category category)? callBack;
+  final void Function(Category category)? callBack;
   @override
   _CategoryListViewState createState() => _CategoryListViewState();
 }
@@ -17,7 +17,7 @@ class CategoryListView extends StatefulWidget {
 class _CategoryListViewState extends State<CategoryListView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
- int? _selectedCategoryIndex; 
+  int? _selectedCategoryIndex;
   @override
   void initState() {
     animationController = AnimationController(
@@ -99,17 +99,16 @@ class _CategoryListViewState extends State<CategoryListView>
 }
 
 class CategoryView extends StatelessWidget {
-  const CategoryView(
-      {Key? key,
-      this.category,
-      this.animationController,
-      this.animation,
-      required this.isSelected,
-      required this.onTap,
-      })
-      : super(key: key);
+  const CategoryView({
+    Key? key,
+    this.category,
+    this.animationController,
+    this.animation,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
 
-final bool isSelected;
+  final bool isSelected;
   final VoidCallback onTap;
   final Category? category;
   final AnimationController? animationController;
@@ -281,15 +280,17 @@ final bool isSelected;
                             top: 24, bottom: 24, left: 16),
                         child: Row(
                           children: <Widget>[
-                          ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                        child: AspectRatio(
-                          aspectRatio: 1.0,
-                          child: category != null
-                              ? Image.network(category!.imagePath) // Use Image.network for server images
-                              : SizedBox(),
-                        ),
-                      ),
+                            ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0)),
+                              child: AspectRatio(
+                                aspectRatio: 1.0,
+                                child: category != null
+                                    ? Image.network(category!
+                                        .imagePath) // Use Image.network for server images
+                                    : SizedBox(),
+                              ),
+                            ),
                           ],
                         ),
                       ),

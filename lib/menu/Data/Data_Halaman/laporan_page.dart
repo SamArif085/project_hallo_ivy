@@ -29,7 +29,7 @@ class LaporanHome extends StatelessWidget {
           child: ListView(
             children: [
               pesanGuru(materi: materi),
-              chartVideo(),
+              const chartVideo(),
             ],
           ),
         ),
@@ -38,6 +38,7 @@ class LaporanHome extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class chartVideo extends StatelessWidget {
   const chartVideo({super.key});
 

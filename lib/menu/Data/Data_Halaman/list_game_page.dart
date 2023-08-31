@@ -23,8 +23,7 @@ class _ListGamePageState extends State<ListGamePage> {
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
         title: const Center(
-            child:
-                Text("List Game", style: TextStyle(color: Colors.black))),
+            child: Text("List Game", style: TextStyle(color: Colors.black))),
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#ffffff')),
@@ -46,7 +45,7 @@ class _ListGamePageState extends State<ListGamePage> {
                   var materi = linkMateriFull[index];
                   return CustomCard(
                     key: Key(materi['id'].toString()),
-                    image: materi["gambar_game"],
+                    image: materi["gambar_cover_game"],
                     onTap: () {
                       Navigator.push(
                         context,

@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import '../Quiz/views/play_quiz.dart';
 import 'color_Theme.dart';
 import 'models/materi_category.dart';
-import 'pr_home.dart';
+import 'pr_home_page.dart';
 
 class KontenMenuPRandQuiz extends StatefulWidget {
-  const KontenMenuPRandQuiz({Key? key, this.callBack, }) : super(key: key);
+  const KontenMenuPRandQuiz({
+    Key? key,
+    this.callBack,
+  }) : super(key: key);
 
   final Function()? callBack;
 
   @override
   _KontenMenuPRandQuizState createState() => _KontenMenuPRandQuizState();
 }
-
 
 class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
     with TickerProviderStateMixin {
@@ -129,7 +131,7 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
             Navigator.push<dynamic>(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) =>  const PlayQuiz(),
+                builder: (BuildContext context) => const PlayQuiz(),
               ),
             );
           },
