@@ -1,15 +1,28 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:http/http.dart' as http;
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'Color_Theme.dart';
-
 import 'package:video_player/video_player.dart';
+import 'package:http/http.dart' as http;
 
 import 'models/refreshdata.dart';
+
+Future<void> sendPlayCountToServer(int playCount) async {
+  final url = Uri.parse('https://hello-ivy.id/post_quiz.php');
+
+  final response = await http.post(url, body: {
+    'count_video': playCount.toString(),
+    'nisn': 321654.toString(),
+  });
+
+  if (response.statusCode == 200) {
+    print('Play count sent successfully');
+  } else {
+    print('Failed to send play count');
+  }
+}
 
 class VideoScreen extends StatefulWidget {
   const VideoScreen({
@@ -49,6 +62,7 @@ class _VideoScreenState extends State<VideoScreen>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
     super.initState();
+
     UserDataManager.refreshUserData();
 
     var controller = VideoPlayerController.network(
@@ -91,6 +105,8 @@ class _VideoScreenState extends State<VideoScreen>
             }).catchError((error) {
               print('Terjadi kesalahan saat mengirim permintaan POST: $error');
             });
+            sendPlayCountToServer(_playCount);
+
           });
         }
       } else {
