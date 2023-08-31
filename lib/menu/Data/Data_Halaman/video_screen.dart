@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-
+import 'package:http/http.dart' as http;
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'Color_Theme.dart';
 
 import 'package:video_player/video_player.dart';
+
+import 'models/refreshdata.dart';
 
 class VideoScreen extends StatefulWidget {
   const VideoScreen({
@@ -16,6 +18,7 @@ class VideoScreen extends StatefulWidget {
   }) : super(key: key);
   final Map<String, dynamic> materi;
   @override
+  // ignore: library_private_types_in_public_api
   _VideoScreenState createState() => _VideoScreenState();
 }
 
@@ -46,17 +49,17 @@ class _VideoScreenState extends State<VideoScreen>
         curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
     super.initState();
-  
-     var controller = VideoPlayerController.network(
-        widget.materi['link_materi'],
-      
+    UserDataManager.refreshUserData();
+
+    var controller = VideoPlayerController.network(
+      widget.materi['link_materi'],
     );
 
-     flickManager = FlickManager(
+    flickManager = FlickManager(
       videoPlayerController: controller,
       autoPlay: false,
     );
-      controller.addListener(() {
+    controller.addListener(() {
       if (controller.value.position >=
               controller.value.duration - const Duration(seconds: 2) &&
           controller.value.position < controller.value.duration) {
@@ -64,13 +67,36 @@ class _VideoScreenState extends State<VideoScreen>
           setState(() {
             _playCount++;
             _isPlaying = true;
+            // Perhitungan data cout db dan data count sekarang
+            widget.materi['count'] =
+                (_playCount + int.parse(widget.materi['count'])).toString();
+            // Fungsi Paramteri pada server
+            Map<String, dynamic> postData = {
+              'count_video': widget.materi['count'],
+              'nisn': widget.materi['nisn'],
+              'id_materi': widget.materi['id'],
+            };
+            // Kirim permintaan POST ke server
+            http
+                .post(
+              Uri.parse('https://hello-ivy.id/post_count.php'),
+              body: postData,
+            )
+                .then((response) {
+              if (response.statusCode == 200) {
+                print('Data count berhasil dikirim');
+              } else {
+                print('Gagal mengirim data count');
+              }
+            }).catchError((error) {
+              print('Terjadi kesalahan saat mengirim permintaan POST: $error');
+            });
           });
         }
       } else {
         _isPlaying = false;
       }
     });
-  
   }
 
   Future<void> setData() async {
@@ -194,7 +220,8 @@ class _VideoScreenState extends State<VideoScreen>
                                   padding: const EdgeInsets.all(8),
                                   child: Row(
                                     children: <Widget>[
-                                      getTimeBoxUI('Diputar', '$_playCount'),
+                                      getTimeBoxUI('Diputar sebanyak',
+                                          widget.materi['count']),
                                     ],
                                   ),
                                 ),

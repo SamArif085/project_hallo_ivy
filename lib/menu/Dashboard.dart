@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-
+import 'Data/Data_Halaman/list_menu_dashboard.dart';
 import 'Data/Data_Halaman/list_game_page.dart';
 import 'Data/Data_Halaman/list_laporan.dart';
-import 'Data/Data_Halaman/list_menu_dashboard.dart';
+import 'Data/Data_Halaman/models/refreshdata.dart';
 import 'Data/Data_Halaman/profile_screen.dart';
 import 'Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'Data/Module/fitness_app_theme.dart';
 import 'Data/Module/models/tabIcon_data.dart';
 
-
 class DashboardHome extends StatefulWidget {
-  const DashboardHome(
-      {super.key,});
+  const DashboardHome({Key? key}) : super(key: key);
+
   @override
   _DashboardHomeState createState() => _DashboardHomeState();
 }
@@ -19,12 +18,10 @@ class DashboardHome extends StatefulWidget {
 class _DashboardHomeState extends State<DashboardHome>
     with TickerProviderStateMixin {
   AnimationController? animationController;
-
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
-
-  Widget tabBody = Container(
-    color: FitnessAppTheme.background,
-  );
+  Widget tabBody = Container(color: FitnessAppTheme.background);
+  String? nisn;
+  String? password;
 
   @override
   void initState() {
@@ -39,12 +36,19 @@ class _DashboardHomeState extends State<DashboardHome>
       animationController: animationController,
     );
     super.initState();
+    UserDataManager.refreshUserData();
   }
 
   @override
   void dispose() {
     animationController?.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    UserDataManager.refreshUserData();
   }
 
   @override
@@ -95,7 +99,6 @@ class _DashboardHomeState extends State<DashboardHome>
                 setState(() {
                   tabBody = DesignCourseHomeScreen(
                     animationController: animationController,
-                  
                   );
                 });
               });
@@ -105,9 +108,7 @@ class _DashboardHomeState extends State<DashboardHome>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                       const ListLaporan();
-                   
+                  tabBody = const ListLaporan();
                 });
               });
             } else if (index == 2) {
@@ -116,23 +117,20 @@ class _DashboardHomeState extends State<DashboardHome>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                       const ListGamePage();
-                   
+                  tabBody = const ListGamePage();
                 });
               });
-            }else if (index == 3) {
+            } else if (index == 3) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
                 }
                 setState(() {
-                  tabBody =
-                       const UserProfilePage();
+                  tabBody = const UserProfilePage();
                 });
               });
             }
-          }, 
+          },
         ),
       ],
     );

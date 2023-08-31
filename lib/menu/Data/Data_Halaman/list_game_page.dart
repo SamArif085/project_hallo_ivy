@@ -22,9 +22,9 @@ class _ListGamePageState extends State<ListGamePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: Center(
+        title: const Center(
             child:
-                const Text("List Game", style: TextStyle(color: Colors.black))),
+                Text("List Game", style: TextStyle(color: Colors.black))),
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#ffffff')),

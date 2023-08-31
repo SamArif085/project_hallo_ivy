@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Game/game_page.dart';
@@ -8,6 +7,7 @@ import 'list_menu_game_dashboard.dart';
 import 'materi_category_list_view.dart';
 import 'color_Theme.dart';
 import 'models/materi_category.dart';
+import 'models/refreshdata.dart';
 import 'video_screen.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
@@ -23,8 +23,20 @@ class DesignCourseHomeScreen extends StatefulWidget {
 
 class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   CategoryType categoryType = CategoryType.ui;
-
   bool showTestPopularView = true;
+
+  @override
+  void initState() {
+    super.initState();
+    UserDataManager.refreshUserData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    UserDataManager.refreshUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,7 +91,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           ),
           Flexible(
             child: CategoryListView(
-                callBack: (Category category) {
+              callBack: (Category category) {
                 moveToMateri(category);
               },
             ),
@@ -114,24 +126,24 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
 
   void moveToMateri(category) async {
     final List<Map<String, dynamic>> materiList = await fetchUserMaterials();
-     Map<String, dynamic> selectedMateri = materiList.firstWhere(
-    (materi) => materi['id'] == category.id,
-    orElse: () => {},
-  );
-    if (selectedMateri.isNotEmpty) {
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => VideoScreen(
-          materi: selectedMateri,
-        ),
-      ),
+    Map<String, dynamic> selectedMateri = materiList.firstWhere(
+      (materi) => materi['id'] == category.id,
+      orElse: () => {},
     );
-  } else {
-    // Handle case where selectedMateri is empty
+    if (selectedMateri.isNotEmpty) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VideoScreen(
+            materi: selectedMateri,
+          ),
+        ),
+      );
+    } else {
+      // Handle case where selectedMateri is empty
+    }
   }
-}
 
   Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -157,27 +169,26 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     }
   }
 
-void moveToGamePage(Category2 category) async {
-  final List<Map<String, dynamic>> dataGame = await fetchGame();
-  Map<String, dynamic> selectedMateri = dataGame.firstWhere(
-    (materi) => materi['id'] == category.id,
-    orElse: () => {},
-  );
-  if (selectedMateri.isNotEmpty) {
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => GamePage(
-          materi: selectedMateri,
-        ),
-      ),
+  void moveToGamePage(Category2 category) async {
+    final List<Map<String, dynamic>> dataGame = await fetchGame();
+    Map<String, dynamic> selectedMateri = dataGame.firstWhere(
+      (materi) => materi['id'] == category.id,
+      orElse: () => {},
     );
-  } else {
-    // Handle case where selectedMateri is empty
+    if (selectedMateri.isNotEmpty) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GamePage(
+            materi: selectedMateri,
+          ),
+        ),
+      );
+    } else {
+      // Handle case where selectedMateri is empty
+    }
   }
-}
-
 
   Widget getGameUI() {
     return const Column(

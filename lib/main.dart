@@ -7,12 +7,14 @@ import 'menu/Dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Map<String, dynamic> userData = await getUserDataFromPreferences(); // Use 'await' here
+  Map<String, dynamic> userData =
+      await getUserDataFromPreferences(); // Use 'await' here
   runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,  // Add this
+      debugShowCheckedModeBanner: false, // Add this
       home: userData.isEmpty ? const Login() : const DashboardHome()));
 }
- Future<Map<String, dynamic>> getUserDataFromPreferences() async {
+
+Future<Map<String, dynamic>> getUserDataFromPreferences() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? userDataString = preferences.getString('userData');
   if (userDataString != null) {
@@ -22,19 +24,19 @@ void main() async {
   }
 }
 
-
 class Login extends StatefulWidget {
-  const Login({super.key,});
+  const Login({
+    super.key,
+  });
 
   @override
-  _LoginState createState() => _LoginState(); 
+  _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
   void togglePasswordVisibility() {
     togglePasswordVisibility();
   }
-
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -79,8 +81,8 @@ class _LoginState extends State<Login> {
         if (serverResponse['status'] == true) {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString('nisn', nisn);
+          preferences.setString('password', password);
           preferences.setString('userData', jsonEncode(serverResponse));
-
 
           // ignore: use_build_context_synchronously
           Navigator.push(
