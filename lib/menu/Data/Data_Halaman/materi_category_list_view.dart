@@ -145,14 +145,11 @@ class CategoryView extends StatelessWidget {
                             ),
                             child: Row(
                               children: <Widget>[
-                                const SizedBox(
-                                  width: 48 + 24.0,
-                                ),
                                 Expanded(
                                   child: Column(
                                     children: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 16),
+                                        padding: const EdgeInsets.only(top: 16 , left: 60),
                                         child: Text(
                                           category?.title ?? '',
                                           textAlign: TextAlign.left,
@@ -167,55 +164,6 @@ class CategoryView extends StatelessWidget {
                                       ),
                                       const Expanded(
                                         child: SizedBox(),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 16, bottom: 8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            const Text(
-                                              '',
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 12,
-                                                letterSpacing: 0.27,
-                                                color:
-                                                    DesignCourseAppTheme.grey,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: const Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    '',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w200,
-                                                      fontSize: 18,
-                                                      letterSpacing: 0.27,
-                                                      color:
-                                                          DesignCourseAppTheme
-                                                              .grey,
-                                                    ),
-                                                  ),
-                                                  // Icon(
-                                                  //   Icons.star,
-                                                  //   color:
-                                                  //       DesignCourseAppTheme
-                                                  //           .nearlyBlue,
-                                                  //   size: 20,
-                                                  // ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -266,19 +214,19 @@ class CategoryView extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 24, bottom: 24, left: 16),
+                          const EdgeInsets.only(top: 24, bottom: 24, left: 8),
                       child: Row(
                         children: <Widget>[
                           ClipRRect(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(16.0)),
+                                const BorderRadius.all(Radius.circular(16.0)),
                             child: AspectRatio(
                               aspectRatio: 1.0,
                               child: category != null
                                   ? Image.network(
                                       category!.imagePath,
                                     ) // Use Image.network for server images
-                                  : SizedBox(),
+                                  : const SizedBox(),
                             ),
                           ),
                         ],

@@ -148,7 +148,7 @@ class Category2View extends StatelessWidget {
                               child: Row(
                                 children: <Widget>[
                                   const SizedBox(
-                                    width: 48 + 24.0,
+                                    width: 60,
                                   ),
                                   Expanded(
                                     child: Container(
