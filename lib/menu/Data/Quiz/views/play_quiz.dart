@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import '../data/data.dart';
 import '../models/question_model.dart';
 import 'result.dart';
@@ -15,6 +19,7 @@ class PlayQuiz extends StatefulWidget {
 }
 
 class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
+  // ignore: non_constant_identifier_names
   List<QuestionModel> Quest = [];
   int index = 0;
   int points = 0;
@@ -24,7 +29,9 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   late Animation animation;
   double beginAnim = 0.0;
   double endAnim = 1.0;
-
+  int totalQuiz = 0;
+  late FlickManager flickManager;
+  int currentVideoIndex = 0;
   void replayQuiz(BuildContext context) {
     setState(() {
       // Reset values
@@ -32,7 +39,6 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
       points = 0;
       correct = 0;
       incorrect = 0;
-
       // Reset animation and timer
       resetProgress();
       startProgress();
@@ -43,12 +49,12 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 10000),
       vsync: this,
     );
 
-    controller =
-        AnimationController(duration: const Duration(seconds: 10), vsync: this);
+    controller = AnimationController(
+        duration: const Duration(seconds: 10000), vsync: this);
     animation = Tween(begin: beginAnim, end: endAnim).animate(controller)
       ..addListener(() {
         setState(() {
@@ -86,9 +92,21 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
 
   Future<void> populateQuestions() async {
     final userData = await getUserData();
+
     if (userData != null) {
       Quest = await getQuestions(userData);
-      setState(() {}); // Memicu rebuild UI
+      totalQuiz = Quest.length;
+
+      setState(() {
+        currentVideoIndex = 0;
+        var controllervideo =
+            VideoPlayerController.network(Quest[index].imageUrl);
+        print(Quest[index].imageUrl);
+        flickManager = FlickManager(
+          videoPlayerController: controllervideo,
+          autoPlay: true,
+        );
+      }); // Memicu rebuild UI
     }
   }
 
@@ -115,6 +133,16 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
       index++;
       resetProgress();
       startProgress();
+      setState(() {
+        currentVideoIndex++; // Pindah ke video berikutnya
+        var controllervideo =
+            VideoPlayerController.network(Quest[currentVideoIndex].imageUrl);
+        flickManager.dispose(); // Hentikan video sebelumnya
+        flickManager = FlickManager(
+          videoPlayerController: controllervideo,
+          autoPlay: true,
+        );
+      });
     } else {
       Navigator.pushReplacement(
         context,
@@ -141,6 +169,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
 
     return Scaffold(
       body: Container(
+        color: HexColor('#85f29d'),
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -158,7 +187,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        "${index + 1}/${currentQuestion.question.length}",
+                        "${index + 1}/$totalQuiz",
                         style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.w500),
                       ),
@@ -206,18 +235,44 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                   fontWeight: FontWeight.w500),
             ),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
-            Container(
-              child: LinearProgressIndicator(
-                value: animation.value,
+            // Container(
+            //   child: LinearProgressIndicator(
+            //     value: animation.value,
+            //     color: Colors.red,
+            //   ),
+            // ),
+            FractionallySizedBox(
+              widthFactor: 0.9,
+              child: VisibilityDetector(
+                key: ObjectKey(flickManager),
+                onVisibilityChanged: (visibility) {
+                  if (visibility.visibleFraction == 0 && this.mounted) {
+                    flickManager.flickControlManager?.autoPause();
+                  } else if (visibility.visibleFraction == 1) {
+                    flickManager.flickControlManager?.autoResume();
+                    setState(() {});
+                  }
+                },
+                child: FlickVideoPlayer(
+                  flickManager: flickManager,
+                  flickVideoWithControls: const FlickVideoWithControls(
+                    closedCaptionTextStyle: TextStyle(fontSize: 8),
+                    controls: FlickPortraitControls(),
+                  ),
+                  flickVideoWithControlsFullscreen:
+                      const FlickVideoWithControls(
+                    controls: FlickLandscapeControls(),
+                  ),
+                ),
               ),
             ),
-            FractionallySizedBox(
-              widthFactor: 0.7, // Ukuran gambar sebesar 80% lebar layar
-              child:
-                  CachedNetworkImage(imageUrl: currentQuestion.getImageUrl()),
-            ),
+            // FractionallySizedBox(
+            //   widthFactor: 0.9, // Ukuran gambar sebesar 80% lebar layar
+            //   child:
+            //       CachedNetworkImage(imageUrl: currentQuestion.getImageUrl()),
+            // ),
             const Spacer(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),

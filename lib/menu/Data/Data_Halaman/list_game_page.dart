@@ -20,6 +20,7 @@ class _ListGamePageState extends State<ListGamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+      automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: DesignCourseAppTheme.nearlyWhite,
         title: const Center(

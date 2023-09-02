@@ -29,6 +29,7 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: HexColor('#85f29d'),
         title: const Padding(
           padding: EdgeInsets.only(left: 50),

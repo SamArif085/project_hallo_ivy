@@ -15,6 +15,7 @@ class LaporanHome extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         elevation: 0,
         title: const Center(
             // child: const Text('Laporan Siswa'),

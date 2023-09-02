@@ -71,8 +71,8 @@ class _PRHomeState extends State<PRHome> {
               decoration: BoxDecoration(color: HexColor('#85f29d')),
               child: ListView(
                 children: [
-                  Center(
-                    child: const Text(
+                  const Center(
+                    child: Text(
                       '- - - Terbaru - - -',
                       style: TextStyle(
                         // color: Colors.white,
@@ -128,7 +128,7 @@ class _PRHomeState extends State<PRHome> {
                         padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
                         child: CustomCard(
                           title: '',
-                          text: 'Belum Ada PR Yang Selesai',
+                          text: 'Belum Ada Riwayat PR',
                           deadln: '',
                         ),
                       ),
