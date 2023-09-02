@@ -33,6 +33,10 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
 
   @override
   Widget build(BuildContext context) {
+    double containerHeight = MediaQuery.of(context).size.width <= 600
+        ? 180
+        : 400; // Mengatur tinggi sesuai dengan kondisi perangkat
+
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: FutureBuilder<bool>(
@@ -41,19 +45,22 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
           if (!snapshot.hasData) {
             return const SizedBox();
           } else {
-            return Row(
-              // Menggunakan Row untuk mengatur konten secara horizontal
-              children: <Widget>[
-                Expanded(
-                  child: getPRUI(), // Konten 'game' berada di sebelah kiri
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Expanded(
-                  child: getQuizUI(), // Konten 'quiz' berada di sebelah kanan
-                ),
-              ],
+            return Container(
+              height:
+                  containerHeight, // Mengatur tinggi sesuai dengan kondisi perangkat
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: getPRUI(),
+                  ),
+                  const SizedBox(
+                    width: 60,
+                  ),
+                  Expanded(
+                    child: getQuizUI(),
+                  ),
+                ],
+              ),
             );
           }
         },
@@ -62,13 +69,14 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
   }
 
   Widget getPRUI() {
+    double main = 370;
+    if (MediaQuery.of(context).size.width <= 600) {
+      main = 170;
+    }
     return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
-        mainAxisSpacing: 32.0,
-        crossAxisSpacing: 32.0,
-        childAspectRatio: 0.8,
+        mainAxisExtent: main,
       ),
       itemCount: Category.testcourseList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -101,13 +109,14 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
   }
 
   Widget getQuizUI() {
+    double main = 370;
+    if (MediaQuery.of(context).size.width <= 600) {
+      main = 170;
+    }
     return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
-        mainAxisSpacing: 32.0,
-        crossAxisSpacing: 32.0,
-        childAspectRatio: 0.8,
+        mainAxisExtent: main,
       ),
       itemCount: Category.popularCourseList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -148,17 +157,21 @@ class CategoryView extends StatelessWidget {
     this.animationController,
     this.animation,
     this.callback,
-    required this.onTap, // Tambahkan required untuk memastikan onTap tidak null
+    required this.onTap,
   }) : super(key: key);
 
   final VoidCallback? callback;
   final Category? category;
   final AnimationController? animationController;
   final Animation<double>? animation;
-  final VoidCallback onTap; // Gunakan tipe VoidCallback
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    double paddingWidth = MediaQuery.of(context).size.width <= 600
+        ? MediaQuery.of(context).size.width * 0.32
+        : MediaQuery.of(context).size.width * 0.4;
+
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -169,7 +182,7 @@ class CategoryView extends StatelessWidget {
                 0.0, 50 * (1.0 - animation!.value), 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: onTap, // Panggil fungsi onTap di sini
+              onTap: onTap,
               child: SizedBox(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
@@ -208,60 +221,11 @@ class CategoryView extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 8,
-                                          left: 16,
-                                          right: 16,
-                                          bottom: 8,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            // const Text(
-                                            //   'test',
-                                            //   textAlign: TextAlign.left,
-                                            //   style: TextStyle(
-                                            //     fontWeight: FontWeight.w200,
-                                            //     fontSize: 12,
-                                            //     letterSpacing: 0.27,
-                                            //     color: DesignCourseAppTheme
-                                            //         .grey,
-                                            //   ),
-                                            // ),
-                                            // Container(
-                                            //   child: const Row(
-                                            //     children: <Widget>[
-                                            //       Text(
-                                            //         '',
-                                            //         textAlign:
-                                            //             TextAlign.left,
-                                            //         style: TextStyle(
-                                            //           fontWeight:
-                                            //               FontWeight.w200,
-                                            //           fontSize: 18,
-                                            //           letterSpacing: 0.27,
-                                            //           color:
-                                            //               DesignCourseAppTheme
-                                            //                   .grey,
-                                            //         ),
-                                            //       ),
-                                            //       // const Icon(
-                                            //       //   Icons.star,
-                                            //       //   color:
-                                            //       //       DesignCourseAppTheme
-                                            //       //           .nearlyBlue,
-                                            //       //   size: 20,
-                                            //       // ),
-                                            //     ],
-                                            //   ),
-                                            // )
-                                          ],
-                                        ),
-                                      ),
+                                      Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5),
                                     ],
                                   ),
                                 ),
@@ -269,33 +233,16 @@ class CategoryView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 0, right: 16, left: 16, bottom: 40),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                color:
-                                    DesignCourseAppTheme.grey.withOpacity(0.2),
-                                offset: const Offset(0.0, 0.0),
-                                blurRadius: 6.0),
-                          ],
-                        ),
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                      child: SizedBox(
+                        width:
+                            paddingWidth, // Lebar disesuaikan dengan kondisi perangkat
                         child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(16.0)),
-                          child: AspectRatio(
-                              aspectRatio: 1.28,
-                              child: Image.asset(category!.imagePath)),
-                        ),
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.asset(category!.imagePath)),
                       ),
                     ),
                   ],

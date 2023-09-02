@@ -129,14 +129,14 @@ class Category2View extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: onTap,
               child: SizedBox(
-                width: 280,
+                width: MediaQuery.of(context).size.width * 0.60,
                 child: Stack(
                   children: <Widget>[
                     Container(
                       child: Row(
                         children: <Widget>[
                           const SizedBox(
-                            width: 48,
+                            width: 78,
                           ),
                           Expanded(
                             child: Container(
