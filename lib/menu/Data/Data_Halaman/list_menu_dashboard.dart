@@ -74,8 +74,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   }
 
   Widget getCategoryUI() {
+    double sizedBoxHeight = MediaQuery.of(context).size.width > 600 ? 270 : 180;
     return Padding(
-      padding: const EdgeInsets.only(top: 30, left: 18, right: 18),
+      padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -89,11 +90,14 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               color: DesignCourseAppTheme.darkerText,
             ),
           ),
-          Flexible(
-            child: CategoryListView(
-              callBack: (Category category) {
-                moveToMateri(category);
-              },
+          SizedBox(
+            height: sizedBoxHeight,
+            child: Flexible(
+              child: CategoryListView(
+                callBack: (Category category) {
+                  moveToMateri(category);
+                },
+              ),
             ),
           ),
           const Flexible(
@@ -112,11 +116,14 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               color: DesignCourseAppTheme.darkerText,
             ),
           ),
-          Flexible(
-            child: GameListView(
-              callBack: (Category2 category) {
-                moveToGamePage(category);
-              },
+          SizedBox(
+            height: sizedBoxHeight,
+            child: Flexible(
+              child: GameListView(
+                callBack: (Category2 category) {
+                  moveToGamePage(category);
+                },
+              ),
             ),
           ),
         ],
