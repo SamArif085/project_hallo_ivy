@@ -33,6 +33,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   int totalQuiz = 0;
   late FlickManager flickManager;
   int currentVideoIndex = 0;
+  
   void replayQuiz(BuildContext context) {
     setState(() {
       // Reset values
@@ -44,6 +45,13 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
       resetProgress();
       startProgress();
     });
+  }
+
+  @override
+  void dispose() {
+    flickManager.dispose(); // Menghentikan pemutar video
+    controller.dispose(); // Membebaskan sumber daya animasi
+    super.dispose();
   }
 
   @override
@@ -356,11 +364,5 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 }
