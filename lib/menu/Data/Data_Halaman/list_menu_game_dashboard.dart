@@ -117,6 +117,8 @@ class Category2View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double sizedPad = MediaQuery.of(context).size.width > 600 ? 95 : 30;
+    double widtFac = MediaQuery.of(context).size.width > 600 ? 0.7 : 0.8;
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -132,34 +134,39 @@ class Category2View extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.60,
                 child: Stack(
                   children: <Widget>[
-                    Container(
-                      child: Row(
-                        children: <Widget>[
-                          const SizedBox(
-                            width: 78,
-                          ),
-                          Expanded(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: Color.fromRGBO(105, 240, 155, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16.0)),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  const SizedBox(
-                                    width: 60,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
+                    Row(
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 78,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Color.fromRGBO(105, 240, 155, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0)),
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                // const SizedBox(
+                                //   width: 60,
+                                // ),
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.fromLTRB(sizedPad, 0, 10, 0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        FractionallySizedBox(
+                                          widthFactor: widtFac,
+                                          child: Padding(
                                             padding:
-                                                const EdgeInsets.only(top: 16),
+                                                const EdgeInsets.only(left: 0),
                                             child: Text(
                                               category?.title1 ?? '',
-                                              textAlign: TextAlign.left,
+                                              textAlign: TextAlign.center,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
@@ -169,137 +176,61 @@ class Category2View extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          const Expanded(
-                                            child: SizedBox(),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 16, bottom: 8),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: <Widget>[
-                                                const Text(
-                                                  '',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 12,
-                                                    letterSpacing: 0.27,
-                                                    color: DesignCourseAppTheme
-                                                        .grey,
-                                                  ),
+                                        ),
+                                        // const Expanded(
+                                        //   child: SizedBox(),
+                                        // ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Container(
+                                              decoration: const BoxDecoration(
+                                                color: DesignCourseAppTheme
+                                                    .nearlyWhite,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8.0)),
+                                              ),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: DesignCourseAppTheme
+                                                      .nearlyGreen,
                                                 ),
-                                                Container(
-                                                  child: const Row(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        '',
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w200,
-                                                          fontSize: 18,
-                                                          letterSpacing: 0.27,
-                                                          color:
-                                                              DesignCourseAppTheme
-                                                                  .grey,
-                                                        ),
-                                                      ),
-                                                      // Icon(
-                                                      //   Icons.star,
-                                                      //   color:
-                                                      //       DesignCourseAppTheme
-                                                      //           .nearlyBlue,
-                                                      //   size: 20,
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 16, right: 16),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                const Text(
-                                                  '',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 18,
-                                                    letterSpacing: 0.27,
-                                                    color: DesignCourseAppTheme
-                                                        .nearlyBlue,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: DesignCourseAppTheme
-                                                        .nearlyWhite,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                8.0)),
-                                                  ),
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.all(4.0),
-                                                    child: Icon(
-                                                      Icons.play_arrow_rounded,
-                                                      color:
-                                                          DesignCourseAppTheme
-                                                              .nearlyGreen,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    // Conditionally show the image based on selection
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 24, bottom: 24, left: 16),
+                      child: Row(
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(16.0)),
+                            child: ClipRRect(
+                              // aspectRatio: 1.0,
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: category != null
+                                  ? Image.network(category!
+                                      .imagePath1) // Use Image.network for server images
+                                  : const SizedBox(),
                             ),
                           )
                         ],
-                      ),
-                    ),
-                    // Conditionally show the image based on selection
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 24, bottom: 24, left: 16),
-                        child: Row(
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
-                              child: ClipRRect(
-                                // aspectRatio: 1.0,
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: category != null
-                                    ? Image.network(category!
-                                        .imagePath1) // Use Image.network for server images
-                                    : const SizedBox(),
-                              ),
-                            )
-                          ],
-                        ),
                       ),
                     ),
                   ],
