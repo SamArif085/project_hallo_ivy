@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Quiz/views/list_quiz.dart';
 import '../Quiz/views/play_quiz.dart';
 import 'color_Theme.dart';
 import 'models/materi_category.dart';
@@ -140,7 +141,7 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
             Navigator.push<dynamic>(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const PlayQuiz(),
+                builder: (BuildContext context) => const QuizMenu(),
               ),
             );
           },

@@ -1,33 +1,31 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/question_model.dart';
+import 'package:http/http.dart' as http;
 
-Future<List<QuestionModel>> getQuestions(userData) async {
-  List<QuestionModel> questions = [];
+Future<List<QuestionModel>> getQuestions(int idMateri) async {
+  final Uri url =
+      Uri.parse('https://hello-ivy.id/get_quiz.php?id_materi=$idMateri');
+  final response = await http.get(url);
 
-  List<Map<String, dynamic>> quizData = await fetchUserMaterials();
-  
-  for (var linkquiz in quizData) {
-    QuestionModel questionModel = QuestionModel(
-  id: linkquiz['id_quiz'],
-  question: linkquiz['pertanyaan'],
-  answer: linkquiz['jawaban'],
-  imageUrl: linkquiz['image'],
-);
-    questions.add(questionModel);
-  }
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    final List<dynamic> quizData = responseData['values']['data'];
 
-  return questions;
-}
+    List<QuestionModel> questions = [];
 
-Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  String? userDataString = preferences.getString('userData');
-  if (userDataString != null) {
-    Map<String, dynamic> userData = jsonDecode(userDataString);
-    // Assuming "quiz" is the key for user's quiz data
-    return userData['quiz'].cast<Map<String, dynamic>>();
+    for (var linkquiz in quizData) {
+      QuestionModel questionModel = QuestionModel(
+        id: linkquiz['id_materi'],
+        question: linkquiz['pertanyaan'],
+        answer: linkquiz['ket_jawab'],
+        imageUrl: linkquiz['link_quiz'],
+      );
+      questions.add(questionModel);
+    }
+
+    return questions;
   } else {
-    return []; // Return an empty list if no user data is found
+    throw Exception('Failed to load quiz data');
   }
 }

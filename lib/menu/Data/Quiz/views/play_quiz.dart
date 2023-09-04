@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-
+import 'package:http/http.dart' as http;
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import '../data/data.dart';
 import '../models/question_model.dart';
 import 'result.dart';
 
 class PlayQuiz extends StatefulWidget {
-  const PlayQuiz({Key? key}) : super(key: key);
-
+  const PlayQuiz({
+    Key? key,
+    required this.materi,
+  }) : super(key: key);
+  final Map<String, dynamic> materi;
   @override
   _PlayQuizState createState() => _PlayQuizState();
 }
@@ -61,8 +64,9 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
         });
       });
     startProgress();
-
-    populateQuestions();
+    print(widget.materi['id']);
+    int idMateri = int.tryParse(widget.materi['id'] ?? "") ?? 0;
+    populateQuestions(idMateri);
 
     animation.addStatusListener(
       (AnimationStatus animationStatus) {
@@ -80,6 +84,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                   totalQuestion: Quest.length,
                   correct: correct,
                   incorrect: incorrect,
+                  materi: widget.materi,
                 ),
               ),
             );
@@ -89,11 +94,11 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
     );
   }
 
-  Future<void> populateQuestions() async {
+  Future<void> populateQuestions(int idMateri) async {
     final userData = await getUserData();
 
     if (userData != null) {
-      Quest = await getQuestions(userData);
+      Quest = await getQuestions(idMateri);
       totalQuiz = Quest.length;
 
       setState(() {
@@ -151,6 +156,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
             totalQuestion: Quest.length,
             correct: correct,
             incorrect: incorrect,
+            materi: widget.materi,
           ),
         ),
       );

@@ -3,35 +3,15 @@
 import 'package:flutter/material.dart';
 
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
-import 'homepage.dart';
+import 'list_quiz.dart';
 import 'play_quiz.dart';
-
-// Inisialisasi objek userData
-void replayQuiz(BuildContext context,) {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => PlayQuiz(),
-    ),
-  );
-}
-
-// ignore: non_constant_identifier_names
-void Home(BuildContext context,) {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => HomePage(),
-    ),
-  );
-}
 
 class Result extends StatelessWidget {
   final int score;
   final int totalQuestion;
   final int correct;
   final int incorrect;
-
+  final Map<String, dynamic> materi;
 
   const Result({
     Key? key,
@@ -39,8 +19,33 @@ class Result extends StatelessWidget {
     required this.totalQuestion,
     required this.correct,
     required this.incorrect,
+    required this.materi,
     // Add this line
   }) : super(key: key);
+
+// Inisialisasi objek userData
+  void replayQuiz(
+    BuildContext context,
+  ) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PlayQuiz(materi: materi),
+      ),
+    );
+  }
+
+// ignore: non_constant_identifier_names
+  void Home(
+    BuildContext context,
+  ) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const QuizMenu(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +116,9 @@ class Result extends StatelessWidget {
                   if (correct <= totalQuestion / 2)
                     ElevatedButton(
                       onPressed: () {
-                        Home(context,);
+                        Home(
+                          context,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('F24C3D'),
@@ -127,7 +134,9 @@ class Result extends StatelessWidget {
                   else
                     ElevatedButton(
                       onPressed: () {
-                        Home(context,);
+                        Home(
+                          context,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('85f29d'),
