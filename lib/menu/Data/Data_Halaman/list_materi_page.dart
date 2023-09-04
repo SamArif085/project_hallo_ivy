@@ -23,7 +23,6 @@ class _MateriPageState extends State<MateriPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: HexColor('#85f29d'),
         // backgroundColor: DesignCourseAppTheme.nearlyWhite,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:http/http.dart' as http;
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import '../data/data.dart';
 import '../models/question_model.dart';

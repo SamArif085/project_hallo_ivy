@@ -25,13 +25,12 @@ class _QuizMenuState extends State<QuizMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: HexColor('#85f29d'),
         // backgroundColor: DesignCourseAppTheme.nearlyWhite,
         title: const Padding(
           padding: EdgeInsets.only(right: 50),
-          child: Center(child: Text('Materi')),
+          child: Center(child: Text('Quiz')),
         ),
       ),
       body: Container(
