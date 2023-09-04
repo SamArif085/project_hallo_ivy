@@ -149,7 +149,8 @@ class CategoryView extends StatelessWidget {
                                   child: Column(
                                     children: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 16 , left: 60),
+                                        padding: const EdgeInsets.only(
+                                            top: 16, left: 55),
                                         child: Text(
                                           category?.title ?? '',
                                           textAlign: TextAlign.left,

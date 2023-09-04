@@ -168,18 +168,20 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
 
     return Scaffold(
       body: Container(
-        color: HexColor('#85f29d'),
-        padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+        // color: HexColor('#85f29d'),
+        padding: const EdgeInsets.fromLTRB(0, 24, 0, 10),
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(
+            Container(
+              color: HexColor('#85f29d'),
               height: 20,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
+              color: HexColor('#85f29d'),
               child: Row(
                 children: <Widget>[
                   Row(
@@ -222,16 +224,20 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            const SizedBox(
+            Container(
+              color: HexColor('#85f29d'),
               height: 20,
             ),
-            Text(
-              "${currentQuestion.getQuestion()}?",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500),
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Text(
+                "${currentQuestion.getQuestion()}?",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: Colors.black87,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500),
+              ),
             ),
             const SizedBox(
               height: 40,
