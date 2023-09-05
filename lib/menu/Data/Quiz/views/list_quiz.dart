@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'play_quiz.dart';
 
-
 class QuizMenu extends StatefulWidget {
   const QuizMenu({
     super.key,
@@ -20,7 +19,6 @@ class QuizMenu extends StatefulWidget {
 class _QuizMenuState extends State<QuizMenu> {
   // ignore: non_constant_identifier_names
   List<Map<String, dynamic>> MateriPerTema = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,6 +107,7 @@ class CustomCard extends StatelessWidget {
   String image;
   @override
   Widget build(BuildContext context) {
+    double sizedHeight = MediaQuery.of(context).size.width > 600 ? 230 : 130;
     return Padding(
       padding: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
       child: Card(
@@ -122,7 +121,7 @@ class CustomCard extends StatelessWidget {
             InkWell(
               onTap: onTap,
               child: Container(
-                height: 100,
+                height: sizedHeight,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(image), // Use a placeholder image URL

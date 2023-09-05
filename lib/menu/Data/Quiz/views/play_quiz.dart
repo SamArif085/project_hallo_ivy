@@ -33,7 +33,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   int totalQuiz = 0;
   late FlickManager flickManager;
   int currentVideoIndex = 0;
-  
+
   void replayQuiz(BuildContext context) {
     setState(() {
       // Reset values
@@ -293,6 +293,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
             // ),
             const Spacer(),
             Container(
+              // width: 300,
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -315,12 +316,13 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                         }
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
                             color: Colors.lightBlue,
                             borderRadius: BorderRadius.circular(24)),
-                        child: const Icon(
-                          Icons.thumb_up_outlined,
+                        child: Image.asset(
+                          'assets/icon/thumb-up-14-64.png',
+                          // width: 1,
                         ),
                       ),
                     ),
@@ -347,12 +349,12 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                         }
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(24)),
-                        child: const Icon(
-                          Icons.thumb_down_outlined,
+                        child: Image.asset(
+                          'assets/icon/thumb-down-10-64.png',
                         ),
                       ),
                     ),

@@ -110,6 +110,7 @@ class CustomCard extends StatelessWidget {
   String image;
   @override
   Widget build(BuildContext context) {
+    double sizedHeight = MediaQuery.of(context).size.width > 600 ? 230 : 130;
     return Padding(
       padding: const EdgeInsets.only(right: 30, left: 30, bottom: 10),
       child: Card(
@@ -123,7 +124,7 @@ class CustomCard extends StatelessWidget {
             InkWell(
               onTap: onTap,
               child: Container(
-                height: 100,
+                height: sizedHeight,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(image), // Use a placeholder image URL
