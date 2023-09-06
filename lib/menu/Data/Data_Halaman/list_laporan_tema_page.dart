@@ -1,68 +1,63 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'laporan_page.dart';
+import 'models/data_laporan_tema.dart';
 
 class ListLaporan extends StatefulWidget {
-  const ListLaporan({
+  final String kdkelas;
+  ListLaporan({
     super.key,
     AnimationController? animationController,
+    required Map<String, dynamic> materi,
+    required this.kdkelas,
   });
 
   @override
+  // ignore: no_logic_in_create_state
   State<ListLaporan> createState() => _ListLaporanState();
 }
 
 class _ListLaporanState extends State<ListLaporan> {
-  List<Map<String, dynamic>> linkMateriFull = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: HexColor('#ffffff'),
-        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Padding(
-          padding: EdgeInsets.only(right: 0),
-          child: Center(
-              child: Text(
-            'Laporan',
-            style: TextStyle(color: Colors.black),
-          )),
-        ),
+        backgroundColor: HexColor('#85f29d'),
+        title: const Center(
+            child: Text("Laporan", style: TextStyle(color: Colors.black))),
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#ffffff')),
-        child: FutureBuilder(
-          future: fetchUserMaterials(), // Fetch the user's materials
+        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        child: FutureBuilder<List<DataTema>>(
+          future: getDataTema(widget.kdkelas),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // Show loading indicator
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              // Populate linkMateriFull with fetched data
-              linkMateriFull = snapshot.data as List<Map<String, dynamic>>;
-              print('linkMateriFull: $linkMateriFull');
+              List<DataTema> dataTema = snapshot.data as List<DataTema>;
+              print('dataTema: $dataTema');
+
               return ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
-                itemCount: linkMateriFull.length,
+                itemCount: dataTema.length,
                 itemBuilder: (context, index) {
-                  var materi = linkMateriFull[index];
+                  var dataLaporanTema = dataTema[index];
                   return CustomCard(
-                    key: Key(materi['id'].toString()),
-                    title: materi['judul_materi'],
+                    key: Key(dataLaporanTema.id.toString()),
+                    title: dataLaporanTema.judulmateri,
                     status: "1",
-                    image: materi['gambar_materi'],
-                    materi: materi['id_pesan'],
+                    image: dataLaporanTema.gambarmateri,
+                    laporan: dataLaporanTema.idpesan,
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => LaporanHome(
-                            materi: materi,
+                            materi: dataLaporanTema.toMap(),
                           ),
                         ),
                       );
@@ -76,19 +71,6 @@ class _ListLaporanState extends State<ListLaporan> {
       ),
     );
   }
-
-  // Replace this with your actual fetching logic
-  Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? userDataString = preferences.getString('userData');
-    if (userDataString != null) {
-      Map<String, dynamic> userData = jsonDecode(userDataString);
-      // Assuming "materi_user" is the key for user's materials
-      return userData['values']['materi_user'].cast<Map<String, dynamic>>();
-    } else {
-      return []; // Return an empty list if no user data is found
-    }
-  }
 }
 
 // ignore: must_be_immutable
@@ -101,11 +83,11 @@ class CustomCard extends StatelessWidget {
     required this.image,
     required this.status,
     required this.onTap,
-    required this.materi,
+    required this.laporan,
   }) : super(key: key);
 
   String title;
-  String materi;
+  String laporan;
   String status;
   String image;
   @override

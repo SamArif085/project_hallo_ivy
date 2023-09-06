@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'color_Theme.dart';
 
 class CourseInfoScreen extends StatefulWidget {
-const CourseInfoScreen({super.key,});
+  const CourseInfoScreen({
+    super.key,
+  });
 
   @override
   _CourseInfoScreenState createState() => _CourseInfoScreenState();

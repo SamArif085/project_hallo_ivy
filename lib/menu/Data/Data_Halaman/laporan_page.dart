@@ -13,35 +13,43 @@ class LaporanHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
-      appBar: AppBar(
-         automaticallyImplyLeading: false,
-        elevation: 0,
-        title: const Center(
-            // child: const Text('Laporan Siswa'),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            elevation: 0,
+            title: const Center(
+              child:
+                  Text('Laporan Siswa', style: TextStyle(color: Colors.black)),
             ),
-        backgroundColor: HexColor('#85f29d'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: HexColor('#85f29d'),
-        ),
-        child: Center(
-          child: ListView(
-            children: [
-              pesanGuru(materi: materi),
-              const chartVideo(),
-            ],
+            backgroundColor: HexColor('#85f29d'),
           ),
-        ),
-      ),
-    ));
+          body: Container(
+            decoration: BoxDecoration(
+              color: HexColor('#85f29d'),
+            ),
+            child: Center(
+              child: ListView(
+                children: [
+                  PesanGuru(materi: materi),
+                  chartVideo(
+                    materi: materi,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 
 // ignore: camel_case_types
 class chartVideo extends StatelessWidget {
-  const chartVideo({super.key});
+  final Map<String, dynamic> materi;
+  const chartVideo({
+    Key? key,
+    required this.materi,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,30 +81,46 @@ class chartVideo extends StatelessWidget {
             ),
             Flexible(
               flex: 5,
-              child: Container(
-                child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  primaryYAxis: NumericAxis(),
-                  series: <ChartSeries>[
-                    ColumnSeries<Map, String>(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5)),
-                      color: HexColor('#85f29d'),
-                      dataSource: [
-                        {'x': 'A', 'y': 10},
-                        {'x': 'B', 'y': 15},
-                        {'x': 'C', 'y': 11},
-                        {'x': 'E', 'y': 20},
-                        {'x': 'F', 'y': 13},
-                        {'x': 'G', 'y': 10},
-                        {'x': 'H', 'y': 8},
-                      ],
-                      xValueMapper: (Map data, int index) => data['x'],
-                      yValueMapper: (Map data, int index) => data['y'],
-                    ),
-                  ],
-                ),
+              child: FutureBuilder(
+                future: Future.value(materi),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    final Map<String, dynamic> materi =
+                        snapshot.data as Map<String, dynamic>;
+                    return Container(
+                      child: SfCartesianChart(
+                        primaryXAxis: CategoryAxis(),
+                        primaryYAxis: NumericAxis(),
+                        series: <ChartSeries>[
+                          ColumnSeries<Map, String>(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                topRight: Radius.circular(5)),
+                            color: HexColor('#85f29d'),
+                            dataSource: [
+                              {
+                                'x': 'A',
+                                'y': int.parse(materi['count'].toString())
+                              },
+                              {'x': 'B', 'y': 15},
+                              {'x': 'C', 'y': 11},
+                              {'x': 'E', 'y': 20},
+                              {'x': 'F', 'y': 13},
+                              {'x': 'G', 'y': 10},
+                              {'x': 'H', 'y': 8},
+                            ],
+                            xValueMapper: (Map data, int index) => data['x'],
+                            yValueMapper: (Map data, int index) => data['y'],
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
               ),
             ),
           ],
@@ -106,8 +130,8 @@ class chartVideo extends StatelessWidget {
   }
 }
 
-class pesanGuru extends StatelessWidget {
-  const pesanGuru({super.key, required this.materi});
+class PesanGuru extends StatelessWidget {
+  const PesanGuru({super.key, required this.materi});
   final Map<String, dynamic> materi;
   @override
   Widget build(BuildContext context) {

@@ -90,9 +90,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               color: DesignCourseAppTheme.darkerText,
             ),
           ),
-          SizedBox(
-            height: sizedBoxHeight,
-            child: Flexible(
+          Flexible(
+            child: SizedBox(
+              height: sizedBoxHeight,
               child: CategoryListView(
                 callBack: (Category category) {
                   moveToMateri(category);
@@ -116,9 +116,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               color: DesignCourseAppTheme.darkerText,
             ),
           ),
-          SizedBox(
-            height: sizedBoxHeight,
-            child: Flexible(
+          Flexible(
+            child: SizedBox(
+              height: sizedBoxHeight,
               child: GameListView(
                 callBack: (Category2 category) {
                   moveToGamePage(category);

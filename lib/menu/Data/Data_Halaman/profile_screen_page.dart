@@ -7,8 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 
 class UserProfilePage extends StatelessWidget {
-
-  const UserProfilePage({Key? key,}) : super(key: key);
+  const UserProfilePage({
+    Key? key,
+  }) : super(key: key);
   Future<void> _logout(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove('userData');
@@ -35,13 +36,13 @@ class UserProfilePage extends StatelessWidget {
           padding: EdgeInsets.only(left: 50),
           child: Center(child: Text('Profile')),
         ),
-        actions:  [
+        actions: [
           IconButton(
             icon: const Icon(
               Icons.logout,
               color: Colors.red,
             ),
-            onPressed:() => _logout(context),
+            onPressed: () => _logout(context),
           ),
         ],
       ),
@@ -53,7 +54,8 @@ class UserProfilePage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            Map<String, dynamic> userData = snapshot.data as Map<String, dynamic>;
+            Map<String, dynamic> userData =
+                snapshot.data as Map<String, dynamic>;
             return Container(
               padding: const EdgeInsets.only(bottom: 70),
               child: ListView(
@@ -61,8 +63,10 @@ class UserProfilePage extends StatelessWidget {
                   userBar(nama: userData['nama']),
                   buildInfo(label: "NISN", value: userData['nisn_siswa']),
                   buildInfo(label: "Kelas", value: userData['kelas']),
-                  buildInfo(label: "Jenis Kelamin", value: userData['jenis_kelamin']),
-                  buildInfo(label: "Nama Orang Tua", value: userData['nama_ortu']),
+                  buildInfo(
+                      label: "Jenis Kelamin", value: userData['jenis_kelamin']),
+                  buildInfo(
+                      label: "Nama Orang Tua", value: userData['nama_ortu']),
                   buildInfo(label: "Alamat", value: userData['alamat_ortu']),
                 ],
               ),
@@ -72,7 +76,8 @@ class UserProfilePage extends StatelessWidget {
       ),
     );
   }
-    Future<Map<String, dynamic>> fetchUserData() async {
+
+  Future<Map<String, dynamic>> fetchUserData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userDataString = preferences.getString('userData');
     if (userDataString != null) {
@@ -83,6 +88,7 @@ class UserProfilePage extends StatelessWidget {
     }
   }
 }
+
 // ignore: camel_case_types
 class userBar extends StatelessWidget {
   String nama;
@@ -122,10 +128,11 @@ class userBar extends StatelessWidget {
 
 // ignore: camel_case_types
 class buildInfo extends StatelessWidget {
- final String label;
+  final String label;
   final String value;
 
-  const buildInfo({super.key, 
+  const buildInfo({
+    super.key,
     required this.label,
     required this.value,
   });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'Data/Data_Halaman/list_laporan_kelas_page.dart';
 import 'Data/Data_Halaman/list_menu_dashboard.dart';
 import 'Data/Data_Halaman/list_game_page.dart';
-import 'Data/Data_Halaman/list_laporan_page.dart';
 import 'Data/Data_Halaman/models/refreshdata.dart';
 import 'Data/Data_Halaman/profile_screen_page.dart';
 import 'Data/Module/bottom_navigation_view/bottom_bar_view.dart';
@@ -108,7 +108,7 @@ class _DashboardHomeState extends State<DashboardHome>
                   return;
                 }
                 setState(() {
-                  tabBody = const ListLaporan();
+                  tabBody = const LaporanKelas();
                 });
               });
             } else if (index == 2) {
