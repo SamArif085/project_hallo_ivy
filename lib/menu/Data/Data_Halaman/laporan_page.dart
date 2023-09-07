@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'models/data_laporan_tema.dart';
 // import 'design_course_app_theme.dart';
 
 class LaporanHome extends StatelessWidget {
+  final String kdkelas;
   final Map<String, dynamic> materi;
   const LaporanHome({
     super.key,
     required this.materi,
+    required this.kdkelas,
   });
 
   @override
@@ -33,7 +36,7 @@ class LaporanHome extends StatelessWidget {
                 children: [
                   PesanGuru(materi: materi),
                   chartVideo(
-                    materi: materi,
+                    kdkelas: kdkelas,
                   ),
                 ],
               ),
@@ -45,10 +48,10 @@ class LaporanHome extends StatelessWidget {
 
 // ignore: camel_case_types
 class chartVideo extends StatelessWidget {
-  final Map<String, dynamic> materi;
+  final String kdkelas;
   const chartVideo({
     Key? key,
-    required this.materi,
+    required this.kdkelas,
   }) : super(key: key);
 
   @override
@@ -82,39 +85,49 @@ class chartVideo extends StatelessWidget {
             Flexible(
               flex: 5,
               child: FutureBuilder(
-                future: Future.value(materi),
+                future: getLaporanStastistik(kdkelas),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
-                    final Map<String, dynamic> materi =
-                        snapshot.data as Map<String, dynamic>;
+                    final List<DataLaporanStastistik> dataLaporanStatistik =
+                        snapshot.data as List<DataLaporanStastistik>;
+                    if (dataLaporanStatistik.isEmpty) {
+                      return Container(
+                        child: const Center(
+                          child: Text(
+                            'Tidak ada data laporan',
+                          ),
+                        ),
+                      );
+                    }
+                    List<Map<String, dynamic>> chartData = [];
+
+                    for (var data in dataLaporanStatistik) {
+                      chartData.add({
+                        'x': data.jenistema,
+                        'y': int.parse(data.count),
+                      });
+                    }
                     return Container(
                       child: SfCartesianChart(
                         primaryXAxis: CategoryAxis(),
                         primaryYAxis: NumericAxis(),
                         series: <ChartSeries>[
-                          ColumnSeries<Map, String>(
+                          ColumnSeries<Map<String, dynamic>, String>(
                             borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(5),
                                 topRight: Radius.circular(5)),
                             color: HexColor('#85f29d'),
-                            dataSource: [
-                              {
-                                'x': 'A',
-                                'y': int.parse(materi['count'].toString())
-                              },
-                              {'x': 'B', 'y': 15},
-                              {'x': 'C', 'y': 11},
-                              {'x': 'E', 'y': 20},
-                              {'x': 'F', 'y': 13},
-                              {'x': 'G', 'y': 10},
-                              {'x': 'H', 'y': 8},
-                            ],
-                            xValueMapper: (Map data, int index) => data['x'],
-                            yValueMapper: (Map data, int index) => data['y'],
+                            dataSource: chartData,
+                            xValueMapper:
+                                (Map<String, dynamic> data, int index) =>
+                                    data['x'],
+                            yValueMapper:
+                                (Map<String, dynamic> data, int index) =>
+                                    data['y'],
                           ),
                         ],
                       ),

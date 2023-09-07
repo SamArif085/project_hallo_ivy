@@ -58,7 +58,9 @@ class _ListLaporanState extends State<ListLaporan> {
                         MaterialPageRoute(
                           builder: (context) => LaporanHome(
                             materi: dataLaporanTema.toMap(),
+                            kdkelas: widget.kdkelas,
                           ),
+                          
                         ),
                       );
                     },
