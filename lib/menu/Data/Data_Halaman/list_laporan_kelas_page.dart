@@ -41,7 +41,7 @@ class _LaporanKelasState extends State<LaporanKelas> {
               // Populate laporanKelas with fetched data
               List<DataKelas> laporanKelas = snapshot.data as List<DataKelas>;
               return ListView.builder(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 60),
                 itemCount: laporanKelas.length,
                 itemBuilder: (context, index) {
                   var materi = laporanKelas[index];
@@ -150,9 +150,9 @@ class CustomCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 20,
-          )
+          // const SizedBox(
+          //   height: 20,
+          // )
         ],
       ),
     );

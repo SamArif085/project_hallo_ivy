@@ -40,7 +40,7 @@ class _ListGamePageState extends State<ListGamePage> {
               linkMateriFull = snapshot.data as List<Map<String, dynamic>>;
               print('linkMateriFull: $linkMateriFull');
               return ListView.builder(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 60),
                 itemCount: linkMateriFull.length,
                 itemBuilder: (context, index) {
                   var materi = linkMateriFull[index];

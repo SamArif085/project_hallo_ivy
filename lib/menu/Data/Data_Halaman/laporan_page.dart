@@ -99,6 +99,11 @@ class chartVideo extends StatelessWidget {
                         child: const Center(
                           child: Text(
                             'Tidak ada data laporan',
+                            style: TextStyle(
+                              color: Colors.black26,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       );
