@@ -51,16 +51,14 @@ class _ListLaporanState extends State<ListLaporan> {
                     title: dataLaporanTema.judulmateri,
                     status: "1",
                     image: dataLaporanTema.gambarmateri,
-                    laporan: dataLaporanTema.idpesan,
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => LaporanHome(
-                            materi: dataLaporanTema.toMap(),
                             kdkelas: widget.kdkelas,
+                            materi: dataLaporanTema.toMap(),
                           ),
-                          
                         ),
                       );
                     },
@@ -85,11 +83,9 @@ class CustomCard extends StatelessWidget {
     required this.image,
     required this.status,
     required this.onTap,
-    required this.laporan,
   }) : super(key: key);
 
   String title;
-  String laporan;
   String status;
   String image;
   @override

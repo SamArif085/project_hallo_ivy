@@ -34,7 +34,9 @@ class LaporanHome extends StatelessWidget {
             child: Center(
               child: ListView(
                 children: [
-                  PesanGuru(materi: materi),
+                  PesanGuru(
+                    materi: materi,
+                  ),
                   chartVideo(
                     kdkelas: kdkelas,
                   ),
@@ -149,10 +151,15 @@ class chartVideo extends StatelessWidget {
 }
 
 class PesanGuru extends StatelessWidget {
-  const PesanGuru({super.key, required this.materi});
   final Map<String, dynamic> materi;
+  const PesanGuru({
+    super.key,
+    required this.materi,
+  });
+
   @override
   Widget build(BuildContext context) {
+    // final isiPesan = materi['isi_pesan'] ?? '';
     return Container(
       margin: const EdgeInsets.fromLTRB(30, 0, 30, 15),
       height: 300,
@@ -181,12 +188,48 @@ class PesanGuru extends StatelessWidget {
             ),
             Flexible(
               flex: 5,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(30, 0, 30, 15),
-                child: Text(
-                  materi['isi_pesan'],
-                  textAlign: TextAlign.justify,
-                ),
+              child: FutureBuilder(
+                future: materi['id'] != null
+                    ? getDataPesanGuru(materi['id'])
+                    : Future.value([]),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    final List<DataPesanGuru> dataPesan =
+                        (snapshot.data as List<dynamic>)
+                            .map((item) => DataPesanGuru(
+                                  idpesan: item.idpesan,
+                                  isipesan: item.isipesan,
+                                ))
+                            .toList();
+                    if (dataPesan.isEmpty) {
+                      return Container(
+                        child: const Center(
+                          child: Text(
+                            'Tidak ada Pesan Guru',
+                            style: TextStyle(
+                              color: Colors.black26,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return Flexible(
+                      flex: 5,
+                      child: Container(
+                          margin: const EdgeInsets.fromLTRB(30, 0, 30, 15),
+                          child: Text(
+                            dataPesan[0].isipesan,
+                            textAlign: TextAlign.justify,
+                          )),
+                    );
+                  }
+                },
               ),
             ),
           ],
