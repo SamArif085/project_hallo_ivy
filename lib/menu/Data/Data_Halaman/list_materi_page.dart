@@ -52,18 +52,39 @@ class _MateriPageState extends State<MateriPage> {
                   return CustomCard(
                     key: Key(materi['id'].toString()),
                     title: materi['judul_materi'],
-                    status: "1",
+                    status: materi['status'],
                     image: materi["gambar_materi"],
                     materi: materi['link_materi'],
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VideoScreen(
-                            materi: materi,
+                      if (materi['status'] == "1") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VideoScreen(
+                              materi: materi,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Materi Terkunci'),
+                              content: const Text(
+                                  'Materi ini masih terkunci. Anda tidak bisa mengaksesnya.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Tutup'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                   );
                 },
@@ -146,7 +167,7 @@ class CustomCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Container(
-                    child: status == "1"
+                    child: status == '1'
                         ? Image.asset(
                             'assets/icon/unlock_icon.png',
                             height: 20,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hello_ivy_test/menu/Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
@@ -29,6 +30,17 @@ class _QuizMenuState extends State<QuizMenu> {
         title: const Padding(
           padding: EdgeInsets.only(right: 50),
           child: Center(child: Text('Quiz')),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), // Tambahkan ikon kembali di sini
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DashboardHome(),
+              ),
+            );
+          },
         ),
       ),
       body: Container(

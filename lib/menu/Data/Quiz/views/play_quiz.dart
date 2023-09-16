@@ -20,10 +20,9 @@ class PlayQuiz extends StatefulWidget {
 }
 
 class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
-  // ignore: non_constant_identifier_names
   List<QuestionModel> Quest = [];
   int index = 0;
-  int points = 0;
+  int answeredQuestions = 0;
   int correct = 0;
   int incorrect = 0;
   late AnimationController controller;
@@ -38,7 +37,6 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
     setState(() {
       // Reset values
       index = 0;
-      points = 0;
       correct = 0;
       incorrect = 0;
       // Reset animation and timer
@@ -83,12 +81,17 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
             resetProgress();
             startProgress();
           } else {
+            double scorePercentage = (correct / answeredQuestions) * 100.0;
+            if (scorePercentage > 100) {
+              scorePercentage = 100; // Batasan maksimal poin adalah 100
+            }
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => Result(
-                  score: points,
-                  totalQuestion: Quest.length,
+                  score: scorePercentage
+                      .toInt(), // Mengonversi poin menjadi integer
+                  totalQuestion: answeredQuestions,
                   correct: correct,
                   incorrect: incorrect,
                   materi: widget.materi,
@@ -155,12 +158,16 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
         );
       });
     } else {
+      double scorePercentage = (correct / answeredQuestions) * 100.0;
+      if (scorePercentage > 100) {
+        scorePercentage = 100; // Batasan maksimal poin adalah 100
+      }
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => Result(
-            score: points,
-            totalQuestion: Quest.length,
+            score: scorePercentage.toInt(), // Mengonversi poin menjadi integer
+            totalQuestion: answeredQuestions,
             correct: correct,
             incorrect: incorrect,
             materi: widget.materi,
@@ -181,13 +188,18 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
 
     return Scaffold(
       body: Container(
-        // color: HexColor('#85f29d'),
         padding: const EdgeInsets.fromLTRB(0, 24, 0, 10),
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            LinearProgressIndicator(
+              value: (index + 1) /
+                  totalQuiz, // Hitung kemajuan berdasarkan nomor soal saat ini
+              color: Colors.blueAccent,
+              backgroundColor: HexColor('#85f29d'),
+            ),
             Container(
               color: HexColor('#85f29d'),
               height: 20,
@@ -219,19 +231,19 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Text(
-                        "$points",
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        "Points",
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w300),
-                      )
+                      // Text(
+                      //   "${points.toInt()}", // Mengonversi poin menjadi integer
+                      //   style: const TextStyle(
+                      //       fontSize: 25, fontWeight: FontWeight.w500),
+                      // ),
+                      // const SizedBox(
+                      //   width: 10,
+                      // ),
+                      // const Text(
+                      //   "Points",
+                      //   style: TextStyle(
+                      //       fontSize: 17, fontWeight: FontWeight.w300),
+                      // )
                     ],
                   ),
                 ],
@@ -255,12 +267,6 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
             const SizedBox(
               height: 40,
             ),
-            // Container(
-            //   child: LinearProgressIndicator(
-            //     value: animation.value,
-            //     color: Colors.red,
-            //   ),
-            // ),
             FractionallySizedBox(
               widthFactor: 0.9,
               child: VisibilityDetector(
@@ -286,14 +292,8 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            // FractionallySizedBox(
-            //   widthFactor: 0.9, // Ukuran gambar sebesar 80% lebar layar
-            //   child:
-            //       CachedNetworkImage(imageUrl: currentQuestion.getImageUrl()),
-            // ),
             const Spacer(),
             Container(
-              // width: 300,
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -303,17 +303,16 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                       onTap: () {
                         if (currentQuestion.getAnswer() == "Betul") {
                           setState(() {
-                            points = points + 20;
-                            nextQuestion();
                             correct++;
+                            answeredQuestions++;
                           });
                         } else {
                           setState(() {
-                            points = points - 5;
-                            nextQuestion();
                             incorrect++;
+                            answeredQuestions++;
                           });
                         }
+                        nextQuestion();
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -322,7 +321,6 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(24)),
                         child: Image.asset(
                           'assets/icon/thumb-up-14-64.png',
-                          // width: 1,
                         ),
                       ),
                     ),
@@ -334,19 +332,17 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                     child: GestureDetector(
                       onTap: () {
                         if (currentQuestion.getAnswer() == "Salah") {
-                          // Update this condition
                           setState(() {
-                            points = points + 20;
-                            nextQuestion();
                             correct++;
+                            answeredQuestions++;
                           });
                         } else {
                           setState(() {
-                            points = points - 5;
-                            nextQuestion();
                             incorrect++;
+                            answeredQuestions++;
                           });
                         }
+                        nextQuestion();
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),

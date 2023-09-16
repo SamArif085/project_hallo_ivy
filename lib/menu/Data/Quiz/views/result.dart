@@ -1,7 +1,6 @@
-// ignore_for_file: camel_case_types, must_be_immutable
-
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'list_quiz.dart';
 import 'play_quiz.dart';
@@ -20,13 +19,9 @@ class Result extends StatelessWidget {
     required this.correct,
     required this.incorrect,
     required this.materi,
-    // Add this line
   }) : super(key: key);
 
-// Inisialisasi objek userData
-  void replayQuiz(
-    BuildContext context,
-  ) {
+  void replayQuiz(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -35,10 +30,7 @@ class Result extends StatelessWidget {
     );
   }
 
-// ignore: non_constant_identifier_names
-  void Home(
-    BuildContext context,
-  ) {
+  void Home(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -47,19 +39,45 @@ class Result extends StatelessWidget {
     );
   }
 
+  void nextMateri(BuildContext context) async {
+    try {
+      final Uri url = Uri.parse('https://hello-ivy.id/post_quiz.php');
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? idnisn = preferences.getString('nisn');
+
+      var request = http.MultipartRequest('POST', url);
+      request.fields['quiz_status'] = '1';
+      request.fields['nisn'] = idnisn!;
+      request.fields['id_materi'] = '${materi['id']}';
+
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const QuizMenu(),
+          ),
+        );
+        print('Data berhasil dikirim ke server');
+      } else {
+        print('Gagal mengirim data ke server');
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Di sini, Anda dapat merancang tampilan untuk hasil kuis
-    // Gunakan nilai-nilai seperti 'score', 'totalQuestion', 'correct', dan 'incorrect'
-    // untuk menampilkan informasi yang sesuai.
-    // Contoh:
     return Scaffold(
       appBar: AppBar(
         title: Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 55, 0),
-            child: const Center(
-              child: Text('Result'),
-            )),
+          margin: const EdgeInsets.fromLTRB(0, 0, 55, 0),
+          child: const Center(
+            child: Text('Result'),
+          ),
+        ),
         elevation: 0,
         backgroundColor: HexColor('#85f29d'),
       ),
@@ -111,14 +129,11 @@ class Result extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // nilai seng perlu dirubah
-                  // if (score <= 10)
-                  if (correct <= totalQuestion / 2)
+                  if (correct <= totalQuestion / 2 ||
+                      (correct / totalQuestion) * 100 < 70)
                     ElevatedButton(
                       onPressed: () {
-                        Home(
-                          context,
-                        );
+                        Home(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('F24C3D'),
@@ -134,16 +149,14 @@ class Result extends StatelessWidget {
                   else
                     ElevatedButton(
                       onPressed: () {
-                        Home(
-                          context,
-                        );
+                        nextMateri(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('85f29d'),
                         elevation: 8,
                       ),
                       child: const Text(
-                        'Next Materi',
+                        'Next Quiz',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -159,15 +172,13 @@ class Result extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class resultInfo extends StatelessWidget {
   String value;
   String color;
   String info;
   resultInfo(
-      {super.key,
-      required this.value,
-      required this.color,
-      required this.info});
+      {Key? key, required this.value, required this.color, required this.info});
 
   @override
   Widget build(BuildContext context) {

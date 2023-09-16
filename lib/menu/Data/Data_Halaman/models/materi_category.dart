@@ -43,18 +43,22 @@ class Category {
     required this.title,
     required this.imagePath,
     required this.imagePathCover,
+    required this.status,
   });
   String id;
   String title;
   String imagePath;
   String imagePathCover;
+  String status;
 
   factory Category.fromMap(Map<String, dynamic> map) {
     return Category(
-        id: map['id'] ?? '',
-        title: map['judul_materi'] ?? '',
-        imagePath: map['gambar_materi'] ?? '',
-        imagePathCover: map['gambar_cover'] ?? '');
+      id: map['id'] ?? '',
+      title: map['judul_materi'] ?? '',
+      imagePath: map['gambar_materi'] ?? '',
+      imagePathCover: map['gambar_cover'] ?? '',
+      status: map['status'] ?? '',
+    );
   }
 
   Future<List<Category>> getData() async {
@@ -86,7 +90,7 @@ class Category {
       id: '',
       imagePath: 'assets/design_course/interFace4.png',
       title: 'Quiz',
-      imagePathCover: '',
+      imagePathCover: '', status: '',
     ),
   ];
 
@@ -95,7 +99,7 @@ class Category {
       id: '',
       imagePath: 'assets/design_course/interFace3.png',
       title: 'Tugas Rumah',
-      imagePathCover: '',
+      imagePathCover: '', status: '',
     ),
   ];
 }
