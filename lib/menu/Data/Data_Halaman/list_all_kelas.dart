@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hello_ivy_test/menu/Data/Data_Halaman/models/data_laporan_kelas.dart';
-import 'Color_Theme.dart';
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'list_laporan_tema_page.dart';
+import 'list_materi_page.dart';
 
-class LaporanKelas extends StatefulWidget {
-  const LaporanKelas({
+class ListAllKelas extends StatefulWidget {
+  const ListAllKelas({
     super.key,
     AnimationController? animationController,
   });
 
   @override
-  State<LaporanKelas> createState() => _LaporanKelasState();
+  State<ListAllKelas> createState() => _ListAllKelasState();
 }
 
-class _LaporanKelasState extends State<LaporanKelas> {
+class _ListAllKelasState extends State<ListAllKelas> {
   List<Map<String, dynamic>> laporanKelas = [];
 
   @override
@@ -22,14 +23,56 @@ class _LaporanKelasState extends State<LaporanKelas> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Center(
-            child: Text("Laporan Perkelas",
-                style: TextStyle(color: Colors.black))),
+        backgroundColor: HexColor('#85f29d'),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+             Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MateriPage(),
+                ),
+              );
+          },
+        ),
+        title: const Padding(
+          padding: EdgeInsets.only(right: 0),
+          child: Center(
+            child: Text('Materi Semua Kelas'),
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.info),
+            iconSize: 30,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Materi Semua Kelas'),
+                    content: const Text(
+                        'Semua materi kelas yang sudah pernah dipelajari. Anda bisa melihatnya kembali pada halaman ini.'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Tutup'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Container(
-        decoration:
-            const BoxDecoration(color: DesignCourseAppTheme.nearlyWhite),
+        decoration: BoxDecoration(color: HexColor('#85f29d')),
         child: FutureBuilder<List<DataKelas>>(
           future: getKelas(), // Fetch the user's materials
           builder: (context, snapshot) {
@@ -135,26 +178,23 @@ class CustomCard extends StatelessWidget {
                         title,
                         textAlign: TextAlign.center,
                       ),
-                      // Container(
-                      //   child: status == "1"
-                      //       ? Image.asset(
-                      //           'assets/icon/unlock_icon.png',
-                      //           height: 20,
-                      //         )
-                      //       : Image.asset(
-                      //           'assets/icon/lock_icon.png',
-                      //           height: 20,
-                      //         ),
-                      // ),
+                      Container(
+                        child: status == "1"
+                            ? Image.asset(
+                                'assets/icon/unlock_icon.png',
+                                height: 20,
+                              )
+                            : Image.asset(
+                                'assets/icon/lock_icon.png',
+                                height: 20,
+                              ),
+                      ),
                     ],
                   ),
                 )
               ],
             ),
           ),
-          // const SizedBox(
-          //   height: 20,
-          // )
         ],
       ),
     );

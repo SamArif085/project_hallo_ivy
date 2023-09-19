@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Dashboard.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'list_all_kelas.dart';
 import 'video_screen.dart';
 
 class MateriPage extends StatefulWidget {
@@ -25,11 +27,43 @@ class _MateriPageState extends State<MateriPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: HexColor('#85f29d'),
-        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
-        title: const Padding(
-          padding: EdgeInsets.only(right: 50),
-          child: Center(child: Text('Materi')),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DashboardHome(),
+              ),
+            );
+          },
         ),
+        title: const Padding(
+          padding: EdgeInsets.only(right: 0),
+          child: Center(
+            child: Text('Materi'),
+          ),
+        ),
+        actions: <Widget>[
+          // Tambahkan tombol di sini
+          IconButton(
+            icon: const Icon(Icons.class_outlined),
+            iconSize: 32, // Icon untuk tombol
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ListAllKelas(),
+                ),
+              );
+              // Aksi yang akan dijalankan saat tombol ditekan
+              // Misalnya, menavigasi ke layar tambahan atau melakukan tindakan lainnya
+            },
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
@@ -37,7 +71,9 @@ class _MateriPageState extends State<MateriPage> {
           future: fetchUserMaterials(), // Fetch the user's materials
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // Show loading indicator
+              return const Center(
+                child: CircularProgressIndicator(),
+              ); // Show loading indicator
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {

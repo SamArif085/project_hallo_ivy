@@ -57,7 +57,9 @@ class _PRHomeState extends State<PRHome> {
         builder: (BuildContext context,
             AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // Show loading indicator while fetching data
+            return const Center(
+              child: CircularProgressIndicator(),
+            ); // Show loading indicator while fetching data
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

@@ -23,7 +23,7 @@ class UserProfilePage extends StatelessWidget {
         fontSize: 16.0);
 
     // ignore: use_build_context_synchronously
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
   }
 
   @override
@@ -50,7 +50,9 @@ class UserProfilePage extends StatelessWidget {
         future: fetchUserData(), // Fetch user data from SharedPreferences
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {

@@ -23,7 +23,7 @@ class LaporanHome extends StatelessWidget {
             elevation: 0,
             title: const Center(
               child:
-                  Text('Laporan Siswa', style: TextStyle(color: Colors.black)),
+                  Text('Laporan Siswa', style: TextStyle(color: Colors.white)),
             ),
             backgroundColor: HexColor('#85f29d'),
           ),
@@ -90,7 +90,9 @@ class chartVideo extends StatelessWidget {
                 future: getLaporanStastistik(kdkelas),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -159,7 +161,6 @@ class PesanGuru extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final isiPesan = materi['isi_pesan'] ?? '';
     return Container(
       margin: const EdgeInsets.fromLTRB(30, 0, 30, 15),
       height: 300,
@@ -194,7 +195,9 @@ class PesanGuru extends StatelessWidget {
                     : Future.value([]),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {

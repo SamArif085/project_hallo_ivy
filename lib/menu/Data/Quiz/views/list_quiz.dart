@@ -63,18 +63,39 @@ class _QuizMenuState extends State<QuizMenu> {
                   return CustomCard(
                     key: Key(materi['id'].toString()),
                     title: materi['judul_materi'],
-                    status: "1",
+                    status: materi['status'],
                     image: materi["gambar_materi"],
                     materi: materi['link_materi'],
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PlayQuiz(
-                            materi: materi,
+                      if (materi['status'] == "1") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PlayQuiz(
+                              materi: materi,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Quiz Terkunci'),
+                              content: const Text(
+                                  'Quiz ini masih terkunci. Anda tidak bisa mengaksesnya.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Tutup'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                   );
                 },

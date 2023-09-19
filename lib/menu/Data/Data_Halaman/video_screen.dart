@@ -243,10 +243,7 @@ class _VideoScreenState extends State<VideoScreen>
                                       ColumnSeries<Map, String>(
                                         color: HexColor('#85f29d'),
                                         dataSource: [
-                                          {'x': 'A', 'y': 10},
-                                          {'x': 'B', 'y': 15},
-                                          {'x': 'C', 'y': 15},
-                                          {'x': 'D', 'y': 15},
+                                        {'x': 'Diputar', 'y': int.parse(widget.materi['count'])},
                                           // Tambahkan data lainnya sesuai kebutuhan
                                         ],
                                         xValueMapper: (Map data, int index) =>

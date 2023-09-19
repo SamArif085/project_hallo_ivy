@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_ivy_test/menu/Dashboard.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'laporan_page.dart';
 import 'models/data_laporan_tema.dart';
@@ -25,8 +26,52 @@ class _ListLaporanState extends State<ListLaporan> {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: HexColor('#85f29d'),
-        title: const Center(
-            child: Text("Laporan", style: TextStyle(color: Colors.black))),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DashboardHome(),
+              ),
+            );
+          },
+        ),
+        title: const Padding(
+          padding: EdgeInsets.all(0),
+          child: Center(
+            child: Text('Laporan'),
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.info),
+            iconSize: 30,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Laporan Pertema'),
+                    content: const Text(
+                        'Anda dapat melihat pesan guru dan laporan statistik pertema pada halaman ini.'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Tutup'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
@@ -34,7 +79,9 @@ class _ListLaporanState extends State<ListLaporan> {
           future: getDataTema(widget.kdkelas),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {

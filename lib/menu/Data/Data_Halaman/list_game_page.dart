@@ -32,7 +32,9 @@ class _ListGamePageState extends State<ListGamePage> {
           future: fetchUserMaterials(), // Fetch the user's materials
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // Show loading indicator
+              return const Center(
+                child: CircularProgressIndicator(),
+              ); // Show loading indicator
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
