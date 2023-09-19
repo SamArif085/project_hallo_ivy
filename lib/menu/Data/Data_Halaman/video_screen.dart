@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -184,75 +186,80 @@ class _VideoScreenState extends State<VideoScreen>
                               ? tempHeight
                               : infoHeight),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0, left: 18, right: 16),
-                            child: Text(
-                              widget.materi['judul_materi'],
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 22,
-                                letterSpacing: 0.27,
-                                color: DesignCourseAppTheme.darkerText,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            // top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
-                            // left: 0,
-                            // padding: EdgeInsets.all(20),
-                            child: ScaleTransition(
-                              alignment: Alignment.center,
-                              scale: CurvedAnimation(
-                                  parent: animationController!,
-                                  curve: Curves.fastOutSlowIn),
-                              child: AnimatedOpacity(
-                                duration: const Duration(milliseconds: 500),
-                                opacity: opacity1,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    children: <Widget>[
-                                      getTimeBoxUI('Diputar sebanyak',
-                                          widget.materi['count']),
-                                    ],
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20.0, left: 18, right: 16),
+                                child: Text(
+                                  widget.materi['judul_materi'],
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22,
+                                    letterSpacing: 0.27,
+                                    color: DesignCourseAppTheme.darkerText,
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity2,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, bottom: 8),
-                                child: Container(
-                                  height: 300,
-                                  child: SfCartesianChart(
-                                    primaryXAxis:
-                                        CategoryAxis(), // Menggunakan axis kategori di sumbu X
-                                    primaryYAxis:
-                                        NumericAxis(), // Menggunakan axis numerik di sumbu Y
-                                    series: <ChartSeries>[
-                                      ColumnSeries<Map, String>(
-                                        color: HexColor('#85f29d'),
-                                        dataSource: [
-                                        {'x': 'Diputar', 'y': int.parse(widget.materi['count'])},
-                                          // Tambahkan data lainnya sesuai kebutuhan
+                              Container(
+                                // top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+                                // left: 0,
+                                // padding: EdgeInsets.all(20),
+                                child: ScaleTransition(
+                                  alignment: Alignment.center,
+                                  scale: CurvedAnimation(
+                                      parent: animationController!,
+                                      curve: Curves.fastOutSlowIn),
+                                  child: AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 500),
+                                    opacity: opacity1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
+                                        children: <Widget>[
+                                          getTimeBoxUI('Diputar sebanyak',
+                                              widget.materi['count']),
                                         ],
-                                        xValueMapper: (Map data, int index) =>
-                                            data['x'],
-                                        yValueMapper: (Map data, int index) =>
-                                            data['y'],
                                       ),
-                                    ],
+                                    ),
                                   ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.9,
+                            width: 150,
+                            child: Expanded(
+                              child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: opacity2,
+                                child: SfCartesianChart(
+                                  primaryXAxis:
+                                      CategoryAxis(), // Menggunakan axis kategori di sumbu X
+                                  primaryYAxis:
+                                      NumericAxis(), // Menggunakan axis numerik di sumbu Y
+                                  series: <ChartSeries>[
+                                    ColumnSeries<Map, String>(
+                                      color: HexColor('#85f29d'),
+                                      dataSource: [
+                                        {
+                                          'x': 'Diputar',
+                                          'y': int.parse(widget.materi['count'])
+                                        },
+                                      ],
+                                      xValueMapper: (Map data, int index) =>
+                                          data['x'],
+                                      yValueMapper: (Map data, int index) =>
+                                          data['y'],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
