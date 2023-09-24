@@ -112,7 +112,6 @@ class _ListLaporanState extends State<ListLaporan> {
                   return CustomCard(
                     key: Key(dataLaporanTema.id.toString()),
                     title: dataLaporanTema.judulmateri,
-                    status: "1",
                     image: dataLaporanTema.gambarmateri,
                     onTap: () {
                       Navigator.push(
@@ -143,13 +142,12 @@ class CustomCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.image,
-    required this.status,
     required this.onTap,
   }) : super(key: key);
 
   String title;
-  String status;
   String image;
+  
   @override
   Widget build(BuildContext context) {
     double sizedHeight = MediaQuery.of(context).size.width > 600 ? 230 : 130;

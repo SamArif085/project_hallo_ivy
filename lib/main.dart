@@ -34,10 +34,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  void togglePasswordVisibility() {
-    togglePasswordVisibility();
-  }
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
@@ -91,13 +87,14 @@ class _LoginState extends State<Login> {
           );
 
           Fluttertoast.showToast(
-              msg: "Login Successful",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 16.0);
+            msg: "Login Successful",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.greenAccent,
+            textColor: Colors.black,
+            fontSize: 16.0,
+          );
         } else {
           // Invalid server response
           Fluttertoast.showToast(
@@ -106,7 +103,7 @@ class _LoginState extends State<Login> {
               gravity: ToastGravity.CENTER,
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.red,
-              textColor: Colors.white,
+              textColor: Colors.black,
               fontSize: 16.0);
         }
       } else {
@@ -117,7 +114,7 @@ class _LoginState extends State<Login> {
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.red,
-            textColor: Colors.white,
+            textColor: Colors.black,
             fontSize: 16.0);
       }
     } catch (e) {
@@ -129,12 +126,19 @@ class _LoginState extends State<Login> {
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
-          textColor: Colors.white,
+          textColor: Colors.black,
           fontSize: 16.0);
     }
   }
 
 // ================================================Password Visibility function ===========================================
+
+  void togglePasswordVisibility() {
+    setState(() {
+      notVisiblePassword = !notVisiblePassword;
+      passwordVisibility();
+    });
+  }
 
   void passwordVisibility() {
     if (notVisiblePassword) {
@@ -205,6 +209,7 @@ class _LoginState extends State<Login> {
                                     ),
                                     controller: emailController),
                                 TextFormField(
+                                    obscureText: notVisiblePassword,
                                     decoration: InputDecoration(
                                       icon: const Icon(
                                         Icons.lock_outline_rounded,
@@ -213,7 +218,9 @@ class _LoginState extends State<Login> {
                                       labelText: 'Password',
                                       suffixIcon: IconButton(
                                         onPressed: togglePasswordVisibility,
-                                        icon: passwordIcon,
+                                        icon: notVisiblePassword
+                                            ? const Icon(Icons.visibility)
+                                            : const Icon(Icons.visibility_off),
                                       ),
                                     ),
                                     controller: passController)

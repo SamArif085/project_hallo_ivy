@@ -1,7 +1,7 @@
-import 'dart:math';
-
+import 'dart:async';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_ivy_test/menu/Data/Quiz/views/list_quiz.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
@@ -18,7 +18,7 @@ class VideoScreen extends StatefulWidget {
   }) : super(key: key);
   final Map<String, dynamic> materi;
   @override
-
+  // ignore: library_private_types_in_public_api
   _VideoScreenState createState() => _VideoScreenState();
 }
 
@@ -28,15 +28,18 @@ class _VideoScreenState extends State<VideoScreen>
   int _playCount = 0;
   final double infoHeight = 364.0;
   bool _isPlaying = false;
+  bool _showMessage = true;
+  late Timer _messageTimer;
   AnimationController? animationController;
   Animation<double>? animation;
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
+
   @override
   void dispose() {
-    flickManager.dispose(); // Menghentikan pemutar video
-    animationController?.dispose(); // Membebaskan sumber daya animasi
+    flickManager.dispose();
+    animationController?.dispose();
     super.dispose();
   }
 
@@ -58,6 +61,7 @@ class _VideoScreenState extends State<VideoScreen>
       videoPlayerController: controller,
       autoPlay: false,
     );
+
     controller.addListener(() {
       if (controller.value.position >=
               controller.value.duration - const Duration(seconds: 2) &&
@@ -66,10 +70,10 @@ class _VideoScreenState extends State<VideoScreen>
           setState(() {
             _playCount++;
             _isPlaying = true;
-            // Perhitungan data cout db dan data count sekarang
+            // Perhitungan data count db dan data count sekarang
             widget.materi['count'] =
                 (_playCount + int.parse(widget.materi['count'])).toString();
-            // Fungsi Paramteri pada server
+            // Fungsi Parameter pada server
             Map<String, dynamic> postData = {
               'count_video': widget.materi['count'],
               'nisn': widget.materi['nisn'],
@@ -96,6 +100,12 @@ class _VideoScreenState extends State<VideoScreen>
         _isPlaying = false;
       }
     });
+
+    _messageTimer = Timer(const Duration(seconds: 15), () {
+      setState(() {
+        _showMessage = false;
+      });
+    });
   }
 
   Future<void> setData() async {
@@ -116,12 +126,12 @@ class _VideoScreenState extends State<VideoScreen>
 
   @override
   Widget build(BuildContext context) {
-    final double tempHeight = MediaQuery.of(context).size.height -
-        (MediaQuery.of(context).size.width / 1.2) +
-        24.0;
     return Container(
       color: DesignCourseAppTheme.nearlyWhite,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: DesignCourseAppTheme.dark_grey,
+        ),
         backgroundColor: Colors.transparent,
         body: Stack(
           children: <Widget>[
@@ -133,13 +143,10 @@ class _VideoScreenState extends State<VideoScreen>
                     child: VisibilityDetector(
                       key: ObjectKey(flickManager),
                       onVisibilityChanged: (visibility) {
-                        if (visibility.visibleFraction == 0 && this.mounted) {
+                        if (visibility.visibleFraction == 0 && mounted) {
                           flickManager.flickControlManager?.autoPause();
                         } else if (visibility.visibleFraction == 1) {
                           flickManager.flickControlManager?.autoResume();
-                          setState(() {
-                            // _playCount++;
-                          });
                         }
                       },
                       child: FlickVideoPlayer(
@@ -164,128 +171,117 @@ class _VideoScreenState extends State<VideoScreen>
               left: 0,
               right: 0,
               child: Container(
-                decoration: BoxDecoration(
-                  color: DesignCourseAppTheme.nearlyWhite,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: DesignCourseAppTheme.grey.withOpacity(0.2),
-                        offset: const Offset(1.1, 1.1),
-                        blurRadius: 10.0),
-                  ],
-                ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: SingleChildScrollView(
-                    child: Container(
-                      constraints: BoxConstraints(
-                          minHeight: infoHeight,
-                          maxHeight: tempHeight > infoHeight
-                              ? tempHeight
-                              : infoHeight),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 20.0, left: 18, right: 16),
-                                child: Text(
-                                  widget.materi['judul_materi'],
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 22,
-                                    letterSpacing: 0.27,
-                                    color: DesignCourseAppTheme.darkerText,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                // top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
-                                // left: 0,
-                                // padding: EdgeInsets.all(20),
-                                child: ScaleTransition(
-                                  alignment: Alignment.center,
-                                  scale: CurvedAnimation(
-                                      parent: animationController!,
-                                      curve: Curves.fastOutSlowIn),
-                                  child: AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 500),
-                                    opacity: opacity1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Row(
-                                        children: <Widget>[
-                                          getTimeBoxUI('Diputar sebanyak',
-                                              widget.materi['count']),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20.0, left: 18, right: 16),
+                          child: Text(
+                            widget.materi['judul_materi'],
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              letterSpacing: 0.27,
+                              color: DesignCourseAppTheme.darkerText,
+                            ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.9,
-                            width: 150,
-                            child: Expanded(
-                              child: AnimatedOpacity(
-                                duration: const Duration(milliseconds: 500),
-                                opacity: opacity2,
-                                child: SfCartesianChart(
-                                  primaryXAxis:
-                                      CategoryAxis(), // Menggunakan axis kategori di sumbu X
-                                  primaryYAxis:
-                                      NumericAxis(), // Menggunakan axis numerik di sumbu Y
-                                  series: <ChartSeries>[
-                                    ColumnSeries<Map, String>(
-                                      color: HexColor('#85f29d'),
-                                      dataSource: [
-                                        {
-                                          'x': 'Diputar',
-                                          'y': int.parse(widget.materi['count'])
-                                        },
-                                      ],
-                                      xValueMapper: (Map data, int index) =>
-                                          data['x'],
-                                      yValueMapper: (Map data, int index) =>
-                                          data['y'],
-                                    ),
+                        ),
+                        Container(
+                          child: ScaleTransition(
+                            alignment: Alignment.center,
+                            scale: CurvedAnimation(
+                                parent: animationController!,
+                                curve: Curves.fastOutSlowIn),
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 500),
+                              opacity: opacity1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: <Widget>[
+                                    getTimeBoxUI('Diputar sebanyak',
+                                        widget.materi['count']),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          AnimatedOpacity(
+                        ),
+                        Container(
+                          child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
-                            opacity: opacity3,
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 16, bottom: 16, right: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[],
+                            opacity: opacity2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 8),
+                              child: Container(
+                                width: 200,
+                                height: 350,
+                                child: Expanded(
+                                  child: AspectRatio(
+                                    aspectRatio: 1 / 2,
+                                    child: SfCartesianChart(
+                                      primaryXAxis: CategoryAxis(),
+                                      primaryYAxis: NumericAxis(),
+                                      series: <ChartSeries>[
+                                        ColumnSeries<Map, String>(
+                                          color: HexColor('#85f29d'),
+                                          dataSource: [
+                                            {
+                                              'x': 'Diputar',
+                                              'y': int.parse(
+                                                  widget.materi['count'])
+                                            },
+                                          ],
+                                          xValueMapper: (Map data, int index) =>
+                                              data['x'],
+                                          yValueMapper: (Map data, int index) =>
+                                              data['y'],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 25,
+              top: (MediaQuery.of(context).size.width / 1.5) - 20.0 - 15,
+              right: 20,
+              child: ScaleTransition(
+                alignment: Alignment.center,
+                scale: CurvedAnimation(
+                    parent: animationController!, curve: Curves.fastOutSlowIn),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: _showMessage ? 1.0 : 0.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: <Widget>[
+                        if (_showMessage) pesan('Memperbesar Video'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 65,
               right: 0,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -294,46 +290,24 @@ class _VideoScreenState extends State<VideoScreen>
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 500),
                   opacity: opacity1,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
                     child: Row(
                       children: <Widget>[
-                        // quiz('Quiz', () {
-                        //   Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           HomePage(userData: widget.userData),
-                        //     ),
-                        //   );
-                        // }),
+                        quiz('Quiz', () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const QuizMenu(),
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: SizedBox(
-                width: AppBar().preferredSize.height,
-                height: AppBar().preferredSize.height,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius:
-                        BorderRadius.circular(AppBar().preferredSize.height),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: DesignCourseAppTheme.nearlyBlack,
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),
@@ -433,6 +407,52 @@ class _VideoScreenState extends State<VideoScreen>
                     color: DesignCourseAppTheme.nearlyBlack,
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget pesan(String text1) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 500),
+        opacity: 1.0,
+        child: Container(
+          decoration: BoxDecoration(
+            color: DesignCourseAppTheme.nearlyWhite,
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: DesignCourseAppTheme.grey.withOpacity(0.2),
+                  offset: const Offset(1.1, 1.1),
+                  blurRadius: 8.0),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 14.0, right: 14.0, top: 6.0, bottom: 6.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  text1,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    letterSpacing: 0.27,
+                    color: DesignCourseAppTheme.nearlyBlack,
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_right_alt_sharp,
+                  color: DesignCourseAppTheme.nearlyBlack,
+                )
               ],
             ),
           ),

@@ -18,12 +18,13 @@ class UserProfilePage extends StatelessWidget {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.amber,
-        textColor: Colors.white,
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.black,
         fontSize: 16.0);
 
     // ignore: use_build_context_synchronously
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Login()));
   }
 
   @override

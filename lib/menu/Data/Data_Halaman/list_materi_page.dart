@@ -47,6 +47,7 @@ class _MateriPageState extends State<MateriPage> {
         actions: <Widget>[
           // Tambahkan tombol di sini
           IconButton(
+            color: HexColor('#85f29d'),
             icon: const Icon(Icons.class_outlined),
             iconSize: 32, // Icon untuk tombol
             onPressed: () {
@@ -65,12 +66,12 @@ class _MateriPageState extends State<MateriPage> {
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
         child: FutureBuilder(
-          future: fetchUserMaterials(), // Fetch the user's materials
+          future: fetchUserMaterials(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
-              ); // Show loading indicator
+              );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
