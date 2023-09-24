@@ -1,16 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'models/data_laporan_tema.dart';
-// import 'design_course_app_theme.dart';
 
+// import 'design_course_app_theme.dart';
 class LaporanHome extends StatelessWidget {
-  final String kdkelas;
   final Map<String, dynamic> materi;
   const LaporanHome({
     super.key,
     required this.materi,
-    required this.kdkelas,
   });
 
   @override
@@ -37,9 +38,7 @@ class LaporanHome extends StatelessWidget {
                   PesanGuru(
                     materi: materi,
                   ),
-                  chartVideo(
-                    kdkelas: kdkelas,
-                  ),
+                  const chartVideo(),
                 ],
               ),
             ),
@@ -49,13 +48,29 @@ class LaporanHome extends StatelessWidget {
 }
 
 // ignore: camel_case_types
-class chartVideo extends StatelessWidget {
-  final String kdkelas;
+class chartVideo extends StatefulWidget {
   const chartVideo({
     Key? key,
-    required this.kdkelas,
   }) : super(key: key);
 
+  @override
+  State<chartVideo> createState() => _chartVideoState();
+}
+
+Future<List<Map<String, dynamic>>> kdkelas() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? userDataString = preferences.getString('userData');
+  if (userDataString != null) {
+    Map<String, dynamic> userData = jsonDecode(userDataString);
+    return userData['values']['materi_user'].cast<Map<String, dynamic>>();
+  } else {
+    return [];
+  }
+}
+
+// ignore: camel_case_types
+class _chartVideoState extends State<chartVideo> {
+  String kdkelas = '';
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,16 +1,16 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hello_ivy_test/menu/Dashboard.dart';
+import 'package:hello_ivy_test/menu/Data/Data_Halaman/models/refreshdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'play_quiz.dart';
 
 class QuizMenu extends StatefulWidget {
+  final String? data;
   const QuizMenu({
     super.key,
-    AnimationController? animationController,
+    this.data,
   });
 
   @override
@@ -20,19 +20,46 @@ class QuizMenu extends StatefulWidget {
 class _QuizMenuState extends State<QuizMenu> {
   // ignore: non_constant_identifier_names
   List<Map<String, dynamic>> MateriPerTema = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data == "refresh") {
+      UserDataManager.refreshUserData();
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> _refreshQuizMenu() async {
+    final newData = await refreshKuis();
+    setState(() {
+      MateriPerTema = newData;
+    });
+    return newData;
+  }
+
+  @override
+  void didUpdateWidget(covariant QuizMenu oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _refreshQuizMenu();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: HexColor('#85f29d'),
-        // backgroundColor: DesignCourseAppTheme.nearlyWhite,
         title: const Padding(
           padding: EdgeInsets.only(right: 50),
-          child: Center(child: Text('Quiz')),
+          child: Center(child: Text('Kuis')),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Tambahkan ikon kembali di sini
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -46,14 +73,13 @@ class _QuizMenuState extends State<QuizMenu> {
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
         child: FutureBuilder(
-          future: fetchUserMaterials(), // Fetch the user's materials
+          future: refreshKuis(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); // Show loading indicator
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              // Populate MateriPerTema with fetched data
               MateriPerTema = snapshot.data as List<Map<String, dynamic>>;
               return ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
@@ -107,16 +133,14 @@ class _QuizMenuState extends State<QuizMenu> {
     );
   }
 
-  // Replace this with your actual fetching logic
-  Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
+  Future<List<Map<String, dynamic>>> refreshKuis() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userDataString = preferences.getString('userData');
     if (userDataString != null) {
       Map<String, dynamic> userData = jsonDecode(userDataString);
-      // Assuming "materi_user" is the key for user's materials
       return userData['values']['materi_user'].cast<Map<String, dynamic>>();
     } else {
-      return []; // Return an empty list if no user data is found
+      return [];
     }
   }
 }

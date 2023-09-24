@@ -10,22 +10,42 @@ Future<List<QuestionModel>> getQuestions(int idMateri) async {
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
-    final List<dynamic> quizData = responseData['values']['data'];
 
-    List<QuestionModel> questions = [];
-
-    for (var linkquiz in quizData) {
-      QuestionModel questionModel = QuestionModel(
-        id: linkquiz['id_materi'],
-        question: linkquiz['pertanyaan'],
-        answer: linkquiz['ket_jawab'],
-        imageUrl: linkquiz['link_quiz'],
-      );
-      questions.add(questionModel);
+    if (responseData.containsKey('status') &&
+        responseData.containsKey('statusCode') &&
+        responseData.containsKey('message') &&
+        responseData['status'] == false &&
+        responseData['statusCode'] == 400 &&
+        responseData['message'] == "Data Not Found") {
+      print('Data kuis tidak ditemukan.');
+      return []; // Mengembalikan daftar kosong jika data tidak ditemukan
     }
 
-    return questions;
+    if (responseData.containsKey('values') && responseData['values'].containsKey('data')) {
+      final List<dynamic> quizData = responseData['values']['data'];
+
+      List<QuestionModel> questions = [];
+
+      for (var linkquiz in quizData) {
+        QuestionModel questionModel = QuestionModel(
+          id: linkquiz['id_materi'],
+          question: linkquiz['pertanyaan'],
+          answer: linkquiz['ket_jawab'],
+          imageUrl: linkquiz['link_quiz'],
+        );
+        questions.add(questionModel);
+      }
+
+      if (questions.isEmpty) {
+        print('Tidak ada pertanyaan yang tersedia.');
+      }
+
+      return questions;
+    } else {
+      throw Exception('Data kuis tidak ditemukan atau tidak sesuai format.');
+    }
   } else {
-    throw Exception('Failed to load quiz data');
+    throw Exception('Gagal memuat data kuis');
   }
 }
+

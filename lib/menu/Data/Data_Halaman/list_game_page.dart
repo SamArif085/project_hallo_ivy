@@ -48,7 +48,7 @@ class _ListGamePageState extends State<ListGamePage> {
                   var materi = linkMateriFull[index];
                   return CustomCard(
                     key: Key(materi['id'].toString()),
-                    image: materi["gambar_cover_game"],
+                    image: materi["gambar_game"],
                     onTap: () {
                       Navigator.push(
                         context,
@@ -75,10 +75,9 @@ class _ListGamePageState extends State<ListGamePage> {
     String? userDataString = preferences.getString('userData');
     if (userDataString != null) {
       Map<String, dynamic> userData = jsonDecode(userDataString);
-      // Assuming "materi_user" is the key for user's materials
       return userData['link_game'].cast<Map<String, dynamic>>();
     } else {
-      return []; // Return an empty list if no user data is found
+      return [];
     }
   }
 }
@@ -90,7 +89,6 @@ class CustomCard extends StatelessWidget {
   String dataGame;
   CustomCard({
     super.key,
-    // required this.title,
     required this.image,
     required this.onTap,
     required this.dataGame,

@@ -18,7 +18,7 @@ class VideoScreen extends StatefulWidget {
   }) : super(key: key);
   final Map<String, dynamic> materi;
   @override
-  // ignore: library_private_types_in_public_api
+
   _VideoScreenState createState() => _VideoScreenState();
 }
 

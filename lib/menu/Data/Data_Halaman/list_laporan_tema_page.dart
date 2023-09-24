@@ -1,16 +1,14 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hello_ivy_test/menu/Dashboard.dart';
-import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'color_Theme.dart';
 import 'laporan_page.dart';
 import 'models/data_laporan_tema.dart';
 
 class ListLaporan extends StatefulWidget {
-  final String kdkelas;
-  ListLaporan({
+  const ListLaporan({
     super.key,
     AnimationController? animationController,
-    required Map<String, dynamic> materi,
-    required this.kdkelas,
   });
 
   @override
@@ -18,44 +16,61 @@ class ListLaporan extends StatefulWidget {
   State<ListLaporan> createState() => _ListLaporanState();
 }
 
+Future<String> kdKelas() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? userDataString = preferences.getString('userData');
+  if (userDataString != null) {
+    Map<String, dynamic> userData = jsonDecode(userDataString);
+    if (userData['values'] != null &&
+        userData['values']['materi_user'][0]['kode_kelas'] != null) {
+      String kodeKelas = userData['values']['materi_user'][0]['kode_kelas'];
+      print('kdKelas: $kodeKelas');
+      return kodeKelas;
+    }
+  }
+  throw Exception('Data pengguna tidak ditemukan atau tidak sesuai format.');
+}
+
 class _ListLaporanState extends State<ListLaporan> {
+  String kodeKelas = '';
+
+  @override
+  void initState() {
+    super.initState();
+    kdKelas().then((value) {
+      setState(() {
+        kodeKelas = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DashboardHome(),
-              ),
-            );
-          },
-        ),
+        backgroundColor: DesignCourseAppTheme.nearlyWhite,
         title: const Padding(
-          padding: EdgeInsets.all(0),
+          padding: EdgeInsets.only(left: 50),
           child: Center(
-            child: Text('Laporan'),
+            child: Text(
+              'Laporan',
+              style: TextStyle(color: DesignCourseAppTheme.nearlyBlack),
+            ),
           ),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info),
+            color: DesignCourseAppTheme.nearlyBlack,
             iconSize: 30,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('Laporan Pertema'),
+                    title: const Text('Laporan'),
                     content: const Text(
                         'Anda dapat melihat pesan guru dan laporan statistik pertema pada halaman ini.'),
                     actions: <Widget>[
@@ -74,9 +89,11 @@ class _ListLaporanState extends State<ListLaporan> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: const BoxDecoration(
+          color: DesignCourseAppTheme.nearlyWhite,
+        ),
         child: FutureBuilder<List<DataTema>>(
-          future: getDataTema(widget.kdkelas),
+          future: getDataTema(kodeKelas),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -87,7 +104,6 @@ class _ListLaporanState extends State<ListLaporan> {
             } else {
               List<DataTema> dataTema = snapshot.data as List<DataTema>;
               print('dataTema: $dataTema');
-
               return ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
                 itemCount: dataTema.length,
@@ -103,7 +119,6 @@ class _ListLaporanState extends State<ListLaporan> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LaporanHome(
-                            kdkelas: widget.kdkelas,
                             materi: dataLaporanTema.toMap(),
                           ),
                         ),
@@ -154,7 +169,7 @@ class CustomCard extends StatelessWidget {
                 height: sizedHeight,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(image), // Use a placeholder image URL
+                    image: NetworkImage(image),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: const BorderRadius.only(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_ivy_test/menu/Data/Data_Halaman/models/refreshdata.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
@@ -30,35 +31,27 @@ class Result extends StatelessWidget {
     );
   }
 
-  void Home(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const QuizMenu(),
-      ),
-    );
-  }
-
   void nextMateri(BuildContext context) async {
     try {
       final Uri url = Uri.parse('https://hello-ivy.id/post_quiz.php');
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? idnisn = preferences.getString('nisn');
-
       var request = http.MultipartRequest('POST', url);
       request.fields['quiz_status'] = '1';
       request.fields['nisn'] = idnisn!;
       request.fields['id_materi'] = '${materi['id']}';
-
+      request.fields['jenis_tema'] = '${materi['jenis_tema']}';
       var response = await request.send();
       if (response.statusCode == 200) {
+        await UserDataManager.refreshUserData();
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const QuizMenu(),
+            builder: (context) => const QuizMenu(data: "refresh"),
           ),
         );
+        UserDataManager.refreshUserData();
         print('Data berhasil dikirim ke server');
       } else {
         print('Gagal mengirim data ke server');
@@ -133,7 +126,7 @@ class Result extends StatelessWidget {
                       (correct / totalQuestion) * 100 < 70)
                     ElevatedButton(
                       onPressed: () {
-                        Home(context);
+                        replayQuiz(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: HexColor('F24C3D'),
@@ -172,13 +165,16 @@ class Result extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
+// ignore: must_be_immutable, camel_case_types
 class resultInfo extends StatelessWidget {
   String value;
   String color;
   String info;
   resultInfo(
-      {Key? key, required this.value, required this.color, required this.info});
+      {super.key,
+      required this.value,
+      required this.color,
+      required this.info});
 
   @override
   Widget build(BuildContext context) {

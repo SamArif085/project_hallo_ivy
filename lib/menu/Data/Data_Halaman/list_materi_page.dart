@@ -1,11 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Dashboard.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
-import 'list_all_kelas.dart';
 import 'video_screen.dart';
 
 class MateriPage extends StatefulWidget {
@@ -53,12 +50,12 @@ class _MateriPageState extends State<MateriPage> {
             icon: const Icon(Icons.class_outlined),
             iconSize: 32, // Icon untuk tombol
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ListAllKelas(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const ListAllKelas(),
+              //   ),
+              // );
               // Aksi yang akan dijalankan saat tombol ditekan
               // Misalnya, menavigasi ke layar tambahan atau melakukan tindakan lainnya
             },

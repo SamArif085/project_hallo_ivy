@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Data/Data_Halaman/list_laporan_kelas_page.dart';
+import 'package:hello_ivy_test/menu/Data/Data_Halaman/list_laporan_tema_page.dart';
 import 'Data/Data_Halaman/list_menu_dashboard.dart';
 import 'Data/Data_Halaman/list_game_page.dart';
 import 'Data/Data_Halaman/models/refreshdata.dart';
@@ -108,7 +108,7 @@ class _DashboardHomeState extends State<DashboardHome>
                   return;
                 }
                 setState(() {
-                  tabBody = const LaporanKelas();
+                  tabBody =  const ListLaporan();
                 });
               });
             } else if (index == 2) {

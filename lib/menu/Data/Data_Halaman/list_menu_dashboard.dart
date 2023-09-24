@@ -132,7 +132,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   }
 
   void moveToMateri(category) async {
-    final List<Map<String, dynamic>> materiList = await fetchUserMaterials();
+    final List<Map<String, dynamic>> materiList = await materiUser();
     Map<String, dynamic> selectedMateri = materiList.firstWhere(
       (materi) => materi['id'] == category.id,
       orElse: () => {},
@@ -152,11 +152,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     }
   }
 
-  Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
+Future<List<Map<String, dynamic>>> materiUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? userDataString = preferences.getString('userData');
-    if (userDataString != null) {
-      Map<String, dynamic> userData = jsonDecode(userDataString);
+    String? dataGameString = preferences.getString('userData');
+    if (dataGameString != null) {
+      Map<String, dynamic> userData = jsonDecode(dataGameString);
       // Assuming "materi_user" is the key for user's materials
       return userData['values']['materi_user'].cast<Map<String, dynamic>>();
     } else {

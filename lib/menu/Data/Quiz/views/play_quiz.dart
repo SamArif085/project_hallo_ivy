@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_ivy_test/menu/Data/Data_Halaman/color_Theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -30,16 +31,16 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   double beginAnim = 0.0;
   double endAnim = 1.0;
   int totalQuiz = 0;
-  late FlickManager flickManager;
+  late FlickManager flickManager = FlickManager(
+    videoPlayerController: VideoPlayerController.network(''), // Video kosong
+  );
   int currentVideoIndex = 0;
 
   void replayQuiz(BuildContext context) {
     setState(() {
-      // Reset values
       index = 0;
       correct = 0;
       incorrect = 0;
-      // Reset animation and timer
       resetProgress();
       startProgress();
     });
@@ -47,8 +48,8 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    flickManager.dispose(); // Menghentikan pemutar video
-    controller.dispose(); // Membebaskan sumber daya animasi
+    flickManager.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -111,16 +112,40 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
       Quest = await getQuestions(idMateri);
       totalQuiz = Quest.length;
 
-      setState(() {
-        currentVideoIndex = 0;
-        var controllervideo =
-            VideoPlayerController.network(Quest[index].imageUrl);
-        print(Quest[index].imageUrl);
-        flickManager = FlickManager(
-          videoPlayerController: controllervideo,
-          autoPlay: true,
+      if (Quest.isEmpty) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Tidak Ada Pertanyaan Tersedia'),
+              content: const Text(
+                  'Mohon maaf, saat ini tidak ada pertanyaan yang tersedia untuk kuis ini.'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Kembali'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
         );
-      }); // Memicu rebuild UI
+      } else {
+        setState(() {
+          currentVideoIndex = 0;
+          var controllervideo =
+              VideoPlayerController.network(Quest[index].imageUrl);
+          print(Quest[index].imageUrl);
+          flickManager.dispose();
+          flickManager = FlickManager(
+            videoPlayerController: controllervideo,
+            autoPlay: true,
+          );
+        });
+      }
     }
   }
 
@@ -148,10 +173,10 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
       resetProgress();
       startProgress();
       setState(() {
-        currentVideoIndex++; // Pindah ke video berikutnya
+        currentVideoIndex++;
         var controllervideo =
             VideoPlayerController.network(Quest[currentVideoIndex].imageUrl);
-        flickManager.dispose(); // Hentikan video sebelumnya
+        flickManager.dispose();
         flickManager = FlickManager(
           videoPlayerController: controllervideo,
           autoPlay: true,
@@ -180,15 +205,60 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (Quest.isEmpty) {
-      // Loading indicator or message if questions are still loading
-      return const CircularProgressIndicator();
+      return const Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 24), // Jarak antara indikator progres dan teks
+              Text('Mohon Tunggu'),
+            ],
+          ),
+        ),
+      );
     }
-
     final currentQuestion = Quest[index];
 
     return Scaffold(
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Jumlah Kuis",
+              style: TextStyle(
+                fontSize: 15,
+                color: DesignCourseAppTheme.darkText,
+              ),
+            ),
+            Text(
+              "${index + 1}/$totalQuiz",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: DesignCourseAppTheme.darkText,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+        elevation: 0,
+        backgroundColor: HexColor('#85f29d'),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: DesignCourseAppTheme.darkText,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: Container(
-        padding: const EdgeInsets.fromLTRB(0, 24, 0, 10),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -199,59 +269,6 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                   totalQuiz, // Hitung kemajuan berdasarkan nomor soal saat ini
               color: Colors.blueAccent,
               backgroundColor: HexColor('#85f29d'),
-            ),
-            Container(
-              color: HexColor('#85f29d'),
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              color: HexColor('#85f29d'),
-              child: Row(
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        "${index + 1}/$totalQuiz",
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        "Question",
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w300),
-                      )
-                    ],
-                  ),
-                  const Spacer(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      // Text(
-                      //   "${points.toInt()}", // Mengonversi poin menjadi integer
-                      //   style: const TextStyle(
-                      //       fontSize: 25, fontWeight: FontWeight.w500),
-                      // ),
-                      // const SizedBox(
-                      //   width: 10,
-                      // ),
-                      // const Text(
-                      //   "Points",
-                      //   style: TextStyle(
-                      //       fontSize: 17, fontWeight: FontWeight.w300),
-                      // )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: HexColor('#85f29d'),
-              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30),
