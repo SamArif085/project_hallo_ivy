@@ -222,32 +222,26 @@ class _VideoScreenState extends State<VideoScreen>
                               padding: const EdgeInsets.only(
                                   left: 16, right: 16, bottom: 8),
                               child: Container(
-                                width: 200,
                                 height: 350,
-                                child: Expanded(
-                                  child: AspectRatio(
-                                    aspectRatio: 1 / 2,
-                                    child: SfCartesianChart(
-                                      primaryXAxis: CategoryAxis(),
-                                      primaryYAxis: NumericAxis(),
-                                      series: <ChartSeries>[
-                                        ColumnSeries<Map, String>(
-                                          color: HexColor('#85f29d'),
-                                          dataSource: [
-                                            {
-                                              'x': 'Diputar',
-                                              'y': int.parse(
-                                                  widget.materi['count'])
-                                            },
-                                          ],
-                                          xValueMapper: (Map data, int index) =>
-                                              data['x'],
-                                          yValueMapper: (Map data, int index) =>
-                                              data['y'],
-                                        ),
+                                width: 200,
+                                child: SfCartesianChart(
+                                  primaryXAxis: CategoryAxis(),
+                                  primaryYAxis: NumericAxis(),
+                                  series: <ChartSeries>[
+                                    ColumnSeries<Map, String>(
+                                      color: HexColor('#85f29d'),
+                                      dataSource: [
+                                        {
+                                          'x': 'Diputar',
+                                          'y': int.parse(widget.materi['count'])
+                                        },
                                       ],
+                                      xValueMapper: (Map data, int index) =>
+                                          data['x'],
+                                      yValueMapper: (Map data, int index) =>
+                                          data['y'],
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -281,7 +275,7 @@ class _VideoScreenState extends State<VideoScreen>
               ),
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.width / 1.1) - 20.0 - 65,
+              top: (MediaQuery.of(context).size.width / 1.1) - 25.0 - 12,
               right: 0,
               child: ScaleTransition(
                 alignment: Alignment.center,
@@ -294,7 +288,7 @@ class _VideoScreenState extends State<VideoScreen>
                     padding: const EdgeInsets.all(8),
                     child: Row(
                       children: <Widget>[
-                        quiz('Quiz', () {
+                        quiz('Kuis', () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -376,7 +370,7 @@ class _VideoScreenState extends State<VideoScreen>
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: HexColor('#85f29d'),
+            color: DesignCourseAppTheme.nearlyWhite,
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(
