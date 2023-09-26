@@ -142,7 +142,7 @@ class Category2View extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: const BoxDecoration(
-                              color: Color.fromRGBO(105, 240, 155, 1),
+                              color: Colors.yellowAccent,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16.0)),
                             ),

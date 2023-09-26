@@ -1,8 +1,6 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-
-import '../../Data_Halaman/list_materi_page.dart';
+import '../../Data_Halaman/list_all_kelas.dart';
 import '../fitness_app_theme.dart';
 import '../models/tabIcon_data.dart';
 
@@ -171,7 +169,7 @@ class _BottomBarViewState extends State<BottomBarView>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MateriPage(),
+                                builder: (context) => const ListAllKelas(),
                               ),
                             );
                           },

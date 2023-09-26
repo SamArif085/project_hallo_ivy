@@ -31,35 +31,40 @@ class Result extends StatelessWidget {
     );
   }
 
-  void nextMateri(BuildContext context) async {
-    try {
-      final Uri url = Uri.parse('https://hello-ivy.id/post_quiz.php');
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      String? idnisn = preferences.getString('nisn');
-      var request = http.MultipartRequest('POST', url);
-      request.fields['quiz_status'] = '1';
-      request.fields['nisn'] = idnisn!;
-      request.fields['id_materi'] = '${materi['id']}';
-      request.fields['jenis_tema'] = '${materi['jenis_tema']}';
-      var response = await request.send();
-      if (response.statusCode == 200) {
-        await UserDataManager.refreshUserData();
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const QuizMenu(data: "refresh"),
-          ),
-        );
-        UserDataManager.refreshUserData();
-        print('Data berhasil dikirim ke server');
-      } else {
-        print('Gagal mengirim data ke server');
-      }
-    } catch (e) {
-      print('Terjadi kesalahan: $e');
+
+ void nextMateri(BuildContext context) async {
+  try {
+    final Uri url = Uri.parse('https://hello-ivy.id/post_quiz.php');
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? idnisn = preferences.getString('nisn');
+    var request = http.MultipartRequest('POST', url);
+    request.fields['nisn'] = idnisn!;
+    request.fields['namaSiswa'] = '${materi['namaUser']}';
+    request.fields['kodeKelas'] = '${materi['kode_kelas']}';
+    request.fields['idTema'] = '${materi['id']}';
+    request.fields['judulTema'] = '${materi['judul_materi']}';
+    request.fields['nilaiQuiz'] = '$score';
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      await UserDataManager.refreshUserData();
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const QuizMenu(data: "refresh"),
+        ),
+      );
+      UserDataManager.refreshUserData();
+      print('Data berhasil dikirim ke server');
+         print('$request');
+    } else {
+      print('Gagal mengirim data ke server');
     }
+  } catch (e) {
+    print('Terjadi kesalahan: $e');
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

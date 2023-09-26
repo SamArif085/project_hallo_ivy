@@ -131,7 +131,7 @@ class _KontenMenuPRandQuizState extends State<KontenMenuPRandQuiz>
           ),
         );
         animationController?.forward();
-        return CategoryView(
+        return CategoryView2(
           callback: widget.callBack,
           category: category,
           animation: animation,
@@ -192,7 +192,113 @@ class CategoryView extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: const Color.fromRGBO(105, 240, 155, 1),
+                              color: Colors.redAccent,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(16.0)),
+                              border: Border.all(
+                                  color: DesignCourseAppTheme.notWhite),
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 16,
+                                          left: 16,
+                                          right: 16,
+                                        ),
+                                        child: Text(
+                                          category!.title,
+                                          textAlign: TextAlign.left,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16,
+                                            letterSpacing: 0.27,
+                                            color:
+                                                DesignCourseAppTheme.darkerText,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                      child: SizedBox(
+                        width:
+                            paddingWidth, // Lebar disesuaikan dengan kondisi perangkat
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.asset(category!.imagePath)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CategoryView2 extends StatelessWidget {
+  const CategoryView2({
+    Key? key,
+    this.category,
+    this.animationController,
+    this.animation,
+    this.callback,
+    required this.onTap,
+  }) : super(key: key);
+
+  final VoidCallback? callback;
+  final Category? category;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    double paddingWidth = MediaQuery.of(context).size.width <= 600
+        ? MediaQuery.of(context).size.width * 0.32
+        : MediaQuery.of(context).size.width * 0.4;
+
+    return AnimatedBuilder(
+      animation: animationController!,
+      builder: (BuildContext context, Widget? child) {
+        return FadeTransition(
+          opacity: animation!,
+          child: Transform(
+            transform: Matrix4.translationValues(
+                0.0, 50 * (1.0 - animation!.value), 0.0),
+            child: InkWell(
+              splashColor: Colors.transparent,
+              onTap: onTap,
+              child: SizedBox(
+                child: Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.orangeAccent,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(16.0)),
                               border: Border.all(

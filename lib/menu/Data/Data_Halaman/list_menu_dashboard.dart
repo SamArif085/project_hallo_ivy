@@ -8,7 +8,7 @@ import 'materi_category_list_view.dart';
 import 'color_Theme.dart';
 import 'models/materi_category.dart';
 import 'models/refreshdata.dart';
-import 'video_screen.dart';
+import 'video_screen_materi.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
   const DesignCourseHomeScreen({
@@ -142,7 +142,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VideoScreen(
+          builder: (context) => VideoScreenMateri(
             materi: selectedMateri,
           ),
         ),

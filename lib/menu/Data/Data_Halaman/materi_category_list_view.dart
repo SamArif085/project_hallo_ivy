@@ -90,14 +90,7 @@ class _CategoryListViewState extends State<CategoryListView>
                     animationController: animationController,
                     isSelected: _selectedCategoryIndex == index,
                     onTap: () {
-                      if (categoryList[index].status == "1") {
-                        setState(() {
-                          _selectedCategoryIndex = index;
-                        });
-                        widget.callBack!(categoryList[index]);
-                      } else {
-                        showCategoryNotAccessibleSnackBar(); // Tampilkan SnackBar jika kategori tidak dapat diakses
-                      }
+                      widget.callBack!(categoryList[index]);
                     },
                   );
                 },
@@ -128,7 +121,6 @@ class CategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -139,7 +131,7 @@ class CategoryView extends StatelessWidget {
                 100 * (1.0 - animation!.value), 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: onTap ,
+              onTap: onTap,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 width: MediaQuery.of(context).size.width * 0.80,

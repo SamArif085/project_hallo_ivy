@@ -10,6 +10,7 @@ class DataTema {
   String gambarmateri;
   String gambarcover;
   String count;
+  String? idnisn;
 
   DataTema({
     required this.id,
@@ -18,6 +19,7 @@ class DataTema {
     required this.gambarmateri,
     required this.gambarcover,
     required this.count,
+    required this.idnisn,
   });
 
   Map<String, dynamic> toMap() {
@@ -70,6 +72,8 @@ class DataPesanGuru {
 }
 
 Future<List<DataTema>> getDataTema(String kdkelas) async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? idnisn = preferences.getString('nisn');
   print('kdkelas dalam getDataTema: $kdkelas');
   final Uri url =
       Uri.parse('https://hello-ivy.id/get_materi.php?kode_kel=$kdkelas');
@@ -83,6 +87,7 @@ Future<List<DataTema>> getDataTema(String kdkelas) async {
 
     for (var linkTema in dataLaporanTema) {
       DataTema kelasModel = DataTema(
+        idnisn: idnisn,
         id: linkTema['id'],
         judulmateri: linkTema['judul_materi'],
         linkmateri: linkTema['link_materi'],

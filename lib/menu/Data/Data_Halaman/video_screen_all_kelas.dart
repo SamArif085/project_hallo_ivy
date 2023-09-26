@@ -8,27 +8,28 @@ import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'Color_Theme.dart';
 import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
-
+import 'models/data_laporan_tema.dart';
 import 'models/refreshdata.dart';
 
-class VideoScreen extends StatefulWidget {
-  const VideoScreen({
+class VideoScreenAllKelas extends StatefulWidget {
+  const VideoScreenAllKelas({
     Key? key,
     required this.materi,
   }) : super(key: key);
-  final Map<String, dynamic> materi;
+   final DataTema materi;
   @override
   // ignore: library_private_types_in_public_api
-  _VideoScreenState createState() => _VideoScreenState();
+  _VideoScreenAllKelasState createState() => _VideoScreenAllKelasState();
 }
 
-class _VideoScreenState extends State<VideoScreen>
+class _VideoScreenAllKelasState extends State<VideoScreenAllKelas>
     with TickerProviderStateMixin {
   late FlickManager flickManager;
   int _playCount = 0;
   final double infoHeight = 364.0;
   bool _isPlaying = false;
   bool _showMessage = true;
+  // ignore: unused_field
   late Timer _messageTimer;
   AnimationController? animationController;
   Animation<double>? animation;
@@ -54,7 +55,7 @@ class _VideoScreenState extends State<VideoScreen>
     super.initState();
     UserDataManager.refreshUserData();
     var controller = VideoPlayerController.network(
-      widget.materi['link_materi'],
+      widget.materi.linkmateri,
     );
 
     flickManager = FlickManager(
@@ -71,13 +72,14 @@ class _VideoScreenState extends State<VideoScreen>
             _playCount++;
             _isPlaying = true;
             // Perhitungan data count db dan data count sekarang
-            widget.materi['count'] =
-                (_playCount + int.parse(widget.materi['count'])).toString();
+            widget.materi.count =
+                (_playCount + int.parse(widget.materi.count)).toString();
             // Fungsi Parameter pada server
             Map<String, dynamic> postData = {
-              'count_video': widget.materi['count'],
-              'nisn': widget.materi['nisn'],
-              'id_materi': widget.materi['id'],
+              'count_video': widget.materi.count,
+              'nisn': widget.materi.idnisn,
+              'id_materi': widget.materi.id,
+              'status': '1',
             };
             // Kirim permintaan POST ke server
             http
@@ -88,6 +90,7 @@ class _VideoScreenState extends State<VideoScreen>
                 .then((response) {
               if (response.statusCode == 200) {
                 print('Data count berhasil dikirim');
+                   print('$postData');
               } else {
                 print('Gagal mengirim data count');
               }
@@ -183,7 +186,7 @@ class _VideoScreenState extends State<VideoScreen>
                           padding: const EdgeInsets.only(
                               top: 20.0, left: 18, right: 16),
                           child: Text(
-                            widget.materi['judul_materi'],
+                            widget.materi.judulmateri,
                             textAlign: TextAlign.left,
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
@@ -207,7 +210,7 @@ class _VideoScreenState extends State<VideoScreen>
                                 child: Row(
                                   children: <Widget>[
                                     getTimeBoxUI('Diputar sebanyak',
-                                        widget.materi['count']),
+                                        widget.materi.count),
                                   ],
                                 ),
                               ),
@@ -233,7 +236,7 @@ class _VideoScreenState extends State<VideoScreen>
                                       dataSource: [
                                         {
                                           'x': 'Diputar',
-                                          'y': int.parse(widget.materi['count'])
+                                          'y': int.parse(widget.materi.count)
                                         },
                                       ],
                                       xValueMapper: (Map data, int index) =>
@@ -289,10 +292,10 @@ class _VideoScreenState extends State<VideoScreen>
                     child: Row(
                       children: <Widget>[
                         quiz('Kuis', () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const QuizMenu(),
+                              builder: (context) => const QuizMenu(data: "refresh"),
                             ),
                           );
                         }),

@@ -1,14 +1,14 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../Dashboard.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
-import 'video_screen.dart';
+import 'models/data_laporan_tema.dart';
+import 'video_screen_all_kelas.dart';
 
 class MateriPage extends StatefulWidget {
+  final String kdkelas;
   const MateriPage({
     super.key,
     AnimationController? animationController,
+    required this.kdkelas,
   });
 
   @override
@@ -30,12 +30,7 @@ class _MateriPageState extends State<MateriPage> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DashboardHome(),
-              ),
-            );
+            Navigator.pop(context);
           },
         ),
         title: const Padding(
@@ -47,18 +42,26 @@ class _MateriPageState extends State<MateriPage> {
         actions: <Widget>[
           // Tambahkan tombol di sini
           IconButton(
-            color: HexColor('#85f29d'),
-            icon: const Icon(Icons.class_outlined),
-            iconSize: 32, // Icon untuk tombol
+            icon: const Icon(Icons.info),
+            iconSize: 30,
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const ListAllKelas(),
-              //   ),
-              // );
-              // Aksi yang akan dijalankan saat tombol ditekan
-              // Misalnya, menavigasi ke layar tambahan atau melakukan tindakan lainnya
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Materi'),
+                    content: const Text('Anda bisa mempelajari materi yang anda pilih pada kelas ini.'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Tutup'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],
@@ -66,7 +69,7 @@ class _MateriPageState extends State<MateriPage> {
       body: Container(
         decoration: BoxDecoration(color: HexColor('#85f29d')),
         child: FutureBuilder(
-          future: fetchUserMaterials(),
+          future: getDataTema(widget.kdkelas),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -76,7 +79,7 @@ class _MateriPageState extends State<MateriPage> {
               return Text('Error: ${snapshot.error}');
             } else {
               // Populate linkMateriFull with fetched data
-              linkMateriFull = snapshot.data as List<Map<String, dynamic>>;
+              List<DataTema> linkMateriFull = snapshot.data as List<DataTema>;
               print('linkMateriFull: $linkMateriFull');
               return ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
@@ -84,41 +87,20 @@ class _MateriPageState extends State<MateriPage> {
                 itemBuilder: (context, index) {
                   var materi = linkMateriFull[index];
                   return CustomCard(
-                    key: Key(materi['id'].toString()),
-                    title: materi['judul_materi'],
-                    status: materi['status'],
-                    image: materi["gambar_materi"],
-                    materi: materi['link_materi'],
+                    key: Key(materi.id.toString()),
+                    title: materi.judulmateri,
+                    status: '1',
+                    image: materi.gambarmateri,
+                    materi: materi.linkmateri,
                     onTap: () {
-                      if (materi['status'] == "1") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VideoScreen(
-                              materi: materi,
-                            ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoScreenAllKelas(
+                            materi: materi,
                           ),
-                        );
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Materi Terkunci'),
-                              content: const Text(
-                                  'Materi ini masih terkunci. Anda tidak bisa mengaksesnya.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text('Tutup'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
+                        ),
+                      );
                     },
                   );
                 },
@@ -130,18 +112,18 @@ class _MateriPageState extends State<MateriPage> {
     );
   }
 
-  // Replace this with your actual fetching logic
-  Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? userDataString = preferences.getString('userData');
-    if (userDataString != null) {
-      Map<String, dynamic> userData = jsonDecode(userDataString);
-      // Assuming "materi_user" is the key for user's materials
-      return userData['values']['materi_user'].cast<Map<String, dynamic>>();
-    } else {
-      return []; // Return an empty list if no user data is found
-    }
-  }
+  // // Replace this with your actual fetching logic
+  // Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   String? userDataString = preferences.getString('userData');
+  //   if (userDataString != null) {
+  //     Map<String, dynamic> userData = jsonDecode(userDataString);
+  //     // Assuming "materi_user" is the key for user's materials
+  //     return userData['values']['materi_user'].cast<Map<String, dynamic>>();
+  //   } else {
+  //     return []; // Return an empty list if no user data is found
+  //   }
+  // }
 }
 
 // ignore: must_be_immutable
@@ -200,17 +182,17 @@ class CustomCard extends StatelessWidget {
                     title,
                     textAlign: TextAlign.center,
                   ),
-                  Container(
-                    child: status == '1'
-                        ? Image.asset(
-                            'assets/icon/unlock_icon.png',
-                            height: 20,
-                          )
-                        : Image.asset(
-                            'assets/icon/lock_icon.png',
-                            height: 20,
-                          ),
-                  ),
+                  // Container(
+                  //   child: status == '1'
+                  //       ? Image.asset(
+                  //           'assets/icon/unlock_icon.png',
+                  //           height: 20,
+                  //         )
+                  //       : Image.asset(
+                  //           'assets/icon/lock_icon.png',
+                  //           height: 20,
+                  //         ),
+                  // ),
                 ],
               ),
             )
