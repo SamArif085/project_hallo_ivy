@@ -372,7 +372,7 @@ class _VideoScreenMateriState extends State<VideoScreenMateri>
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: DesignCourseAppTheme.nearlyWhite,
+            color: Colors.orangeAccent,
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(

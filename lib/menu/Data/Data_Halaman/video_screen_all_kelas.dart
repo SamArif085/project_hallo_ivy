@@ -373,7 +373,7 @@ class _VideoScreenAllKelasState extends State<VideoScreenAllKelas>
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: DesignCourseAppTheme.nearlyWhite,
+            color: Colors.orangeAccent,
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             boxShadow: <BoxShadow>[
               BoxShadow(

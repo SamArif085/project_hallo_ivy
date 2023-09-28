@@ -86,7 +86,7 @@ class Category {
     Category(
       id: '',
       imagePath: 'assets/design_course/interFace4.png',
-      title: 'Quiz',
+      title: 'Kuis',
       imagePathCover: '',
     ),
   ];

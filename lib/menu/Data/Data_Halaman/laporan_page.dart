@@ -251,7 +251,6 @@ class PesanGuru extends StatelessWidget {
   }
 }
 
-// ignore: camel_case_types
 class chartNilai extends StatefulWidget {
   final Map<String, dynamic> materi;
   const chartNilai({
@@ -263,7 +262,6 @@ class chartNilai extends StatefulWidget {
   State<chartNilai> createState() => _chartNilaiState();
 }
 
-// ignore: camel_case_types
 class _chartNilaiState extends State<chartNilai> {
   @override
   Widget build(BuildContext context) {
@@ -311,7 +309,7 @@ class _chartNilaiState extends State<chartNilai> {
                       return Container(
                         child: const Center(
                           child: Text(
-                            'Tidak ada data laporan',
+                            'Tidak ada data Nilai',
                             style: TextStyle(
                               color: Colors.black26,
                               fontSize: 20,
@@ -325,7 +323,7 @@ class _chartNilaiState extends State<chartNilai> {
 
                     for (var data in dataNilaiQuiz) {
                       chartData.add({
-                        'x': data.judulTema,
+                        'x': data.date,
                         'y': int.parse(data.nilai),
                       });
                     }
@@ -334,20 +332,20 @@ class _chartNilaiState extends State<chartNilai> {
                         primaryXAxis: CategoryAxis(),
                         primaryYAxis: NumericAxis(),
                         series: <ChartSeries>[
-                          ColumnSeries<Map<String, dynamic>, String>(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                topRight: Radius.circular(5)),
+                          SplineSeries<Map<String, dynamic>, String>(
                             color: HexColor('#85f29d'),
                             dataSource: chartData,
                             xValueMapper:
                                 (Map<String, dynamic> data, int index) =>
                                     data['x'],
+                            dataLabelSettings:
+                                const DataLabelSettings(isVisible: true),
                             yValueMapper:
                                 (Map<String, dynamic> data, int index) =>
                                     data['y'],
-                            dataLabelSettings:
-                                const DataLabelSettings(isVisible: true),
+                            markerSettings: const MarkerSettings(
+                              isVisible: true,
+                            ),
                           ),
                         ],
                       ),
