@@ -170,29 +170,23 @@ Future<List<DataLaporanNilaiQuiz>> getLaporanNilaiQuiz(String materi) async {
   final Uri url = Uri.parse(
       'https://hello-ivy.id/get_laporan_nilai.php?nisn=$idnisn&id_materi=$materi');
   final response = await http.get(url);
-  print(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
-    if (responseData['value']['data'] != null) {
-      final List<dynamic> dataNilaiQuiz = responseData['value']['data'];
-      List<DataLaporanNilaiQuiz> dataNilai = [];
-      for (var linkNilaiQuiz in dataNilaiQuiz) {
-        DataLaporanNilaiQuiz kelasModel = DataLaporanNilaiQuiz(
-            id: linkNilaiQuiz['id'],
-            nisn: linkNilaiQuiz['nisn'],
-            nama: linkNilaiQuiz['nama_siswa'],
-            kodeKelas: linkNilaiQuiz['kode_kelas'],
-            idTema: linkNilaiQuiz['id_tema'],
-            judulTema: linkNilaiQuiz['judul_tema'],
-            nilai: linkNilaiQuiz['nilai_quiz'],
-            date: linkNilaiQuiz['created_at']);
-        dataNilai.add(kelasModel);
-      }
-      return dataNilai;
-    } else {
-      print('Data Nilai Quiz kosong');
-      return [];
+    final List<dynamic> dataNilaiQuiz = responseData['values']['data'];
+    List<DataLaporanNilaiQuiz> dataNilai = [];
+    for (var linkNilaiQuiz in dataNilaiQuiz) {
+      DataLaporanNilaiQuiz kelasModel = DataLaporanNilaiQuiz(
+          id: linkNilaiQuiz['id'],
+          nisn: linkNilaiQuiz['nisn'],
+          nama: linkNilaiQuiz['nama_siswa'],
+          kodeKelas: linkNilaiQuiz['kode_kelas'],
+          idTema: linkNilaiQuiz['id_tema'],
+          judulTema: linkNilaiQuiz['judul_tema'],
+          nilai: linkNilaiQuiz['nilai_quiz'],
+          date: linkNilaiQuiz['created_at']);
+      dataNilai.add(kelasModel);
     }
+    return dataNilai;
   } else {
     throw Exception('Failed to load quiz data');
   }
