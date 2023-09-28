@@ -50,7 +50,7 @@ class _PRHomeState extends State<PRHome> {
           )),
         ),
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
+        backgroundColor: Colors.redAccent,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: userMaterials,
@@ -70,14 +70,14 @@ class _PRHomeState extends State<PRHome> {
                 ?.where((material) => material['status'] == 'aktif')
                 .toList();
             return Container(
-              decoration: BoxDecoration(color: HexColor('#85f29d')),
+              decoration: BoxDecoration(color: Colors.redAccent),
               child: ListView(
                 children: [
                   const Center(
                     child: Text(
                       '- - - Terbaru - - -',
                       style: TextStyle(
-                        // color: Colors.white,
+                        color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -111,11 +111,11 @@ class _PRHomeState extends State<PRHome> {
                     ),
                   Center(
                     child: Container(
-                      padding: const EdgeInsets.only(bottom: 16),
+                      padding: const EdgeInsets.only(bottom: 16, top: 16),
                       child: const Text(
                         '- - - Riwayat - - -',
                         style: TextStyle(
-                          // color: HexColor('#85f29d'),
+                          color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),

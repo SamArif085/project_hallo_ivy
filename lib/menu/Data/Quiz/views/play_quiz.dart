@@ -246,7 +246,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
           ],
         ),
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
+        backgroundColor: Colors.orangeAccent,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -268,7 +268,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
               value: (index + 1) /
                   totalQuiz, // Hitung kemajuan berdasarkan nomor soal saat ini
               color: Colors.blueAccent,
-              backgroundColor: HexColor('#85f29d'),
+              backgroundColor: Colors.redAccent,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30),

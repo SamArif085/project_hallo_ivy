@@ -53,7 +53,7 @@ class _QuizMenuState extends State<QuizMenu> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
+        backgroundColor: Colors.orangeAccent,
         title: const Padding(
           padding: EdgeInsets.only(right: 50),
           child: Center(child: Text('Kuis')),
@@ -71,7 +71,7 @@ class _QuizMenuState extends State<QuizMenu> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: BoxDecoration(color: Colors.orangeAccent),
         child: FutureBuilder(
           future: refreshKuis(),
           builder: (context, snapshot) {
