@@ -1,6 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataTema {
@@ -113,13 +112,11 @@ Future<List<DataTema>> getDataTema(String kdkelas) async {
   final Uri url =
       Uri.parse('https://hello-ivy.id/get_materi.php?kode_kel=$kdkelas');
   final response = await http.get(url);
-
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
     final List<dynamic> dataLaporanTema = responseData['values']['data'];
     print('kdkelas dalam getDataTema: $dataLaporanTema');
     List<DataTema> dataTema = [];
-
     for (var linkTema in dataLaporanTema) {
       DataTema kelasModel = DataTema(
         idnisn: idnisn,
@@ -132,7 +129,6 @@ Future<List<DataTema>> getDataTema(String kdkelas) async {
       );
       dataTema.add(kelasModel);
     }
-
     return dataTema;
   } else {
     throw Exception('Failed to load quiz data');
@@ -204,7 +200,6 @@ Future<List<DataPesanGuru>> getDataPesanGuru(String materi) async {
     print('getDataTema: $dataLaporanPesan');
     print('mater:$materi');
     List<DataPesanGuru> dataTema = [];
-
     for (var linkLaporan in dataLaporanPesan) {
       DataPesanGuru kelasModel = DataPesanGuru(
         idpesan: linkLaporan['id_pesan'],

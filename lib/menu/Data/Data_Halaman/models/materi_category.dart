@@ -30,7 +30,7 @@ class Category2 {
           materiList.map((map) => Category2.fromMap(map)).toList();
       return categories1;
     } else {
-      return []; // Return an empty list if no user data is found
+      return [];
     }
   }
 
@@ -70,7 +70,7 @@ class Category {
           materiList.map((map) => Category.fromMap(map)).toList();
       return categories;
     } else {
-      return []; // Return an empty list if no user data is found
+      return [];
     }
   }
 

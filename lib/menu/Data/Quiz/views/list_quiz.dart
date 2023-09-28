@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hello_ivy_test/menu/Dashboard.dart';
 import 'package:hello_ivy_test/menu/Data/Data_Halaman/models/refreshdata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'play_quiz.dart';
 
 class QuizMenu extends StatefulWidget {
@@ -71,7 +70,7 @@ class _QuizMenuState extends State<QuizMenu> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.orangeAccent),
+        decoration: const BoxDecoration(color: Colors.orangeAccent),
         child: FutureBuilder(
           future: refreshKuis(),
           builder: (context, snapshot) {
@@ -109,7 +108,7 @@ class _QuizMenuState extends State<QuizMenu> {
                             return AlertDialog(
                               title: const Text('Quiz Terkunci'),
                               content: const Text(
-                                  'Quiz ini masih terkunci. Anda tidak bisa mengaksesnya.'),
+                                  'Quiz ini masih terkunci. Anda harus menonton video materi tema ini untuk membuka aksesnya.'),
                               actions: <Widget>[
                                 TextButton(
                                   child: const Text('Tutup'),

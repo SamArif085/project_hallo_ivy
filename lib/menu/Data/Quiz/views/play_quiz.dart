@@ -5,7 +5,6 @@ import 'package:hello_ivy_test/menu/Data/Data_Halaman/color_Theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../../Module/bottom_navigation_view/bottom_bar_view.dart';
 import '../data/data.dart';
 import '../models/question_model.dart';
 import 'result.dart';

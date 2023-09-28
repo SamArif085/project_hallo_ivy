@@ -1,26 +1,45 @@
-// ignore_for_file: must_be_immutable
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Module/bottom_navigation_view/bottom_bar_view.dart';
+import 'models/data_pr.dart';
 
 class PRHome extends StatefulWidget {
-  const PRHome({Key? key}) : super(key: key);
-
+  const PRHome({super.key});
   @override
   _PRHomeState createState() => _PRHomeState();
 }
 
 class _PRHomeState extends State<PRHome> {
-  late Future<List<Map<String, dynamic>>> userMaterials;
+  late Future<List<dataPRAktif>> aktifData = Future.value([]);
+  late Future<List<dataPRSelesai>> selesaiData = Future.value([]);
+  String kodeKelas = '';
 
   @override
   void initState() {
     super.initState();
-    userMaterials = fetchUserMaterials();
+    getkodeKelas().then((value) {
+      setState(() {
+        kodeKelas = value;
+        aktifData = getDataPRAktif(kodeKelas);
+        selesaiData = getDataPRSelesai(kodeKelas);
+      });
+    });
+  }
+
+  Future<String> getkodeKelas() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userDataString = preferences.getString('userData');
+    if (userDataString != null) {
+      Map<String, dynamic> userData = jsonDecode(userDataString);
+      if (userData['values'] != null &&
+          userData['values']['materi_user'][0]['kode_kelas'] != null) {
+        String kodeKelas = userData['values']['materi_user'][0]['kode_kelas'];
+        print('kdKelas: $kodeKelas');
+        return kodeKelas;
+      }
+    }
+    throw Exception('Data pengguna tidak ditemukan atau tidak sesuai format.');
   }
 
   Future<List<Map<String, dynamic>>> fetchUserMaterials() async {
@@ -38,82 +57,42 @@ class _PRHomeState extends State<PRHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(right: 55),
-          child: Center(
-              child: Text(
-            'PR',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          )),
+        appBar: AppBar(
+          title: const Padding(
+            padding: EdgeInsets.only(right: 55),
+            child: Center(
+                child: Text(
+              'PR',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            )),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.redAccent,
         ),
-        elevation: 0,
-        backgroundColor: Colors.redAccent,
-      ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: userMaterials,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            ); // Show loading indicator while fetching data
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            List<Map<String, dynamic>>? userMaterials = snapshot.data
-                ?.where((material) => material['status'] == 'selesai')
-                .toList();
-            List<Map<String, dynamic>>? activeMaterials = snapshot.data
-                ?.where((material) => material['status'] == 'aktif')
-                .toList();
-            return Container(
-              decoration: BoxDecoration(color: Colors.redAccent),
-              child: ListView(
-                children: [
-                  const Center(
-                    child: Text(
-                      '- - - Terbaru - - -',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  if (activeMaterials!.isEmpty)
-                    Center(
-                      child: Container(
-                        width: 350.0,
-                        height: 100.0,
-                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
-                        child: CustomCard(
-                          title: '',
-                          text: 'Belum Ada PR',
-                          deadln: '',
-                        ),
-                      ),
-                    ),
-                  for (var material in activeMaterials)
-                    Center(
-                      child: Container(
-                        width: 350.0,
-                        height: 300.0,
-                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
-                        child: CustomCard(
-                          title: material['judulPr'],
-                          text: material['deskripsi'],
-                          deadln: material['tenggat'],
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: Container(
-                      padding: const EdgeInsets.only(bottom: 16, top: 16),
-                      child: const Text(
-                        '- - - Riwayat - - -',
+        body: FutureBuilder(
+          future: Future.wait([aktifData, selesaiData]),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<dataPRAktif> aktifMaterials =
+                  snapshot.data![0] as List<dataPRAktif>;
+              List<dataPRSelesai> selesaiMaterials =
+                  snapshot.data![1] as List<dataPRSelesai>;
+              return Container(
+                decoration: const BoxDecoration(color: Colors.redAccent),
+                child: ListView(
+                  children: [
+                    const Center(
+                      child: Text(
+                        '- - - Terbaru - - -',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -121,43 +100,81 @@ class _PRHomeState extends State<PRHome> {
                         ),
                       ),
                     ),
-                  ),
-                  if (userMaterials!.isEmpty)
+                    if (aktifMaterials.isEmpty)
+                      Center(
+                        child: Container(
+                          width: 350.0,
+                          height: 100.0,
+                          padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
+                          child: CustomCard(
+                            title: '',
+                            text: 'Belum Ada PR',
+                            deadln: '',
+                          ),
+                        ),
+                      ),
+                    for (var material in aktifMaterials)
+                      Center(
+                        child: Container(
+                          width: 350.0,
+                          height: 300.0,
+                          padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
+                          child: CustomCard(
+                            title: material.judulPr,
+                            text: material.deskripsi,
+                            deadln: material.tenggat,
+                          ),
+                        ),
+                      ),
                     Center(
                       child: Container(
-                        width: 350.0,
-                        height: 100.0,
-                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
-                        child: CustomCard(
-                          title: '',
-                          text: 'Belum Ada Riwayat PR',
-                          deadln: '',
+                        padding: const EdgeInsets.only(bottom: 16, top: 16),
+                        child: const Text(
+                          '- - - Riwayat - - -',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  for (var material in userMaterials)
-                    Center(
-                      child: Container(
-                        width: 350.0,
-                        height: 300.0,
-                        padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
-                        child: CustomCard(
-                          title: material['judulPr'],
-                          text: material['deskripsi'],
-                          deadln: material['status'],
+                    if (selesaiMaterials.isEmpty)
+                      Center(
+                        child: Container(
+                          width: 350.0,
+                          height: 100.0,
+                          padding: const EdgeInsets.fromLTRB(16, 5, 10, 10),
+                          child: CustomCard(
+                            title: '',
+                            text: 'Belum Ada Riwayat PR',
+                            deadln: '',
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-            );
-          }
-        },
-      ),
-    );
+                    for (var material in selesaiMaterials)
+                      Center(
+                        child: Container(
+                          width: 350.0,
+                          height: 300.0,
+                          padding: const EdgeInsets.fromLTRB(16, 5, 10, 0),
+                          child: CustomCard(
+                            title: material.judulPr,
+                            text: material.deskripsi,
+                            deadln: material.status,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }
+          },
+        ));
   }
 }
 
+// ignore: must_be_immutable
 class CustomCard extends StatelessWidget {
   CustomCard(
       {super.key,

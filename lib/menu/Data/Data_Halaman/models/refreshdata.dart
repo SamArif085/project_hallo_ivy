@@ -7,16 +7,11 @@ class UserDataManager {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? nisn = preferences.getString('nisn');
     String? password = preferences.getString('password');
-
     if (nisn != null && password != null) {
       try {
         Map<String, dynamic> updatedUserData =
             await fetchUpdatedUserDataFromServer(nisn, password);
         preferences.setString('userData', jsonEncode(updatedUserData));
-
-        // You can also update local state here if needed
-        // ...
-
         print("Data updated successfully");
       } catch (e) {
         print("Error fetching and saving data: $e");
@@ -29,12 +24,10 @@ class UserDataManager {
   static Future<Map<String, dynamic>> fetchUpdatedUserDataFromServer(
       String nisn, String password) async {
     const String serverUrl = "https://hello-ivy.id/cek_login.php";
-
     final Map<String, String> requestData = {
       "nisn": nisn,
       "password": password,
     };
-
     try {
       final response = await http.post(
         Uri.parse(serverUrl),
