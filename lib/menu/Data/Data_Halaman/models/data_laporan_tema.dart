@@ -110,7 +110,7 @@ Future<List<DataTema>> getDataTema(String kdkelas) async {
   String? idnisn = preferences.getString('nisn');
   print('kdkelas dalam getDataTema: $kdkelas');
   final Uri url =
-      Uri.parse('https://hello-ivy.id/get_materi.php?kode_kel=$kdkelas');
+      Uri.parse('https://hello-ivy.id/api-mobile/get_materi.php?kode_kel=$kdkelas');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
@@ -139,7 +139,7 @@ Future<List<DataLaporanStastistik>> getLaporanStastistik(String kdkelas) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idnisn = preferences.getString('nisn');
   final Uri url = Uri.parse(
-      'https://hello-ivy.id/get_laporan.php?nisn=$idnisn&kode_kel=$kdkelas');
+      'https://hello-ivy.id/api-mobile/get_laporan.php?nisn=$idnisn&kode_kel=$kdkelas');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
@@ -164,7 +164,7 @@ Future<List<DataLaporanNilaiQuiz>> getLaporanNilaiQuiz(String materi) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idnisn = preferences.getString('nisn');
   final Uri url = Uri.parse(
-      'https://hello-ivy.id/get_laporan_nilai.php?nisn=$idnisn&id_materi=$materi');
+      'https://hello-ivy.id/api-mobile/get_laporan_nilai.php?nisn=$idnisn&id_materi=$materi');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
@@ -192,7 +192,7 @@ Future<List<DataPesanGuru>> getDataPesanGuru(String materi) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idnisn = preferences.getString('nisn');
   final Uri url = Uri.parse(
-      'https://hello-ivy.id/get_pesan_guru.php?nisn=$idnisn&id_materi=$materi');
+      'https://hello-ivy.id/api-mobile/get_pesan_guru.php?nisn=$idnisn&id_materi=$materi');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);

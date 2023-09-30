@@ -33,7 +33,7 @@ class Result extends StatelessWidget {
 
   void nextMateri(BuildContext context) async {
     try {
-      final Uri url = Uri.parse('https://hello-ivy.id/post_quiz.php');
+      final Uri url = Uri.parse('https://hello-ivy.id/api-mobile/post_quiz.php');
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? idnisn = preferences.getString('nisn');
       var request = http.MultipartRequest('POST', url);

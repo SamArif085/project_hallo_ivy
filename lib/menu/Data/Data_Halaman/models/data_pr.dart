@@ -87,7 +87,7 @@ Future<List<dataPRAktif>> getDataPRAktif(String kodeKelas) async {
 
 Future<List<dataPRSelesai>> getDataPRSelesai(String kodeKelas) async{
   final Uri url =
-      Uri.parse('https://hello-ivy.id/get_pr_selesai.php?kode_kel=$kodeKelas');
+      Uri.parse('https://hello-ivy.id/api-mobile/get_pr_selesai.php?kode_kel=$kodeKelas');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);

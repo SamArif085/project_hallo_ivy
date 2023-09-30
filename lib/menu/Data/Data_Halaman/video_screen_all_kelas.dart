@@ -84,7 +84,7 @@ class _VideoScreenAllKelasState extends State<VideoScreenAllKelas>
             // Kirim permintaan POST ke server
             http
                 .post(
-              Uri.parse('https://hello-ivy.id/post_count.php'),
+              Uri.parse('https://hello-ivy.id/api-mobile/post_count.php'),
               body: postData,
             )
                 .then((response) {

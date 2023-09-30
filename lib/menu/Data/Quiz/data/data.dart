@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<QuestionModel>> getQuestions(int idMateri) async {
   final Uri url =
-      Uri.parse('https://hello-ivy.id/get_quiz.php?id_materi=$idMateri');
+      Uri.parse('https://hello-ivy.id/api-mobile/get_quiz.php?id_materi=$idMateri');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {

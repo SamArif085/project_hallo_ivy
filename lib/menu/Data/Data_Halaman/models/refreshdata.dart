@@ -23,7 +23,7 @@ class UserDataManager {
 
   static Future<Map<String, dynamic>> fetchUpdatedUserDataFromServer(
       String nisn, String password) async {
-    const String serverUrl = "https://hello-ivy.id/cek_login.php";
+    const String serverUrl = "https://hello-ivy.id/api-mobile/cek_login.php";
     final Map<String, String> requestData = {
       "nisn": nisn,
       "password": password,

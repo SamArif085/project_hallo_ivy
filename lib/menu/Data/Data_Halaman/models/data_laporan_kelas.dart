@@ -14,7 +14,7 @@ class DataKelas {
 }
 
 Future<List<DataKelas>> getKelas() async {
-  final Uri url = Uri.parse('https://hello-ivy.id/get_kelas.php');
+  final Uri url = Uri.parse('https://hello-ivy.id/api-mobile/get_kelas.php');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
