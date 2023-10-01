@@ -235,7 +235,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
               "Jumlah Kuis",
               style: TextStyle(
                 fontSize: 15,
-                color: DesignCourseAppTheme.darkText,
+                color: DesignCourseAppTheme.nearlyWhite,
               ),
             ),
             Text(
@@ -243,7 +243,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
-                color: DesignCourseAppTheme.darkText,
+                color: DesignCourseAppTheme.nearlyWhite,
               ),
             ),
             const SizedBox(
@@ -256,7 +256,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: DesignCourseAppTheme.darkText,
+            color: DesignCourseAppTheme.nearlyWhite,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -264,6 +264,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
         ),
       ),
       body: Container(
+        color: Colors.orangeAccent,
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -282,7 +283,7 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
                 "${currentQuestion.getQuestion()}?",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    color: Colors.black87,
+                    color: DesignCourseAppTheme.nearlyWhite,
                     fontSize: 20,
                     fontWeight: FontWeight.w500),
               ),

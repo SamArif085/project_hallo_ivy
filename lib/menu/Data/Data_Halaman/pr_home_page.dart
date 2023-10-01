@@ -203,7 +203,7 @@ class CustomCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16, fontWeight: FontWeight.bold , ),
                 ),
               ),
             ),
@@ -215,7 +215,7 @@ class CustomCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   text,
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

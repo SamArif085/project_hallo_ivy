@@ -40,6 +40,9 @@ class LaporanHome extends StatelessWidget {
                   chartVideo(
                     kodeKelas: kodeKelas,
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   chartNilai(
                     materi: materi,
                   ),
@@ -251,6 +254,7 @@ class PesanGuru extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class chartNilai extends StatefulWidget {
   final Map<String, dynamic> materi;
   const chartNilai({
