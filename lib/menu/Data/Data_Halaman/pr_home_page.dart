@@ -76,8 +76,9 @@ class _PRHomeState extends State<PRHome> {
           builder:
               (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                color: Colors.redAccent,
+                child: const Center(child: CircularProgressIndicator()),
               );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');

@@ -204,15 +204,22 @@ class _PlayQuizState extends State<PlayQuiz> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (Quest.isEmpty) {
-      return const Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 24), // Jarak antara indikator progres dan teks
-              Text('Mohon Tunggu'),
-            ],
+      return Scaffold(
+        body: Container(
+          color: Colors.orangeAccent,
+          child: const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 24),
+                Text(
+                  'Mohon Tunggu',
+                  style: TextStyle(color: Colors.white , fontSize: 18),
+                  
+                ),
+              ],
+            ),
           ),
         ),
       );

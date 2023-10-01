@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
     String password = passController.text;
 
     // Replace with your actual server URL
-    String serverUrl = "https://hello-ivy.id/cek_login.php";
+    String serverUrl = "https://hello-ivy.id/api-mobile/cek_login.php";
     // Create a map for your login data
     Map<String, dynamic> loginData = {
       "nisn": nisn,
