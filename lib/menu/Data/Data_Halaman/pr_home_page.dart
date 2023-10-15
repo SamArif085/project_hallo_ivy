@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/data_pr.dart';
+import 'models/wiget/notifikasi_wiget.dart';
 
 class PRHome extends StatefulWidget {
   const PRHome({super.key});
@@ -68,6 +70,22 @@ class _PRHomeState extends State<PRHome> {
               ),
             )),
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LocalNotificationWidget(),
+                  ),
+                );
+              },
+            )
+          ],
           elevation: 0,
           backgroundColor: Colors.redAccent,
         ),
@@ -203,7 +221,9 @@ class CustomCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold , ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

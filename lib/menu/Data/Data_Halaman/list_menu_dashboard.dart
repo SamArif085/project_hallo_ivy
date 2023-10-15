@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Game/game_page.dart';
 import 'list_materi_menu_dashboard.dart';
@@ -7,6 +8,7 @@ import 'list_menu_game_dashboard.dart';
 import 'materi_category_list_view.dart';
 import 'color_Theme.dart';
 import 'models/materi_category.dart';
+import 'models/notifikasi.dart';
 import 'models/refreshdata.dart';
 import 'video_screen_materi.dart';
 
@@ -29,6 +31,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   void initState() {
     super.initState();
     UserDataManager.refreshUserData();
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkSharedPreferencesDataAndShowNotifications(notifications);
+    });
   }
 
   @override
@@ -37,6 +42,25 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     UserDataManager.refreshUserData();
   }
 
+Future<void> checkSharedPreferencesDataAndShowNotifications(
+    FlutterLocalNotificationsPlugin notifications,
+  ) async {
+    final preferences = await SharedPreferences.getInstance();
+    final userDataString = preferences.getString('userData');
+    if (userDataString != null) {
+      final userData = json.decode(userDataString);
+      final materiUser = userData['values']['materi_user'] as List;
+
+      for (var materi in materiUser) {
+        final status = materi['status'];
+        if (status == 1) {
+          // Tampilkan notifikasi
+          showOngoingNotification(
+              notifications, 'Judul Notifikasi', 'Isi notifikasi disini');
+        }
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

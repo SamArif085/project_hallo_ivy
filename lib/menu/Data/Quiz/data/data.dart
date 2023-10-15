@@ -1,11 +1,13 @@
 import 'dart:convert';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/question_model.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<QuestionModel>> getQuestions(int idMateri) async {
-  final Uri url =
-      Uri.parse('https://hello-ivy.id/api-mobile/get_quiz.php?id_materi=$idMateri');
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? idnisn = preferences.getString('nisn');
+  final Uri url = Uri.parse(
+      'https://hello-ivy.id/api-mobile/get_quiz.php?id_materi=$idMateri&nisn=$idnisn');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -21,7 +23,8 @@ Future<List<QuestionModel>> getQuestions(int idMateri) async {
       return []; // Mengembalikan daftar kosong jika data tidak ditemukan
     }
 
-    if (responseData.containsKey('values') && responseData['values'].containsKey('data')) {
+    if (responseData.containsKey('values') &&
+        responseData['values'].containsKey('data')) {
       final List<dynamic> quizData = responseData['values']['data'];
 
       List<QuestionModel> questions = [];
@@ -48,4 +51,3 @@ Future<List<QuestionModel>> getQuestions(int idMateri) async {
     throw Exception('Gagal memuat data kuis');
   }
 }
-

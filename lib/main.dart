@@ -167,7 +167,11 @@ class _LoginState extends State<Login> {
                   ),
                   // Topmost image
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                      right: 35.0,
+                      left: 35.0,
+                    ),
                     child: Image.asset(
                       'assets/images/logo.png',
                     ),
