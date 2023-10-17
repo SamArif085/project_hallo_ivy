@@ -25,11 +25,11 @@ class LaporanHome extends StatelessWidget {
               child:
                   Text('Laporan Siswa', style: TextStyle(color: Colors.white)),
             ),
-            backgroundColor: HexColor('#85f29d'),
+            backgroundColor: HexColor('#ff8478'),
           ),
           body: Container(
             decoration: BoxDecoration(
-              color: HexColor('#85f29d'),
+              color: HexColor('#ff8478'),
             ),
             child: Center(
               child: ListView(
@@ -141,7 +141,7 @@ class _chartVideoState extends State<chartVideo> {
                             borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(5),
                                 topRight: Radius.circular(5)),
-                            color: HexColor('#85f29d'),
+                            color: HexColor('#ff8478'),
                             dataSource: chartData,
                             xValueMapper:
                                 (Map<String, dynamic> data, int index) =>
@@ -337,7 +337,7 @@ class _chartNilaiState extends State<chartNilai> {
                         primaryYAxis: NumericAxis(),
                         series: <ChartSeries>[
                           SplineSeries<Map<String, dynamic>, String>(
-                            color: HexColor('#85f29d'),
+                            color: HexColor('#ff8478'),
                             dataSource: chartData,
                             xValueMapper:
                                 (Map<String, dynamic> data, int index) =>

@@ -23,7 +23,7 @@ class _ListAllKelasState extends State<ListAllKelas> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
+        backgroundColor: HexColor('#ff8478'),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -72,7 +72,7 @@ class _ListAllKelasState extends State<ListAllKelas> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: BoxDecoration(color: HexColor('#ff8478')),
         child: FutureBuilder<List<DataKelas>>(
           future: getKelas(), // Fetch the user's materials
           builder: (context, snapshot) {

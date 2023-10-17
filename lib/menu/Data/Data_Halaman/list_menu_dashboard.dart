@@ -31,9 +31,9 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   void initState() {
     super.initState();
     UserDataManager.refreshUserData();
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkSharedPreferencesDataAndShowNotifications(notifications);
-    });
+    //  WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   checkSharedPreferencesDataAndShowNotifications(notifications);
+    // });
   }
 
   @override
@@ -42,25 +42,25 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     UserDataManager.refreshUserData();
   }
 
-Future<void> checkSharedPreferencesDataAndShowNotifications(
-    FlutterLocalNotificationsPlugin notifications,
-  ) async {
-    final preferences = await SharedPreferences.getInstance();
-    final userDataString = preferences.getString('userData');
-    if (userDataString != null) {
-      final userData = json.decode(userDataString);
-      final materiUser = userData['values']['materi_user'] as List;
+// Future<void> checkSharedPreferencesDataAndShowNotifications(
+//     FlutterLocalNotificationsPlugin notifications,
+//   ) async {
+//     final preferences = await SharedPreferences.getInstance();
+//     final userDataString = preferences.getString('userData');
+//     if (userDataString != null) {
+//       final userData = json.decode(userDataString);
+//       final materiUser = userData['values']['materi_user'] as List;
 
-      for (var materi in materiUser) {
-        final status = materi['status'];
-        if (status == 1) {
-          // Tampilkan notifikasi
-          showOngoingNotification(
-              notifications, 'Judul Notifikasi', 'Isi notifikasi disini');
-        }
-      }
-    }
-  }
+//       for (var materi in materiUser) {
+//         final status = materi['status'];
+//         if (status == 1) {
+//           // Tampilkan notifikasi
+//           showOngoingNotification(
+//               notifications, 'Judul Notifikasi', 'Isi notifikasi disini');
+//         }
+//       }
+//     }
+//   }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -176,7 +176,7 @@ Future<void> checkSharedPreferencesDataAndShowNotifications(
     }
   }
 
-Future<List<Map<String, dynamic>>> materiUser() async {
+  Future<List<Map<String, dynamic>>> materiUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? dataGameString = preferences.getString('userData');
     if (dataGameString != null) {

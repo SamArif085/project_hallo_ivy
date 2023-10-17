@@ -145,8 +145,8 @@ class _BottomBarViewState extends State<BottomBarView>
                         color: FitnessAppTheme.nearlyWhite,
                         gradient: LinearGradient(
                             colors: [
-                              HexColor('#66e782'),
-                              Colors.greenAccent,
+                              HexColor('#ff8478'),
+                              HexColor('#ff8478'),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight),

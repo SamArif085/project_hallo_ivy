@@ -78,7 +78,7 @@ class _VideoScreenMateriState extends State<VideoScreenMateri>
             Map<String, dynamic> postData = {
               'count_video': widget.materi['count'],
               'nisn': widget.materi['nisn'],
-              'id_materi': widget.materi['id'],  
+              'id_materi': widget.materi['id'],
               'status': '1',
             };
             // Kirim permintaan POST ke server
@@ -132,7 +132,7 @@ class _VideoScreenMateriState extends State<VideoScreenMateri>
       color: DesignCourseAppTheme.nearlyWhite,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: DesignCourseAppTheme.dark_grey,
+          backgroundColor: HexColor('#85f29d'),
         ),
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -294,7 +294,8 @@ class _VideoScreenMateriState extends State<VideoScreenMateri>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const QuizMenu(data: "refresh"),
+                              builder: (context) =>
+                                  const QuizMenu(data: "refresh"),
                             ),
                           );
                         }),

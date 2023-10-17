@@ -23,7 +23,7 @@ class _MateriPageState extends State<MateriPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: HexColor('#85f29d'),
+        backgroundColor: HexColor('#ff8478'),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -50,7 +50,8 @@ class _MateriPageState extends State<MateriPage> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Materi'),
-                    content: const Text('Anda bisa mempelajari materi yang anda pilih pada kelas ini.'),
+                    content: const Text(
+                        'Anda bisa mempelajari materi yang anda pilih pada kelas ini.'),
                     actions: <Widget>[
                       TextButton(
                         child: const Text('Tutup'),
@@ -67,7 +68,7 @@ class _MateriPageState extends State<MateriPage> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(color: HexColor('#85f29d')),
+        decoration: BoxDecoration(color: HexColor('#ff8478')),
         child: FutureBuilder(
           future: getDataTema(widget.kdkelas),
           builder: (context, snapshot) {

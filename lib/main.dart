@@ -188,7 +188,7 @@ class _LoginState extends State<Login> {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                                color: Colors.greenAccent,
+                                color: Color.fromRGBO(255, 132, 120, 100),
                                 fontSize: 40,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Poppins'),
@@ -238,7 +238,8 @@ class _LoginState extends State<Login> {
                             checkLogin();
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.greenAccent,
+                              backgroundColor:
+                                  Color.fromRGBO(255, 132, 120, 100),
                               minimumSize: const Size.fromHeight(45),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
