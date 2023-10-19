@@ -195,8 +195,8 @@ class CategoryView extends StatelessWidget {
                               color: Colors.redAccent,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(
-                                  color: DesignCourseAppTheme.notWhite),
+                              // border: Border.all(
+                              //     color: DesignCourseAppTheme.notWhite),
                             ),
                             child: Column(
                               children: <Widget>[
@@ -301,8 +301,8 @@ class CategoryView2 extends StatelessWidget {
                               color: Colors.orangeAccent,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(
-                                  color: DesignCourseAppTheme.notWhite),
+                              // border: Border.all(
+                              //     color: DesignCourseAppTheme.notWhite),
                             ),
                             child: Column(
                               children: <Widget>[

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hello_ivy_test/menu/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,7 +153,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor('ff8478'),
         resizeToAvoidBottomInset: false,
         body: MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -188,7 +189,7 @@ class _LoginState extends State<Login> {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                                color: Color.fromRGBO(255, 132, 120, 100),
+                                color: Colors.white,
                                 fontSize: 40,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Poppins'),
@@ -207,7 +208,7 @@ class _LoginState extends State<Login> {
                                     decoration: const InputDecoration(
                                       icon: Icon(
                                         Icons.alternate_email_outlined,
-                                        color: Colors.grey,
+                                        color: Colors.white,
                                       ),
                                       labelText: 'Username',
                                     ),
@@ -217,7 +218,7 @@ class _LoginState extends State<Login> {
                                     decoration: InputDecoration(
                                       icon: const Icon(
                                         Icons.lock_outline_rounded,
-                                        color: Colors.grey,
+                                        color: Colors.white,
                                       ),
                                       labelText: 'Password',
                                       suffixIcon: IconButton(
@@ -259,14 +260,15 @@ class _LoginState extends State<Login> {
                             ),
                             Center(
                               child: Container(
-                                color: Colors.white,
+                                color: HexColor('ff8478'),
                                 width: 70,
                                 child: const Center(
                                   child: Text(
                                     "With",
                                     style: TextStyle(
-                                        fontSize: 20,
-                                        backgroundColor: Colors.white),
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),

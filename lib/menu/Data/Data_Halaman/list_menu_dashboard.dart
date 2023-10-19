@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:hello_ivy_test/menu/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Game/game_page.dart';
 import 'list_materi_menu_dashboard.dart';
@@ -64,7 +66,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: DesignCourseAppTheme.nearlyWhite,
+      color: HexColor('ff8478'),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
@@ -111,7 +113,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 22,
               letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+              color: DesignCourseAppTheme.nearlyWhite,
             ),
           ),
           Flexible(
@@ -137,7 +139,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 22,
               letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+              color: DesignCourseAppTheme.nearlyWhite,
             ),
           ),
           Flexible(
@@ -235,7 +237,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 22,
               letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+              color: DesignCourseAppTheme.nearlyWhite,
             ),
           ),
         ),
@@ -286,7 +288,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
                         letterSpacing: 0.2,
-                        color: DesignCourseAppTheme.grey,
+                        color: Colors.white,
                       ),
                     ),
                     Text(
@@ -296,7 +298,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
                         letterSpacing: 0.27,
-                        color: DesignCourseAppTheme.darkerText,
+                        color: Colors.white,
                       ),
                     ),
                   ],
