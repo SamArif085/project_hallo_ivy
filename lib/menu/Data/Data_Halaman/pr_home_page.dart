@@ -70,22 +70,22 @@ class _PRHomeState extends State<PRHome> {
               ),
             )),
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LocalNotificationWidget(),
-                  ),
-                );
-              },
-            )
-          ],
+          // actions: <Widget>[
+          //   IconButton(
+          //     icon: const Icon(
+          //       Icons.arrow_back,
+          //       color: Colors.white,
+          //     ),
+          //     onPressed: () {
+          //       Navigator.pushReplacement(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) => const LocalNotificationWidget(),
+          //         ),
+          //       );
+          //     },
+          //   )
+          // ],
           elevation: 0,
           backgroundColor: Colors.redAccent,
         ),

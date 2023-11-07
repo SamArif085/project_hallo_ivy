@@ -1,18 +1,23 @@
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hello_ivy_test/menu/Data/Data_Halaman/Color_Theme.dart';
 import 'package:hello_ivy_test/menu/Data/Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menu/Dashboard.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Map<String, dynamic> userData =
       await getUserDataFromPreferences(); // Use 'await' here
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false, // Add this
-      home: userData.isEmpty ? const Login() : const DashboardHome()));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MaterialApp(
+        debugShowCheckedModeBanner: false, // Add this
+        home: userData.isEmpty ? const Login() : const DashboardHome()));
+  });
 }
 
 Future<Map<String, dynamic>> getUserDataFromPreferences() async {
@@ -164,7 +169,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 40,
+                    height: 50,
                   ),
                   // Topmost image
                   Padding(
@@ -206,10 +211,9 @@ class _LoginState extends State<Login> {
                               children: [
                                 TextFormField(
                                     decoration: const InputDecoration(
-                                      icon: Icon(
-                                        Icons.alternate_email_outlined,
-                                        color: Colors.white,
-                                      ),
+                                      icon: Icon(Icons.alternate_email_outlined,
+                                          color:
+                                              DesignCourseAppTheme.nearlyWhite),
                                       labelText: 'Username',
                                     ),
                                     controller: emailController),
@@ -223,6 +227,7 @@ class _LoginState extends State<Login> {
                                       labelText: 'Password',
                                       suffixIcon: IconButton(
                                         onPressed: togglePasswordVisibility,
+                                        color: DesignCourseAppTheme.nearlyWhite,
                                         icon: notVisiblePassword
                                             ? const Icon(Icons.visibility)
                                             : const Icon(Icons.visibility_off),
@@ -247,7 +252,9 @@ class _LoginState extends State<Login> {
                           child: const Center(
                               child: Text(
                             "Login",
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: DesignCourseAppTheme.nearlyWhite),
                           )),
                         ),
                         // Sized box
@@ -261,6 +268,7 @@ class _LoginState extends State<Login> {
                             Center(
                               child: Container(
                                 color: HexColor('ff8478'),
+                                height: 40,
                                 width: 70,
                                 child: const Center(
                                   child: Text(

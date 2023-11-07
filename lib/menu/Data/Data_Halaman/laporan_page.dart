@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'models/data_laporan_tema.dart';
+import 'package:dio/dio.dart';
 
 // import 'design_course_app_theme.dart';
 class LaporanHome extends StatelessWidget {
@@ -211,6 +212,22 @@ class PesanGuru extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
+                    if (snapshot.error is DioError) {
+                      final dioError = snapshot.error as DioError;
+                      if (dioError.response?.statusCode == 404) {
+                        // Handle 404 error
+                        return Center(
+                          child: Text(
+                            'Data Not Found',
+                            style: TextStyle(
+                              color: Colors.black26,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      }
+                    }
                     return Text('Error: ${snapshot.error}');
                   } else {
                     final List<DataPesanGuru> dataPesan =

@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 
 class DataTema {
   String id;
@@ -109,8 +110,8 @@ Future<List<DataTema>> getDataTema(String kdkelas) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idnisn = preferences.getString('nisn');
   print('kdkelas dalam getDataTema: $kdkelas');
-  final Uri url =
-      Uri.parse('https://hello-ivy.id/api-mobile/get_materi.php?kode_kel=$kdkelas');
+  final Uri url = Uri.parse(
+      'https://hello-ivy.id/api-mobile/get_materi.php?kode_kel=$kdkelas');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);
@@ -191,24 +192,38 @@ Future<List<DataLaporanNilaiQuiz>> getLaporanNilaiQuiz(String materi) async {
 Future<List<DataPesanGuru>> getDataPesanGuru(String materi) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? idnisn = preferences.getString('nisn');
-  final Uri url = Uri.parse(
-      'https://hello-ivy.id/api-mobile/get_pesan_guru.php?nisn=$idnisn&id_materi=$materi');
-  final response = await http.get(url);
-  if (response.statusCode == 200) {
-    final Map<String, dynamic> responseData = json.decode(response.body);
-    final List<dynamic> dataLaporanPesan = responseData['values']['data'];
-    print('getDataTema: $dataLaporanPesan');
-    print('mater:$materi');
-    List<DataPesanGuru> dataTema = [];
-    for (var linkLaporan in dataLaporanPesan) {
-      DataPesanGuru kelasModel = DataPesanGuru(
-        idpesan: linkLaporan['id_pesan'],
-        isipesan: linkLaporan['isi_pesan'],
-      );
-      dataTema.add(kelasModel);
+  final String url =
+      'https://hello-ivy.id/api-mobile/get_pesan_guru.php?nisn=$idnisn&id_materi=$materi';
+  try {
+    final Dio dio = Dio();
+    final response = await dio.get(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = response.data;
+      if (responseData.containsKey('values') &&
+          responseData['values'].containsKey('data')) {
+        final List<dynamic> dataLaporanPesan = responseData['values']['data'];
+        print('getDataTema: $dataLaporanPesan');
+        print('mater:$materi');
+        List<DataPesanGuru> dataTema = [];
+        for (var linkLaporan in dataLaporanPesan) {
+          DataPesanGuru kelasModel = DataPesanGuru(
+            idpesan: linkLaporan['id_pesan'],
+            isipesan: linkLaporan['isi_pesan'],
+          );
+          dataTema.add(kelasModel);
+        }
+        return dataTema;
+      } else {
+        return [];
+      }
+    } else if (response.statusCode == 404) {
+      print('Data Not Found');
+      return [];
+    } else {
+      throw Exception('Failed to load data pesan guru');
     }
-    return dataTema;
-  } else {
-    throw Exception('Failed to load quiz data');
+  } catch (e) {
+    throw Exception('Failed to load data pesan guru: $e');
   }
 }

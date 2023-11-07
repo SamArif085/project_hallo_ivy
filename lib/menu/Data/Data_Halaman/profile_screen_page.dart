@@ -68,9 +68,9 @@ class UserProfilePage extends StatelessWidget {
                   buildInfo(label: "Kelas", value: userData['kelas']),
                   buildInfo(
                       label: "Jenis Kelamin", value: userData['jenis_kelamin']),
-                  buildInfo(
-                      label: "Nama Orang Tua", value: userData['nama_ortu']),
-                  buildInfo(label: "Alamat", value: userData['alamat_ortu']),
+                  // buildInfo(
+                  //     label: "Nama Orang Tua", value: userData['nama_ortu']),
+                  // buildInfo(label: "Alamat", value: userData['alamat_ortu']),
                 ],
               ),
             );

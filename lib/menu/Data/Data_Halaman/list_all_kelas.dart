@@ -149,11 +149,10 @@ class CustomCard extends StatelessWidget {
                 InkWell(
                   onTap: onTap,
                   child: Container(
-                    height: sizedHeight,
+                    height: sizedHeight * 1.2,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image:
-                            NetworkImage(image), // Use a placeholder image URL
+                        image: NetworkImage(image),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: const BorderRadius.only(

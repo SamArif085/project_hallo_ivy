@@ -177,10 +177,10 @@ class CustomCard extends StatelessWidget {
             InkWell(
               onTap: onTap,
               child: Container(
-                height: sizedHeight,
+                height: sizedHeight * 1.2,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(image), // Use a placeholder image URL
+                    image: NetworkImage(image),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: const BorderRadius.only(
@@ -196,9 +196,16 @@ class CustomCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                   Container(
                     child: status == "1"

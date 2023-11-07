@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Module/bottom_navigation_view/bottom_bar_view.dart';
 import 'color_Theme.dart';
 import 'laporan_page.dart';
 import 'models/data_laporan_tema.dart';
@@ -50,27 +51,29 @@ class _ListLaporanState extends State<ListLaporan> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: DesignCourseAppTheme.nearlyWhite,
+        backgroundColor: HexColor('#ff8478'),
         title: const Padding(
           padding: EdgeInsets.only(left: 50),
           child: Center(
             child: Text(
               'Laporan',
-              style: TextStyle(color: DesignCourseAppTheme.nearlyBlack),
+              style: TextStyle(color: DesignCourseAppTheme.nearlyWhite),
             ),
           ),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info),
-            color: DesignCourseAppTheme.nearlyBlack,
+            color: DesignCourseAppTheme.nearlyWhite,
             iconSize: 30,
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('Laporan'),
+                    title: const Text(
+                      'Laporan',
+                    ),
                     content: const Text(
                         'Anda dapat melihat pesan guru dan laporan statistik pertema pada halaman ini.'),
                     actions: <Widget>[
@@ -119,7 +122,7 @@ class _ListLaporanState extends State<ListLaporan> {
                         MaterialPageRoute(
                           builder: (context) => LaporanHome(
                             materi: dataLaporanTema.toMap(),
-                            kodeKelas : kodeKelas,
+                            kodeKelas: kodeKelas,
                           ),
                         ),
                       );
@@ -148,7 +151,7 @@ class CustomCard extends StatelessWidget {
 
   String title;
   String image;
-  
+
   @override
   Widget build(BuildContext context) {
     double sizedHeight = MediaQuery.of(context).size.width > 600 ? 230 : 130;
@@ -165,7 +168,7 @@ class CustomCard extends StatelessWidget {
             InkWell(
               onTap: onTap,
               child: Container(
-                height: sizedHeight,
+                height: sizedHeight * 1.2,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(image),
@@ -184,21 +187,17 @@ class CustomCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
-                  // Container(
-                  //   child: status == "1"
-                  //       ? Image.asset(
-                  //           'assets/icon/unlock_icon.png',
-                  //           height: 20,
-                  //         )
-                  //       : Image.asset(
-                  //           'assets/icon/lock_icon.png',
-                  //           height: 20,
-                  //         ),
-                  // ),
                 ],
               ),
             )

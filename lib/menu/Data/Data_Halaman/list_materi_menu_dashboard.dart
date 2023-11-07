@@ -191,10 +191,10 @@ class CategoryView extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.redAccent,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
+                                  BorderRadius.all(Radius.circular(16.0)),
                               // border: Border.all(
                               //     color: DesignCourseAppTheme.notWhite),
                             ),
@@ -205,7 +205,7 @@ class CategoryView extends StatelessWidget {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                          top: 16,
+                                          top: 28,
                                           left: 16,
                                           right: 16,
                                         ),
@@ -236,7 +236,7 @@ class CategoryView extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
                       child: SizedBox(
                         width:
                             paddingWidth, // Lebar disesuaikan dengan kondisi perangkat
@@ -297,10 +297,10 @@ class CategoryView2 extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.orangeAccent,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
+                                  BorderRadius.all(Radius.circular(16.0)),
                               // border: Border.all(
                               //     color: DesignCourseAppTheme.notWhite),
                             ),
@@ -311,7 +311,7 @@ class CategoryView2 extends StatelessWidget {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                          top: 16,
+                                          top: 28,
                                           left: 16,
                                           right: 16,
                                         ),
@@ -342,7 +342,7 @@ class CategoryView2 extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
                       child: SizedBox(
                         width:
                             paddingWidth, // Lebar disesuaikan dengan kondisi perangkat
